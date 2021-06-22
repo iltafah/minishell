@@ -17,6 +17,7 @@ get_next_line/get_next_line.c \
 get_next_line/get_next_line_utils.c \
 get_prompt_name.c \
 minishell.c \
+treat_herdocs.c \
 parser/check_tokens_syntax/check_simple_word_syntax.c \
 parser/check_tokens_syntax/check_tokens_order.c \
 parser/check_tokens_syntax/check_tokens_syntax.c \

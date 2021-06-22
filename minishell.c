@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/22 15:41:45 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/22 17:57:41 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ void	execute_test(t_ast *ast)
 ** ************************************************************************** **
 */
 
-void	temp_exit(t_tokens **tokens_list, t_ast *ast, char *line)
+void	temp_exit(t_tokens **tokens_list, t_ast *ast, char *line, char *prompt)
 {
 	/////////////////////////////////
 	/**		  freeing time		**///
@@ -197,6 +197,7 @@ void	temp_exit(t_tokens **tokens_list, t_ast *ast, char *line)
 	free_tokens_list(tokens_list);//
 	free_abstract_syntax_tree(ast);//
 	free(line);					   //
+	free(prompt);
 	// free_env_table(env_table);
 	/////////////////////////////////
 	exit(0);
@@ -226,9 +227,6 @@ void print_header()
 	printf("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n");
 }
 
-
-
-
 int	main(int argc, char **argv, char **env)
 {
 	char		*line;
@@ -236,43 +234,23 @@ int	main(int argc, char **argv, char **env)
 	t_tokens	*tokens_list = NULL;
 	t_ast		*ast = NULL;
 
-
-	
-	// printf("%s\n", the_history_list[0]->line);
-///////////////////////////////////////////
-
 	line = NULL;
 	prompt = NULL;
 	if (argc == 1)
 	{
 		(void)argv;
-		create_env_table(&g_vars.env_table, env);
 		g_vars.last_err_num = 0;
+		create_env_table(&g_vars.env_table, env);
 		while (1337)
 		{
 			prompt = get_prompt_name();
-			// write(1, WHT, ft_strlen(WHT));
 			line = readline(prompt);
 			add_history(line);
-
-// ////					herdocs					//////
-// 			char limiter[] = "xd";
-// 			t_char_vec buffer;
-// 			initialize_vec_of_char(&buffer);
-// 			while (true)
-// 			{
-// 				char *herdoc_line = readline(">> ");
-// 				if (strcmp(herdoc_line, limiter) == 0)
-// 				{
-// 					printf("{%s}\n", buffer.elements);
-// 					break ;
-// 				}
-// 				buffer.add_set_of_elements(&buffer, herdoc_line);
-// 				buffer.add_new_element(&buffer, '\n');
-// 			}
-// ////			
-
-
+// ////					[herdocs]						//////
+			char *herdocs_content = treat_herdocs("xd");
+			printf("{\n%s}", herdocs_content);
+			free(herdocs_content);
+// ////													//////
 			line_tokenization(line, &tokens_list);
 			print_tokens(tokens_list);
 			if (check_tokens_syntax(tokens_list) == ERROR)
@@ -286,7 +264,7 @@ int	main(int argc, char **argv, char **env)
 			/////////////////////////////////
 			/**				exit		**///
 			if (strcmp(line, "exit") == 0)
-				temp_exit(&tokens_list, ast, line);
+				temp_exit(&tokens_list, ast, line, prompt);
 			/////////////////////////////////
 	
 			// print_preorder(ast, 1, env_table);
@@ -319,56 +297,3 @@ int	main(int argc, char **argv, char **env)
 
 /*[3] "echo $jfhjdf=kdjskdgs" */
 /*[4] echo $ilias_1337_man$  */     //underscor?? dollar at the end??
-
-
-
-
-	// t_char_vec str;
-
-	// initialize_vec_of_char(&str);
-	// str.add_new_element(&str, 'h');
-	// str.add_new_element(&str, 'e');
-	// str.add_new_element(&str, 'l');
-	// str.add_new_element(&str, 'l');
-	// str.add_new_element(&str, 'o');
-	// str.add_new_element(&str, 'w');
-	// str.add_new_element(&str, 'o');
-	// str.add_new_element(&str, 'r');
-	// str.add_new_element(&str, 'l');
-	// str.add_new_element(&str, 'd');
-
-	// str.add_new_element_at_index(&str, ' ', 5);
-	// str.add_set_of_elements_at_index(&str, "bye bye", 0);
-
-	// printf("{%s}\n", str.elements);
-
-	// t_str_vec	vec;
-	
-	// initialize_vec_content(&vec);
-
-	// vec.add_new_element(&vec, "hello world");
-	// vec.add_new_element(&vec, "bye bye world");
-	// vec.add_new_element(&vec, "well well well");
-	// vec.add_new_element(&vec, "nice it works");
-	// vec.add_new_element(&vec, "ahahaha I like this");
-
-	// vec.add_new_element_at_index(&vec, "I have been inserted", 3);
-	// vec.delete_element_at_index(&vec, 3);
-	// vec.delete_element_at_index(&vec, 2);
-	// for (int i = 0; vec.elements[i]; i++)
-	// 	printf("[%s]\n", vec.elements[i]);
-
-/*
-** ************************************************************************** **
-*/
-//char	*str = strdup("\n");
-// ///////execute cat command example//////////////
-// char	**newargv = malloc(sizeof(char*) * 4);	//
-// newargv[0] = strdup("cat");				//
-// newargv[1] = strdup("file");			//
-// newargv[2] = strdup("file1");			//
-// newargv[3] = strdup("file2");
-// newargv[4] = 0;								//
-
-// execve("/bin/cat", newargv, env);			//
-// ////////////////////////////////////////////////

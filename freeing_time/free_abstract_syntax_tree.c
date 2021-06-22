@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:45:47 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:45:48 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/22 17:48:07 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	free_redirection_list(t_redirection **redirection_list)
 	while (curr_redir_node)
 	{
 		next_redir_node = curr_redir_node->next;
+		free(curr_redir_node->file);
+		free(curr_redir_node->type);
 		free(curr_redir_node);
 		curr_redir_node = next_redir_node;
 	}
