@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/22 17:57:41 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/22 18:04:53 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,9 +247,9 @@ int	main(int argc, char **argv, char **env)
 			line = readline(prompt);
 			add_history(line);
 // ////					[herdocs]						//////
-			char *herdocs_content = treat_herdocs("xd");
-			printf("{\n%s}", herdocs_content);
-			free(herdocs_content);
+			// char *herdocs_content = treat_herdocs("xd");
+			// printf("{\n%s}", herdocs_content);
+			// free(herdocs_content);
 // ////													//////
 			line_tokenization(line, &tokens_list);
 			print_tokens(tokens_list);
