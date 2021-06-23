@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/22 18:04:53 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/23 10:15:34 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,19 @@ void print_cmd_redirection(t_ast *data_node)
 	curr_redir_node = data_node->node.data.redirections;
 	while (curr_redir_node)
 	{
-		if (strcmp(curr_redir_node->type, ">") == 0 || strcmp(curr_redir_node->type, ">>") == 0)
-			output_file = curr_redir_node->file;
-		else if (strcmp(curr_redir_node->type, "<") == 0)
-			input_file = curr_redir_node->file;
+		printf("file : %s, type : %s\n", curr_redir_node->file, curr_redir_node->type);
+	// 	if (strcmp(curr_redir_node->type, ">") == 0 
+	// 		|| strcmp(curr_redir_node->type, ">>") == 0)
+	// 		output_file = curr_redir_node->file;
+	// 	else if (strcmp(curr_redir_node->type, "<") == 0
+	// 		|| strcmp(curr_redir_node->type, "<<") == 0)
+	// 		input_file = curr_redir_node->file;
 		curr_redir_node = curr_redir_node->next;
 	}
-	printf("%sredirections:  Input file = [%s%s%s]  , Output file = [%s%s%s]\n",
-		   WHT,
-		   YEL, input_file, WHT,
-		   YEL, output_file, WHT);
+	// printf("%sredirections:  Input file = [%s%s%s]  , Output file = [%s%s%s]\n",
+	// 	   WHT,
+	// 	   YEL, input_file, WHT,
+	// 	   YEL, output_file, WHT);
 }
 
 void print_tokens(t_tokens *tokens)
@@ -178,7 +181,7 @@ void	execute_test(t_ast *ast)
 			expand_curr_cmd(curr_simple_cmd);
 			curr_data_node = curr_simple_cmd->node.dir.bottom;
 			print_cmd_redirection(curr_data_node);
-			print_args(curr_data_node);
+			// print_args(curr_data_node);
 			curr_simple_cmd = get_curr_smpl_cmd_node(curr_pipeline_seq);
 		}
 		curr_pipeline_seq = get_curr_pipeline_seq_node(ast);
@@ -247,9 +250,9 @@ int	main(int argc, char **argv, char **env)
 			line = readline(prompt);
 			add_history(line);
 // ////					[herdocs]						//////
-			// char *herdocs_content = treat_herdocs("xd");
-			// printf("{\n%s}", herdocs_content);
-			// free(herdocs_content);
+			// char *heredocs_content = treat_heredocs(strdup("xdmeowwell"));
+			// printf("{\n%s}", heredocs_content);
+			// free(heredocs_content);
 // ////													//////
 			line_tokenization(line, &tokens_list);
 			print_tokens(tokens_list);

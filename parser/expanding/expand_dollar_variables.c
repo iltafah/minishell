@@ -6,55 +6,11 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:32:55 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/19 11:23:29 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/23 09:06:00 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
-
-int	expand_quoted_var(char *str, int *i, t_char_vec *vec)
-{
-	char		*name;
-	char		*value;
-	int			is_expanded;
-
-	is_expanded = false;
-	name = get_dollar_name(str, i);
-	if (name != NULL)
-	{
-		value = get_dollar_value(name);
-		vec->add_set_of_elements_at_index(vec, value, vec->used_size);
-		is_expanded = true;
-		free(name);
-	}
-	return (is_expanded);
-}
-
-int	expand_unquoted_var(char *str, int *i, t_char_vec *vec)
-{
-	char		*name;
-	char		*value;
-	int			is_expanded;
-
-	is_expanded = false;
-	if (str[*i + 1] == SP_DOUBLE_QUOTES || str[*i + 1] == SP_SINGLE_QUOTES)
-	{
-		*i += 1;
-		is_expanded = true;
-	}
-	else
-	{
-		name = get_dollar_name(str, i);
-		if (name != NULL)
-		{
-			value = get_dollar_value(name);
-			vec->add_set_of_elements_at_index(vec, value, vec->used_size);
-			is_expanded = true;
-			free(name);
-		}
-	}
-	return (is_expanded);
-}
 
 void	initialize_expanding_vars(t_expnd_vars *vars)
 {

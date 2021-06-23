@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:36:47 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/22 17:56:10 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/22 19:30:16 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ t_gvars				g_vars;
 
 char	*get_prompt_name(void);
 char	*get_curr_dir_name(void);
-char	*treat_herdocs(char *delimiter);
+char	*treat_heredocs(char *delimiter);
 
 #endif
