@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/23 10:15:34 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/23 20:08:21 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void print_cmd_redirection(t_ast *data_node)
 	curr_redir_node = data_node->node.data.redirections;
 	while (curr_redir_node)
 	{
-		printf("file : %s, type : %s\n", curr_redir_node->file, curr_redir_node->type);
+		printf("%stype %s: {%s%s%s}\n", GRN, WHT, YEL, curr_redir_node->type, WHT);
+		printf("%sfile %s: \n{%s%s%s}\n", GRN, WHT, YEL, curr_redir_node->file, WHT);
+		printf("===========================================================\n");
 	// 	if (strcmp(curr_redir_node->type, ">") == 0 
 	// 		|| strcmp(curr_redir_node->type, ">>") == 0)
 	// 		output_file = curr_redir_node->file;
@@ -40,6 +42,8 @@ void print_cmd_redirection(t_ast *data_node)
 	// 	   WHT,
 	// 	   YEL, input_file, WHT,
 	// 	   YEL, output_file, WHT);
+	printf("%s", WHT);
+
 }
 
 void print_tokens(t_tokens *tokens)
@@ -163,6 +167,7 @@ void	print_args(t_ast *data_node)
 	printf("%*s",max_len, "");
 	printf("%s]\n", PRP);
 	printf("---------------------------------------------------------------\n\n");
+	printf("%s", WHT);
 }
 
 void	execute_test(t_ast *ast)
@@ -250,12 +255,12 @@ int	main(int argc, char **argv, char **env)
 			line = readline(prompt);
 			add_history(line);
 // ////					[herdocs]						//////
-			// char *heredocs_content = treat_heredocs(strdup("xdmeowwell"));
+			// char *heredocs_content = treat_heredocs(strdup("$xd"));
 			// printf("{\n%s}", heredocs_content);
 			// free(heredocs_content);
 // ////													//////
 			line_tokenization(line, &tokens_list);
-			print_tokens(tokens_list);
+			//print_tokens(tokens_list);
 			if (check_tokens_syntax(tokens_list) == ERROR)
 			{
 				free_tokens_list(&tokens_list);

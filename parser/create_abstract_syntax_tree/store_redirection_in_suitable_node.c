@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:38:45 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/15 17:34:24 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/23 19:44:55 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ void	store_redir_in_suitable_node(t_ast_vars *vars, t_tokens **curr_token)
 	type = (*curr_token)->data;
 	(*curr_token) = (*curr_token)->next;
 	file = (*curr_token)->data;
+	if (strcmp(type, "<<") == 0)
+		file = treat_heredocs(file);
 	*curr_redir_node = create_single_redirection_node(type, file);
 }

@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:35:38 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/20 15:10:49 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/23 20:01:57 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ void	expand_redirection_list(t_redirection *rdir_list)
 	curr_redir_node = rdir_list;
 	while (curr_redir_node != NULL)
 	{
-		give_quotes_special_meaning(curr_redir_node->file);
-		expand_dollar_vars(&curr_redir_node->file);
-		remove_special_quotes(&curr_redir_node->file);
+		if (strcmp(curr_redir_node->type, "<<") != 0)
+		{
+			give_quotes_special_meaning(curr_redir_node->file);
+			expand_dollar_vars(&curr_redir_node->file);
+			remove_special_quotes(&curr_redir_node->file);
+		}
 		curr_redir_node = curr_redir_node->next;
 	}
 }

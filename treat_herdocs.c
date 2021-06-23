@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 17:55:27 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/23 10:14:18 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/23 20:08:59 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		is_delimiter_quoted(char **delimiter)
 		unqotd_delimiter.add_new_element(&unqotd_delimiter, (*delimiter)[i]);
 		does_backslash_exist((*delimiter)[i], &quotes);
 	}
-	free(*delimiter);
+	// free(*delimiter);
 	*delimiter = unqotd_delimiter.elements;
 	return (is_quoted);
 }

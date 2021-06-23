@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:38:12 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/21 19:27:43 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/23 19:26:04 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,10 @@ void	store_tokens_in_suitable_nodes(t_ast_vars *vars, t_tokens **curr_token)
 		store_word_in_suitable_node(vars, (*curr_token)->data);
 		change_nodes_state(&vars->state, e_simple_word);
 	}
-	else if (type == e_pipe)
-		change_nodes_state(&vars->state, e_pipe);
-	else if (type == e_semicolon)
-		change_nodes_state(&vars->state, e_semicolon);
 	else if (type == less || type == great || type == double_great
 		|| type == double_less)
-	{
 		store_redir_in_suitable_node(vars, curr_token);
-		change_nodes_state(&vars->state, type);
-	}
+	change_nodes_state(&vars->state, type);
 }
 
 void	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens)
