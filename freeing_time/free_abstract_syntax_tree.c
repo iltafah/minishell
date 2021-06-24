@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:45:47 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/24 11:21:21 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/24 11:46:56 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_args_vec(t_str_vec *args_vec)
 	args_vec->free(args_vec);
 }
 
-void	free_data_node_content(t_data *node_data)
+void	free_data_node_content(t_data_content *node_data)
 {
 	free_args_vec(&node_data->args_vec);
 	free_redirection_list(&node_data->redirections);

@@ -78,14 +78,14 @@ OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(OBJ) $(LIBFT) -o $(NAME) -ltermcap -lreadline
+	$(CC) $(OBJ) $(LIBFT) -o $(NAME) -lreadline $(LDFLAGS)
 
 $(LIBFT): force
 	make -C ./libft
 
 $(OBJ): $(OBJ_DIR)/%.o : %.c
 	mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@ $(CPPFLAGS)
 
 clean :
 	rm -f $(OBJ)

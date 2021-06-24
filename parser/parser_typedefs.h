@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:37:34 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/24 09:36:36 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/24 11:45:24 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ typedef struct s_pipe_content
 	t_dir	dir;
 }	t_pipe_content;
 
-typedef struct s_data
+typedef struct s_data_content
 {
 	t_str_vec		args_vec;
 	t_redirection	*redirections;
-}	t_data;
+}	t_data_content;
 
 typedef struct s_ast
 {
@@ -80,7 +80,7 @@ typedef struct s_ast
 	union u_node
 	{
 		t_dir			dir;
-		t_data			data;
+		t_data_content	data;
 		t_pipe_content	pipe;
 	}	node;
 }	t_ast;

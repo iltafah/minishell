@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/24 11:38:04 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/24 18:38:31 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,13 +232,38 @@ void print_header()
 	printf("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n");
 }
 
+void	signal_handler(int sig_num)
+{
+	if (sig_num == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
+void	disable_echoctl_flag(void)
+{
+	struct termios	xd;
+	char			*tty;
+	int				fd;
+
+	tty = ttyname(0);
+	fd = open(tty, O_WRONLY);
+	ioctl(fd,  TIOCGETA, &xd);
+	xd.c_lflag &= ~(ECHOCTL);
+	ioctl(fd, TIOCSETA, &xd);
+	close(fd);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char		*line;
 	char		*prompt;
 	t_tokens	*tokens_list = NULL;
 	t_ast		*ast = NULL;
-
+	
 	line = NULL;
 	prompt = NULL;
 	if (argc == 1)
@@ -246,16 +271,13 @@ int	main(int argc, char **argv, char **env)
 		(void)argv;
 		g_vars.last_err_num = 0;
 		create_env_table(&g_vars.env_table, env);
+		disable_echoctl_flag();
 		while (1337)
 		{
+			signal(SIGINT, signal_handler);
 			prompt = get_prompt_name();
 			line = readline(prompt);
 			add_history(line);
-// ////					[herdocs]						//////
-			// char *heredocs_content = treat_heredocs(strdup("$xd"));
-			// printf("{\n%s}", heredocs_content);
-			// free(heredocs_content);
-// ////													//////
 			line_tokenization(line, &tokens_list);
 			//print_tokens(tokens_list);
 			if (check_tokens_syntax(tokens_list) == ERROR)
