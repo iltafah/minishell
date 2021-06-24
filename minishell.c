@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/23 20:08:21 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/24 11:38:04 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,17 @@ void print_cmd_redirection(t_ast *data_node)
 	char *output_file = "STDOUT";
 
 	curr_redir_node = data_node->node.data.redirections;
+	printf("%s===========================================================\n", YEL);
+	printf("%sredirections:\n", PRP);
 	while (curr_redir_node)
 	{
+		printf("\n");
 		printf("%stype %s: {%s%s%s}\n", GRN, WHT, YEL, curr_redir_node->type, WHT);
 		printf("%sfile %s: \n{%s%s%s}\n", GRN, WHT, YEL, curr_redir_node->file, WHT);
-		printf("===========================================================\n");
-	// 	if (strcmp(curr_redir_node->type, ">") == 0 
-	// 		|| strcmp(curr_redir_node->type, ">>") == 0)
-	// 		output_file = curr_redir_node->file;
-	// 	else if (strcmp(curr_redir_node->type, "<") == 0
-	// 		|| strcmp(curr_redir_node->type, "<<") == 0)
-	// 		input_file = curr_redir_node->file;
 		curr_redir_node = curr_redir_node->next;
+		printf("\n");
 	}
-	// printf("%sredirections:  Input file = [%s%s%s]  , Output file = [%s%s%s]\n",
-	// 	   WHT,
-	// 	   YEL, input_file, WHT,
-	// 	   YEL, output_file, WHT);
+	printf("%s===========================================================\n", YEL);
 	printf("%s", WHT);
 
 }
@@ -120,11 +114,11 @@ t_ast *get_curr_pipeline_seq_node(t_ast *ast)
 		if (first == 1)
 			curr_pipeline_seq = ast->node.dir.bottom;
 		else if (curr_pipeline_seq != NULL)
-			curr_pipeline_seq = curr_pipeline_seq->node.dir.next;
+			curr_pipeline_seq = curr_pipeline_seq->node.pipe.dir.next;
 		first++;
 	}
 	if (curr_pipeline_seq == NULL)
-		first = 1;
+		first = 1;	
 	return (curr_pipeline_seq);
 }
 
@@ -136,7 +130,7 @@ t_ast *get_curr_smpl_cmd_node(t_ast *pipeline_seq)
 	if (pipeline_seq)
 	{
 		if (first == 1)
-			curr_smpl_cmd = pipeline_seq->node.dir.bottom;
+			curr_smpl_cmd = pipeline_seq->node.pipe.dir.bottom;
 		else if (curr_smpl_cmd != NULL)
 			curr_smpl_cmd = curr_smpl_cmd->node.dir.next;
 		first++;
@@ -157,6 +151,7 @@ void	print_args(t_ast *data_node)
 	len = 0;
 	max_len = 0;
 	args = data_node->node.data.args_vec.elements;
+	printf("%sArguments:\n", PRP);
 	printf("%s[\n%s", PRP,WHT);
 	while (args[i])
 	{
@@ -166,7 +161,7 @@ void	print_args(t_ast *data_node)
 	}
 	printf("%*s",max_len, "");
 	printf("%s]\n", PRP);
-	printf("---------------------------------------------------------------\n\n");
+	printf("-----------------------------CMD END-----------------------------\n\n\n");
 	printf("%s", WHT);
 }
 
@@ -174,23 +169,25 @@ void	execute_test(t_ast *ast)
 {
 	t_ast *curr_pipeline_seq;
 	t_ast *curr_simple_cmd;
-	t_ast *curr_data_node;
+	t_ast *curr_data;
 
 	curr_pipeline_seq = get_curr_pipeline_seq_node(ast);
 	while (curr_pipeline_seq)
-	{	
+	{
 		curr_simple_cmd = get_curr_smpl_cmd_node(curr_pipeline_seq);
 		printf("%s ╔███████████████████████ Pipeline ███████████████████████╗\n\n",RED);
+		printf("%spipes count = %d\n", WHT, curr_pipeline_seq->node.pipe.pipes_count);
 		while (curr_simple_cmd)
 		{
 			expand_curr_cmd(curr_simple_cmd);
-			curr_data_node = curr_simple_cmd->node.dir.bottom;
-			print_cmd_redirection(curr_data_node);
-			// print_args(curr_data_node);
+			curr_data = curr_simple_cmd->node.dir.bottom;
+			print_cmd_redirection(curr_data);
+			print_args(curr_data);
 			curr_simple_cmd = get_curr_smpl_cmd_node(curr_pipeline_seq);
 		}
 		curr_pipeline_seq = get_curr_pipeline_seq_node(ast);
 	}
+	printf("\n\n\n%s███████████████████████████████████████████████████████████%s\n\n\n", GRN, WHT);
 }
 /*
 ** ************************************************************************** **

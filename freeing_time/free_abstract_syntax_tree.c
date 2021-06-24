@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:45:47 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/22 17:48:07 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/24 11:21:21 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,14 @@ void	free_abstract_syntax_tree(t_ast *ast)
 {
 	if (ast == NULL)
 		return ;
-	if (ast->tag != e_data_node)
+	if (ast->tag == e_cmdline_node || ast->tag == e_simple_cmd_node)
 	{
 		free_abstract_syntax_tree(ast->node.dir.bottom);
 		free_abstract_syntax_tree(ast->node.dir.next);
 	}
-	else
+	else if (ast->tag == e_pipeline_node)
+		free_abstract_syntax_tree(ast->node.pipe.dir.bottom);
+	else if (ast->tag == e_data_node)
 		free_data_node_content(&ast->node.data);
 	free(ast);
 }

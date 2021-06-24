@@ -6,29 +6,30 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:38:12 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/23 19:26:04 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/24 09:37:04 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "create_abstract_syntax_tree.h"
 
-void	change_nodes_state(t_state *state, t_type token)
+void	change_nodes_state(t_ast_vars *vars, t_type token)
 {
-	initialize_node_states(state);
+	initialize_node_states(&vars->state);
 	if (token == e_simple_word || token == less || token == great
 		|| token == double_less || token == double_great)
 	{
-		state->pipe_seq_node = EXIST;
-		state->simple_command_node = EXIST;
-		state->data_node = EXIST;
+		vars->state.pipe_seq_node = EXIST;
+		vars->state.simple_command_node = EXIST;
+		vars->state.data_node = EXIST;
 	}
 	else if (token == e_pipe)
 	{
-		state->pipe_seq_node = EXIST;
-		state->simple_command_node = EXIST;
+		vars->state.pipe_seq_node = EXIST;
+		vars->state.simple_command_node = EXIST;
+		(*vars->ast_ptrs.curr_pipe_seq)->node.pipe.pipes_count++;
 	}
 	else if (token == e_semicolon)
-		state->pipe_seq_node = EXIST;
+		vars->state.pipe_seq_node = EXIST;
 }
 
 void	store_tokens_in_suitable_nodes(t_ast_vars *vars, t_tokens **curr_token)
@@ -39,12 +40,12 @@ void	store_tokens_in_suitable_nodes(t_ast_vars *vars, t_tokens **curr_token)
 	if (type == e_simple_word)
 	{
 		store_word_in_suitable_node(vars, (*curr_token)->data);
-		change_nodes_state(&vars->state, e_simple_word);
+		change_nodes_state(vars, e_simple_word);
 	}
 	else if (type == less || type == great || type == double_great
 		|| type == double_less)
 		store_redir_in_suitable_node(vars, curr_token);
-	change_nodes_state(&vars->state, type);
+	change_nodes_state(vars, type);
 }
 
 void	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens)
