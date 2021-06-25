@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:34:24 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/15 17:20:39 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/25 11:27:43 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	check_redirection_token_order(t_vars *vars, int type)
 			redir = ">";
 		else if (type == double_great)
 			redir = ">>";
+		else if (type == double_less)
+			redir = "<<";
 		printf("%sbash: syntax error near unexpected token `%s'\n", RED, redir);
 		vars->error = EXIST;
 		g_vars.last_err_num = 258;

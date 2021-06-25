@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/25 10:22:45 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/25 12:36:22 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,8 @@ void	signal_handler(int sig_num)
 		rl_redisplay();
 		g_vars.last_err_num = 1;
 	}
+	// else if (sig_num == SIGQUIT)
+	// 	rl_redisplay();
 }
 
 void	disable_echoctl_flag(void)
@@ -276,7 +278,7 @@ int		main(int argc, char **argv, char **env)
 		while (1337)
 		{
 			signal(SIGINT, signal_handler);
-			// signal(SIGQUIT, signal_handler);
+			signal(SIGQUIT, SIG_IGN);
 			prompt = get_prompt_name();
 			line = readline(prompt);
 			if (line == NULL)
