@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:46:06 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/24 18:40:10 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/25 09:48:18 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,4 @@ void	create_env_table(t_env_table *env_table, char **env)
 	initialize_vec_content(&env_table->value);
 	while (env[++i])
 		extract_env_data(&env_table->name, &env_table->value, env[i]);
-	// for (int i = 0; i < env_table->name.used_size; i++)
-	// {
-	// 	printf("[%s]  =  [%s]\n", env_table->name.elements[i] , env_table->value.elements[i]);
-	// }
 }

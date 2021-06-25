@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:45:47 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/24 11:46:56 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/25 10:17:49 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	free_abstract_syntax_tree(t_ast *ast)
 		free_abstract_syntax_tree(ast->node.dir.next);
 	}
 	else if (ast->tag == e_pipeline_node)
+	{
 		free_abstract_syntax_tree(ast->node.pipe.dir.bottom);
+		free_abstract_syntax_tree(ast->node.pipe.dir.next);
+	}
 	else if (ast->tag == e_data_node)
 		free_data_node_content(&ast->node.data);
 	free(ast);
