@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:46:06 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/25 09:48:18 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/27 11:46:10 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,9 @@ void	extract_env_data(t_str_vec *name_vec, t_str_vec *value_vec, char *env)
 		len++;
 	name = ft_substr(env, 0, len);
 	value = ft_strdup(env + len + 1);
-	if (strcmp(name, "OLDPWD") != 0)
-	{
-		name_vec->add_new_element(name_vec, name);
-		value_vec->add_new_element(value_vec, value);
-	}
-	else
-	{
-		free(name);
-		free(value);
-	}
+	name_vec->add_new_element(name_vec, name);
+	value_vec->add_new_element(value_vec, value);
 }
-
-
-#include <stdio.h>
 
 void	create_env_table(t_env_table *env_table, char **env)
 {
