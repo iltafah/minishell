@@ -1,0 +1,14 @@
+export a =a
+export a +a
+unset a=
+
+export a+=a (at the begining)
+
+> f1 
+exit 000000000000000000000000000000000053
+export a= b c=lfjdhjs d e=j k1 _l k1+=
+export 1test
+export = = = = =  = = = =  = = = =  = = 
+unset HOME -> cd
+unset PWD -> cd .. -> echo $PWD
+export -dfnv -> invalid option

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:36:47 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/24 16:13:31 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/28 16:08:32 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_gvars
 {
 	t_env_table		env_table;
 	int				last_err_num;
+	char			*pwd;
 }				t_gvars;
 
 extern t_gvars		g_vars;
@@ -57,5 +58,6 @@ t_gvars				g_vars;
 char	*get_prompt_name(void);
 char	*get_curr_dir_name(void);
 char	*treat_heredocs(char *delimiter);
+void	execution(t_ast *scn, int num_pipes);
 
 #endif

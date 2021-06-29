@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 19:01:32 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/14 15:44:01 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/28 12:50:57 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ static int	split_it(char **tab, char const *s, size_t y_len, char c)
 	}
 	return (1);
 }
+#include <stdio.h>
 
 char	**ft_split(char const *s, char c)
 {

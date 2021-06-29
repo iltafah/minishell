@@ -69,7 +69,8 @@ vectors/vector_of_string/add_new_element_at_index.c \
 vectors/vector_of_string/delete_element_at_index.c \
 vectors/vector_of_string/initialize_vec_content.c \
 vectors/vector_of_string/realloc_and_free_vec.c \
-vectors/vector_of_string/replace_element_at_index.c
+vectors/vector_of_string/replace_element_at_index.c \
+exec.c
 
 OBJ_DIR = objs
 
