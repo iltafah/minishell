@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:43 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:47:45 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/30 17:47:58 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	initialize_rdl_vars(t_rdline *rdl_vars)
 	rdl_vars->starting_hilitd_index = 0;
 	rdl_vars->beg_hilitd_index = 0;
 	rdl_vars->last_hilitd_index = 0;
+	rdl_vars->previous_key = 0;
 	rdl_vars->hilitd_txt = NULL;
 	rdl_vars->line = NULL;
 	rdl_vars->prompt = NULL;

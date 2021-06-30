@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_key_seq_trie.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlimouni <hlimouni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:48:00 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/15 18:26:10 by hlimouni         ###   ########.fr       */
+/*   Updated: 2021/06/30 11:02:47 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ t_trie_node	*initialize_key_seq_trie(void)
 	insert_key(trie_root, "\030", ctl_x);
 	insert_key(trie_root, "\04", ctl_d);
 	insert_key(trie_root, "\n", enter);
+	insert_key(trie_root, "\t", tab);
 	return (trie_root);
 }

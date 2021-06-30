@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:09 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/29 16:30:23 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/30 16:17:49 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void		start_down_arrow_action(t_rdline *rdl_vars);
 void		print_curr_char(t_rdline *rdl_vars, char c);
 void		start_highlighting_mode(t_rdline *rdl_vars);
 void		start_right_arrow_action(t_rdline *rdl_vars);
-void		clear_lines_below_cursor(t_rdline *rdl_vars);
 void		start_ctl_up_arrow_action(t_rdline *rdl_vars);
 void		move_cursor_right_or_down(t_rdline *rdl_vars);
 void		move_to_beginning_of_line(t_rdline *rdl_vars);

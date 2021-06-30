@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:17 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:47:19 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/30 20:01:21 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <dirent.h>
 
 typedef enum e_key
 {
@@ -46,7 +47,9 @@ typedef enum e_key
 	ctl_v,
 	ctl_x,
 	ctl_d,
-	printable
+	tab,
+	printable,
+	disable_enter
 }	t_key;
 
 typedef enum e_prototype {first, second}	t_prototype;
@@ -103,6 +106,7 @@ typedef struct s_rdline
 	int				starting_hilitd_row;
 	int				syntax_highlighting;
 	int				auto_suggestions;
+	int				previous_key;
 }					t_rdline;
 
 typedef union u_func_ptr
