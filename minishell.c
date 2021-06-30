@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/29 12:20:32 by iariss           ###   ########.fr       */
+/*   Updated: 2021/06/30 11:09:44 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,7 @@ void	execute_test(t_ast *ast)
 				curr_data = curr_simple_cmd->node.dir.bottom;
 				// printf("no pipe\n");
 				execution(curr_data, num_pipes);
+				// return ;
 				dup2(dup1, 1);
 				dup2(dup02, 0);
 				close(dup1);
@@ -265,6 +266,8 @@ void	execute_test(t_ast *ast)
 		// free(pid);
 		curr_pipeline_seq = get_curr_pipeline_seq_node(ast);
 	}
+	// printf("outsside\n");
+		// printf("hre\n");
 }
 
 // void	execute_test(t_ast *ast)
@@ -379,6 +382,7 @@ int		main(int argc, char **argv, char **env)
 		{
 			signal(SIGINT, signal_handler);
 			signal(SIGQUIT, SIG_IGN);
+			printf("here1\n");
 			prompt = get_prompt_name();
 			line = readline(prompt);
 			if (line == NULL)
@@ -405,6 +409,7 @@ int		main(int argc, char **argv, char **env)
 	
 			// print_preorder(ast, 1, env_table);
 
+			printf("here2\n");
 			execute_test(ast);
 			/////////////////////////////////
 			/**		  freeing time		**///

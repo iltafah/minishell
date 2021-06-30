@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 12:56:09 by iariss            #+#    #+#             */
-/*   Updated: 2021/06/29 12:21:47 by iariss           ###   ########.fr       */
+/*   Updated: 2021/06/30 11:10:58 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ void	cd(char **args, t_varso *vars)
 			path = home;
 		else
 		{
-			printf("bash: cd: HOME not set\n");
+			printf("minishell: cd: HOME not set\n");
 			g_vars.last_err_num = 1;
 			return ;
 		}
@@ -242,18 +242,22 @@ void	cd(char **args, t_varso *vars)
 	change_value("OLDPWD", vars->prev_path);
 	if (stat(path, &buffer) == -1)
 	{
-		error_msg("bash: cd:No such file or directory\n");
+		error_msg("minishell: cd:No such file or directory\n");
 		g_vars.last_err_num = 1;
 	}
-	else if (chdir(path) != 0)
+	else if (chdir(path) != 0 && getcwd(cwd, sizeof(cwd))
 	{
 		error_msg("chdir failed\n");
 		g_vars.last_err_num = 1;
 	}
+	else if (!getcwd(cwd, sizeof(cwd)))
+	{
+		printf("")
+	}
 	getcwd(cwd, sizeof(cwd));
 	if (f)
 		free(path);
-	// path = ft_strdup(cwd);/////maybe
+	path = ft_strdup(cwd);
 	change_value("PWD", path);
 	free(path);
 }
@@ -288,12 +292,12 @@ void	unset(t_ast *scn, t_varso *vars)
 			x++;
 		if ((x == 1 && args[i][0] && args[i][0] == '='))
 		{
-			printf("bash: unset: `=': not a valid identifier\n");
+			printf("minishell: unset: `=': not a valid identifier\n");
 			g_vars.last_err_num = 1;
 		}
 		if (!ft_isalpha(args[i][0]) || (!ft_isalpha(args[i][ft_strlen(args[i]) - 1]) && !ft_isdigit(args[i][ft_strlen(args[i]) - 1])))
 		{
-			printf("bash: unset: '%s': not a valid identifier\n", args[i]);
+			printf("minishell: unset: '%s': not a valid identifier\n", args[i]);
 			g_vars.last_err_num = 1;
 		}
 		else
@@ -301,11 +305,11 @@ void	unset(t_ast *scn, t_varso *vars)
 			j = 0;
 			while (j <= g_vars.env_table.name.last_index)
 			{
-				if(!(ft_strncmp(scn->node.data.args_vec.elements[i], g_vars.env_table.name.elements[j], x)))
+				if(!(ft_strncmp(args[i], g_vars.env_table.name.elements[j], x)))
 				{
-					g_vars.env_table.name.delete_element_at_index( &g_vars.env_table.name, j);
-					g_vars.env_table.value.delete_element_at_index( &g_vars.env_table.value, j);
-					return ;
+					printf("%s | %d\n", args[i], x);
+					g_vars.env_table.name.delete_element_at_index(&g_vars.env_table.name, j);
+					g_vars.env_table.value.delete_element_at_index(&g_vars.env_table.value, j);
 				}
 				j++;
 			}
@@ -414,25 +418,25 @@ int	check_args(char **args, t_ast *all, int x, int lp)
 	if (args[lp][0] == '-')
 	{
 		subbed = ft_substr(args[lp], 0, 2);
-		printf("bash: export: %s: invalid option\nexport: usage: export [-nf] [name[=value] ...] or export -p\n", subbed);
+		printf("minishell: export: %s: invalid option\nexport: usage: export [-nf] [name[=value] ...] or export -p\n", subbed);
 		g_vars.last_err_num = 2;
 	}
 	else if (ft_isdigit(args[lp][0]))
 	{
-		printf("bash: export: `%s': not a valid identifier\n", args[lp]);
+		printf("minishell: export: `%s': not a valid identifier\n", args[lp]);
 		g_vars.last_err_num = 1;
 		return (0);
 	}
 	else if ((x == 1 && args[lp][0] && args[lp][0] == '='))
 	{
-		printf("bash: export: `=': not a valid identifier\n");
+		printf("minishell: export: `=': not a valid identifier\n");
 		g_vars.last_err_num = 1;
 		return (0);
 	}
 	else if (((!ft_isalpha(args[lp][0]) || (!ft_isalnum(args[lp][ft_strlen(args[lp]) - 1])
 	&& args[lp][ft_strlen(args[lp]) - 1] != '='))) && args[lp][0] != '_' && args[lp][ft_strlen(args[lp]) - 1] != '_')
 	{
-		printf("bash: export: '%s': not a valid identifier\n", args[lp]);
+		printf("minishell: export: '%s': not a valid identifier\n", args[lp]);
 		g_vars.last_err_num = 1;
 		return (0);
 	}
@@ -479,6 +483,7 @@ void	export(char **args, t_varso *vars, t_ast *sim_cmd_nd)
 	{
 		while(lp <= sim_cmd_nd->node.data.args_vec.last_index)
 		{
+			x = 0;
 			while (args[lp][x] && args[lp][x] != '=' && ft_strncmp(args[lp] + x , "+=", 2))
 			{
 				x++;	
@@ -494,12 +499,13 @@ void	export(char **args, t_varso *vars, t_ast *sim_cmd_nd)
 					i = 0;
 					while (i <= g_vars.env_table.name.last_index)
 					{
-						// if (!ft_strcmp(g_vars.env_table.name.elements[i], args[lp]) && (x == ft_strlen(args[lp]) && args[lp][x] == '='))
-						if(!ft_strcmp(g_vars.env_table.name.elements[i], ft_substr(args[lp], 0, x)))
+						if(!ft_strcmp(g_vars.env_table.name.elements[i], ft_substr(args[lp], 0, x)) && args[lp][x])
 						{
 							g_vars.env_table.value.replace_element_at_index( &g_vars.env_table.value, ft_strdup(args[lp] + x + 1), i);
 							return ;
 						}
+						if (!args[lp][x])
+							return ;
 						i++;
 					}
 					g_vars.env_table.name.add_new_element(&g_vars.env_table.name, ft_substr(args[lp], 0, x));
@@ -509,7 +515,6 @@ void	export(char **args, t_varso *vars, t_ast *sim_cmd_nd)
 						g_vars.env_table.value.add_new_element(&g_vars.env_table.value, ft_substr(args[lp], x + 1, ft_strlen(args[lp]) - x));
 				}
 			}
-			// printf("here\n");
 			lp++;
 		}
 	}
@@ -578,7 +583,7 @@ void	check_redis(t_ast *scn)
 			fd = open(head.redirections->file, O_RDONLY);
 			if(fd == -1)
 			{
-				printf("bash: %s: No such file or directory\n", head.redirections->file);
+				printf("minishell: %s: No such file or directory\n", head.redirections->file);
 				g_vars.last_err_num = 1;
 			}
 			else
@@ -640,7 +645,7 @@ void	 exv(t_ast *scn, t_varso *vars)
 	x = 0;
 	getcwd(cwd, sizeof(cwd));
 	path = find_env("PATH");
-	if (path)
+	if (path && scn->node.data.args_vec.elements[0][0])
 	{
 		tab = ft_split(path, ':');
 		sticker = scn->node.data.args_vec.elements[0];
@@ -679,7 +684,6 @@ void	 exv(t_ast *scn, t_varso *vars)
 				if (pid == 0)
 				{
 					execve(tab[i], scn->node.data.args_vec.elements, vars->export.env);
-					exit(0);
 				}
 				waitpid(pid, &status, 0);
 				if (WIFEXITED(status))
@@ -695,13 +699,13 @@ void	 exv(t_ast *scn, t_varso *vars)
 		}
 		if (stat(tab[i], &buff))
 		{
-			printf("bash : %s: command not found\n", scn->node.data.args_vec.elements[0]);
+			printf("minishell : %s: command not found\n", scn->node.data.args_vec.elements[0]);
 			g_vars.last_err_num = 127;
 		}
 		free(tab);
 		free(vars->export.env);
 	}
-	else if (!path)
+	else if (!path && scn->node.data.args_vec.elements[0][0])
 	{
 		if (!stat(scn->node.data.args_vec.elements[0], &buff))
 		{
@@ -721,10 +725,12 @@ void	 exv(t_ast *scn, t_varso *vars)
 		}
 		else
 		{
-			printf("bash : %s: command not found\n", scn->node.data.args_vec.elements[0]);
+			printf("minishell : %s: command not found\n", scn->node.data.args_vec.elements[0]);
 			g_vars.last_err_num = 127;
 		}
 	}
+	else
+		printf("minishell : %s: command not found\n", scn->node.data.args_vec.elements[0]);
 	return ;
 }
 
@@ -737,13 +743,13 @@ int	check_exit_num(char *num, int j, t_ast *scn)
 	if (num[0] != '-' && (ft_strlen(num) != j || (ft_strlen(num) > 19 && num[0] != '0') ||
 	(ft_strlen(num) == 19 && ft_strncmp(max_long, num, ft_strlen(num)) < 0)))
 	{
-		printf("exit\nbash: exit: %s: numeric argument required\n", num);
+		printf("exit\nminishell: exit: %s: numeric argument required\n", num);
 		exit(255);
 	}
 	else if (num[0] == '-' && (ft_strlen(num) != j || (ft_strlen(num) > 20 && num[0] != '0') ||
 	(ft_strlen(num) == 20 && ft_strncmp(max_long, num, ft_strlen(num)) < 0)))
 	{
-		printf("exit\nbash: exit: %s: numeric argument required\n", num);
+		printf("exit\nminishell: exit: %s: numeric argument required\n", num);
 		exit(255);
 	}
 	else
@@ -786,10 +792,10 @@ void	check_exit(t_ast *scn)
 			}
 			if (ft_strlen(scn->node.data.args_vec.elements[i]) != j)
 			{
-				printf("exit\nbash: exit: %s: numeric argument required\n", scn->node.data.args_vec.elements[i]);
+				printf("exit\nminishell: exit: %s: numeric argument required\n", scn->node.data.args_vec.elements[i]);
 				exit(ft_atoi(scn->node.data.args_vec.elements[i]));
 			}
-			printf("exit\nbash: exit: too many arguments\n");
+			printf("exit\nminishell: exit: too many arguments\n");
 			g_vars.last_err_num = 1;
 			break ;
 		}
@@ -797,8 +803,8 @@ void	check_exit(t_ast *scn)
 	}
 	if (scn->node.data.args_vec.last_index == 0)
 	{
-		g_vars.last_err_num = 0;
-		exit(0);
+		// g_vars.last_err_num = 0;
+		exit(g_vars.last_err_num);
 	}
 }
 
@@ -846,8 +852,12 @@ void	execution(t_ast *scn, int num_pipes)
 		}
 		else if (!ft_strcmp(first_arg, "pwd"))
 		{
-			if (getcwd(cwd, sizeof(cwd)) != NULL) 
+			if (getcwd(cwd, sizeof(cwd))) 
 				printf("%s\n", cwd);
+			// else if (find_env("PWD"))
+			// 	printf("%s\n", find_env("PWD"));
+			else
+				printf("error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
 		}
 		else if (!ft_strcmp(first_arg, "export"))
 		{
