@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:36:47 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/28 16:08:32 by iariss           ###   ########.fr       */
+/*   Updated: 2021/06/29 16:24:45 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "./libft/libft.h"
 # include "./freeing_time/freeing_time.h"
 # include "./get_next_line/get_next_line.h"
+# include "./readline/readline.h"
 
 # define CYN "\e[1;96m"
 # define YEL "\e[1;93m"
@@ -46,6 +47,7 @@ enum e_bool {false, true};
 
 typedef struct s_gvars
 {
+	t_rdline		rdl_vars;
 	t_env_table		env_table;
 	int				last_err_num;
 	char			*pwd;

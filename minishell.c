@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/29 12:20:32 by iariss           ###   ########.fr       */
+/*   Updated: 2021/06/29 21:34:23 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,31 +334,48 @@ void print_header()
 	printf("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n");
 }
 
-void	signal_handler(int sig_num)
-{
-	if (sig_num == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_vars.last_err_num = 1;
-	}
-}
+// void	signal_handler(int sig_num)
+// {
+// 	if (sig_num == SIGINT)
+// 	{
+// 		printf("\n");
+// 		rl_on_new_line();
+// 		rl_replace_line("", 0);
+// 		rl_redisplay();
+// 		g_vars.last_err_num = 1;
+// 	}
+// }
 
-void	disable_echoctl_flag(void)
-{
-	struct termios	state;
-	char			*tty;
-	int				fd;
+// void	disable_echoctl_flag(void)
+// {
+// 	struct termios	state;
+// 	char			*tty;
+// 	int				fd;
 
-	tty = ttyname(0);
-	fd = open(tty, O_WRONLY);
-	ioctl(fd,  TIOCGETA, &state);
-	state.c_lflag &= ~(ECHOCTL);
-	ioctl(fd, TIOCSETA, &state);
-	close(fd);
-}
+// 	tty = ttyname(0);
+// 	fd = open(tty, O_WRONLY);
+// 	ioctl(fd,  TIOCGETA, &state);
+// 	state.c_lflag &= ~(ECHOCTL);
+// 	ioctl(fd, TIOCSETA, &state);
+// 	close(fd);
+// }
+
+// void	enable_echoctl_flag(void)
+// {
+// 	struct termios	state;
+// 	char			*tty;
+// 	int				fd;
+
+// 	tty = ttyname(0);
+// 	fd = open(tty, O_WRONLY);
+// 	ioctl(fd,  TIOCGETA, &state);
+// 	state.c_lflag &= ~(IEXTEN);
+// 	state.c_lflag |= ECHOCTL;
+// 	ioctl(fd, TIOCSETA, &state);
+// 	close(fd);
+// }
+
+
 
 int		main(int argc, char **argv, char **env)
 {
@@ -374,18 +391,10 @@ int		main(int argc, char **argv, char **env)
 		(void)argv;
 		g_vars.last_err_num = 0;
 		create_env_table(&g_vars.env_table, env);
-		disable_echoctl_flag();
 		while (1337)
 		{
-			signal(SIGINT, signal_handler);
-			signal(SIGQUIT, SIG_IGN);
 			prompt = get_prompt_name();
-			line = readline(prompt);
-			if (line == NULL)
-			{
-				printf("ctl-D EOF go brrr\n");
-				exit(0);
-			}
+			line = read_line(prompt);
 			add_history(line);
 			line_tokenization(line, &tokens_list);
 			//print_tokens(tokens_list);

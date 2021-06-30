@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:09 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/15 20:17:27 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/29 16:30:23 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 
 # define SKIP continue
 
-enum 		e_bool {false, true};
 enum 		e_restore {dont_restore, restore};
 enum 		e_is_found {not_found, found};
 enum 		e_is_on {off, on};
