@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/29 21:34:23 by iltafah          ###   ########.fr       */
+/*   Created: 2021/06/30 11:14:00 by iariss            #+#    #+#             */
+/*   Updated: 2021/06/30 11:14:03 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,7 @@ void	execute_test(t_ast *ast)
 				curr_data = curr_simple_cmd->node.dir.bottom;
 				// printf("no pipe\n");
 				execution(curr_data, num_pipes);
+				// return ;
 				dup2(dup1, 1);
 				dup2(dup02, 0);
 				close(dup1);
@@ -265,6 +266,8 @@ void	execute_test(t_ast *ast)
 		// free(pid);
 		curr_pipeline_seq = get_curr_pipeline_seq_node(ast);
 	}
+	// printf("outsside\n");
+		// printf("hre\n");
 }
 
 // void	execute_test(t_ast *ast)
@@ -393,9 +396,11 @@ int		main(int argc, char **argv, char **env)
 		create_env_table(&g_vars.env_table, env);
 		while (1337)
 		{
+			// signal(SIGINT, signal_handler);
+			// signal(SIGQUIT, SIG_IGN);
 			prompt = get_prompt_name();
 			line = read_line(prompt);
-			add_history(line);
+			// add_history(line);
 			line_tokenization(line, &tokens_list);
 			//print_tokens(tokens_list);
 			if (check_tokens_syntax(tokens_list) == ERROR)
