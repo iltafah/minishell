@@ -70,6 +70,78 @@ vectors/vector_of_string/delete_element_at_index.c \
 vectors/vector_of_string/initialize_vec_content.c \
 vectors/vector_of_string/realloc_and_free_vec.c \
 vectors/vector_of_string/replace_element_at_index.c \
+./readline/clear_lines.c \
+./readline/create_key_seq_trie.c \
+./readline/detect_screen_resizing.c \
+./readline/erase_and_remove_char.c \
+./readline/exit_program.c \
+./readline/get_screen_width.c \
+./readline/initializing.c \
+./readline/insert_curr_line_to_history.c \
+./readline/key_actions_funcs/start_backspace_action.c \
+./readline/key_actions_funcs/start_ctl_down_arrow_action.c \
+./readline/key_actions_funcs/start_ctl_left_arrow_action.c \
+./readline/key_actions_funcs/start_ctl_right_arrow_action.c \
+./readline/key_actions_funcs/start_ctl_s_action.c \
+./readline/key_actions_funcs/start_ctl_up_arrow_action.c \
+./readline/key_actions_funcs/start_ctl_v_action.c \
+./readline/key_actions_funcs/start_ctl_x_action.c \
+./readline/key_actions_funcs/start_down_arrow_action.c \
+./readline/key_actions_funcs/start_end_action.c \
+./readline/key_actions_funcs/start_enter_action.c \
+./readline/key_actions_funcs/start_home_action.c \
+./readline/key_actions_funcs/start_left_arrow_action.c \
+./readline/key_actions_funcs/start_printable_action.c \
+./readline/key_actions_funcs/start_right_arrow_action.c \
+./readline/key_actions_funcs/start_shift_left_arrow_action.c \
+./readline/key_actions_funcs/start_shift_right_arrow_action.c \
+./readline/key_actions_funcs/start_up_arrow_action.c \
+./readline/load_history_file_to_vec.c \
+./readline/move_cursor_to_funcs/move_cursor_end_of_prec_line.c \
+./readline/move_cursor_to_funcs/move_cursor_left_or_up.c \
+./readline/move_cursor_to_funcs/move_cursor_left_right.c \
+./readline/move_cursor_to_funcs/move_cursor_right_or_down.c \
+./readline/move_cursor_to_funcs/move_cursor_start_of_next_line.c \
+./readline/move_cursor_to_funcs/move_cursor_to_colum.c \
+./readline/move_cursor_to_funcs/move_cursor_to_colum_and_row.c \
+./readline/move_cursor_to_funcs/move_cursor_to_end_of_printed_line.c \
+./readline/move_cursor_to_funcs/move_cursor_to_row.c \
+./readline/move_cursor_to_funcs/move_cursor_up_down_vertically.c \
+./readline/move_cursor_to_funcs/move_left.c \
+./readline/move_cursor_to_funcs/move_right.c \
+./readline/move_cursor_to_funcs/move_to_beginning_of_line.c \
+./readline/move_cursor_to_funcs/move_to_end_of_line.c \
+./readline/move_cursor_to_funcs/move_to_next_word.c \
+./readline/move_cursor_to_funcs/move_to_prec_word.c \
+./readline/move_cursor_to_funcs/move_up_down_vertically.c \
+./readline/open_history_file.c \
+./readline/overwrite_history_file.c \
+./readline/printing_funcs/print_after_cursor.c \
+./readline/printing_funcs/print_curr_char.c \
+./readline/printing_funcs/print_line_with_chosen_method.c \
+./readline/printing_funcs/print_prompt.c \
+./readline/printing_funcs/print_suggestions.c \
+./readline/printing_funcs/put_char.c \
+./readline/printing_funcs/put_colorful_char.c \
+./readline/printing_funcs/rdl_print_char.c \
+./readline/process_input.c \
+./readline/readline.c \
+./readline/restore_cursor_position.c \
+./readline/show_history.c \
+./readline/signals_handler.c \
+./readline/syntax_highlighting_funcs/check_if_cmd_exist.c \
+./readline/syntax_highlighting_funcs/check_if_file_exist.c \
+./readline/syntax_highlighting_funcs/print_with_syntax_highlighting.c \
+./readline/text_highlighting_funcs/copy_highlighted_text.c \
+./readline/text_highlighting_funcs/cut_highlighted_text.c \
+./readline/text_highlighting_funcs/determine_beg_last_highlighted_text_index.c \
+./readline/text_highlighting_funcs/left_highlight.c \
+./readline/text_highlighting_funcs/past_highlighted_text.c \
+./readline/text_highlighting_funcs/quit_highlighting_mode.c \
+./readline/text_highlighting_funcs/right_highlight.c \
+./readline/text_highlighting_funcs/start_highlighting_mode.c \
+./readline/update_cursor_data.c \
+./readline/usefull_history_vec_func.c\
 exec.c
 
 OBJ_DIR = objs
@@ -79,7 +151,7 @@ OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(OBJ) $(LIBFT) -o $(NAME) -lreadline $(LDFLAGS)
+	$(CC) $(OBJ) $(LIBFT) -o $(NAME) -ltermcap -lreadline $(LDFLAGS)
 
 $(LIBFT): force
 	make -C ./libft

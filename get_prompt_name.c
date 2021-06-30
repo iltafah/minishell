@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:41:58 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/22 18:23:36 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/29 18:47:14 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*get_prompt_name(void)
 {
-	static char	arrow[] = "༺  〖";
-	static char	spaces[] = "〗";
+	static char	arrow[] = "༺  ";
+	static char	spaces[] = " ";
 	char		*curr_dir;
 	char		*tmp_ptr;
 	char		*prompt;

@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 12:56:09 by iariss            #+#    #+#             */
-/*   Updated: 2021/06/30 11:10:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/06/30 11:16:51 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,14 +245,14 @@ void	cd(char **args, t_varso *vars)
 		error_msg("minishell: cd:No such file or directory\n");
 		g_vars.last_err_num = 1;
 	}
-	else if (chdir(path) != 0 && getcwd(cwd, sizeof(cwd))
+	else if (chdir(path) != 0 && getcwd(cwd, sizeof(cwd)))
 	{
 		error_msg("chdir failed\n");
 		g_vars.last_err_num = 1;
 	}
 	else if (!getcwd(cwd, sizeof(cwd)))
 	{
-		printf("")
+		printf("");
 	}
 	getcwd(cwd, sizeof(cwd));
 	if (f)
@@ -857,7 +857,10 @@ void	execution(t_ast *scn, int num_pipes)
 			// else if (find_env("PWD"))
 			// 	printf("%s\n", find_env("PWD"));
 			else
+			{
+				g_vars.last_err_num = 1;
 				printf("error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+			}
 		}
 		else if (!ft_strcmp(first_arg, "export"))
 		{

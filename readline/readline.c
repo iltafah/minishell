@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:14 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/14 09:31:53 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/29 21:07:09 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	enable_raw_mode(void)
 	tcgetattr(g_vars.rdl_vars.tty_fd, &raw);
 	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN);
 	raw.c_iflag &= ~(IXON);
-	tcsetattr(g_vars.rdl_vars.tty_fd, TCSAFLUSH, &raw);
+	tcsetattr(g_vars.rdl_vars.tty_fd, TCSANOW, &raw);
 }
 
 void	disable_raw_mode(struct termios old_termios_state)
 {
-	tcsetattr(g_vars.rdl_vars.tty_fd, TCSAFLUSH, &old_termios_state);
+	tcsetattr(g_vars.rdl_vars.tty_fd, TCSANOW, &old_termios_state);
 }
 
 char	*read_line(char *prompt)
@@ -43,6 +43,7 @@ char	*read_line(char *prompt)
 		load_history(rdl_vars);
 		is_initialized = true;
 	}
+	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signals_handler);
 	signal(SIGWINCH, signals_handler);
 	enable_raw_mode();

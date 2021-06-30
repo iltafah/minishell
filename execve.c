@@ -6,14 +6,12 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:57:19 by iariss            #+#    #+#             */
-/*   Updated: 2021/06/30 11:09:39 by iariss           ###   ########.fr       */
+/*   Updated: 2021/06/30 11:20:14 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "file.h"
-
-
 
 void	 exv(t_ast *scn, t_varso *vars)
 {

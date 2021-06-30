@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 17:55:27 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/24 08:20:13 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/29 18:43:19 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*treat_heredocs(char *delimiter)
 	while (true)
 	{
 		herdoc_line = readline(">> ");
-		if (strcmp(herdoc_line, delimiter) == 0)
+		if (herdoc_line == NULL || strcmp(herdoc_line, delimiter) == 0)
 			break ;
 		buffer_vec.add_set_of_elements(&buffer_vec, herdoc_line);
 		buffer_vec.add_new_element(&buffer_vec, '\n');
