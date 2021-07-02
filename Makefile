@@ -141,7 +141,7 @@ vectors/vector_of_string/replace_element_at_index.c \
 ./readline/text_highlighting_funcs/right_highlight.c \
 ./readline/text_highlighting_funcs/start_highlighting_mode.c \
 ./readline/update_cursor_data.c \
-./readline/usefull_history_vec_func.c\
+./readline/usefull_history_vec_func.c \
 exec.c
 
 OBJ_DIR = objs

@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:43 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/30 17:47:58 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/02 12:56:39 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,20 @@ void	initialize_printing_methods(t_rdline *rdl_vars)
 	}
 }
 
+void	initialize_tab_vars(t_tab_vars *vars)
+{
+	vars->curr_index = 0;
+	vars->printd_matched_file_len = 0;
+	vars->dir_to_search = NULL;
+	vars->file_to_match = NULL;
+	// initialize_vec_content(&vars->matched_files);
+}
+
 void	initialize_rdl_vars(t_rdline *rdl_vars)
 {
-	rdl_vars->key_seq_trie = initialize_key_seq_trie();
-	initialize_vec_of_char_vec(&rdl_vars->history_vec);
-	initialize_vec_of_int(&rdl_vars->old_curs_colm_pos_stack);
-	initialize_vec_of_int(&rdl_vars->old_curs_row_pos_stack);
+	rdl_vars->tty_fd = 0;
+	rdl_vars->syntax_highlighting = 0;
+	rdl_vars->auto_suggestions = 0;
 	rdl_vars->c_i = 0;
 	rdl_vars->l_i = 0;
 	rdl_vars->curs_row_pos = 0;
@@ -101,8 +109,14 @@ void	initialize_rdl_vars(t_rdline *rdl_vars)
 	rdl_vars->beg_hilitd_index = 0;
 	rdl_vars->last_hilitd_index = 0;
 	rdl_vars->previous_key = 0;
+	rdl_vars->tab_mode = 0;
 	rdl_vars->hilitd_txt = NULL;
 	rdl_vars->line = NULL;
 	rdl_vars->prompt = NULL;
 	rdl_vars->old_history = NULL;
+	initialize_tab_vars(&rdl_vars->tab_vars);
+	rdl_vars->key_seq_trie = initialize_key_seq_trie();
+	initialize_vec_of_char_vec(&rdl_vars->history_vec);
+	initialize_vec_of_int(&rdl_vars->old_curs_colm_pos_stack);
+	initialize_vec_of_int(&rdl_vars->old_curs_row_pos_stack);
 }

@@ -12,3 +12,9 @@ export = = = = =  = = = =  = = = =  = =
 unset HOME -> cd
 unset PWD -> cd .. -> echo $PWD
 export -dfnv -> invalid option
+
+
+
+
+echo hello > $PWD
+echo hello > $fgd

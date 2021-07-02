@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 16:40:58 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/30 21:39:08 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/02 13:07:18 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	set_rdl_vars(t_rdline *rdl_vars, char *prompt)
 
 int	which_prototype(int key)
 {
-	if (key >= up_arrow && key <= ctl_x)
+	if (key >= up_arrow && key <= tab)
 		return (first);
 	else if (key == printable)
 		return (second);
@@ -54,11 +54,15 @@ void	call_suitable_func(t_func_ptr *func, t_rdline *rdl_v, int key, char c)
 t_str_vec	get_matched_files(char *dir, char *file)
 {
 	DIR				*curr_directory;
-	struct dirent	*entry;
 	t_str_vec		files;
+	struct dirent	*entry;
+	struct stat		file_stat;
+	char			*file_with_path;
 
 	curr_directory = opendir(dir);
 	initialize_vec_content(&files);
+	if (curr_directory == NULL)
+		return (files);
 	while (true)
 	{
 		entry = readdir(curr_directory);
@@ -66,12 +70,31 @@ t_str_vec	get_matched_files(char *dir, char *file)
 			break ;
 		if (file != NULL)
 		{
-			if (ft_strncmp(file, entry->d_name, ft_strlen(file)) == 0)
-				files.add_new_element(&files, entry->d_name);
+				
+			if (entry->d_name[0] != '.'
+				&& ft_strncmp(file, entry->d_name, ft_strlen(file)) == 0)
+			{
+				file_with_path = ft_strjoin(dir, entry->d_name);
+				stat(file_with_path, &file_stat);
+				if (S_ISDIR(file_stat.st_mode))
+					files.add_new_element(&files, ft_strjoin(entry->d_name, "/"));
+				else
+					files.add_new_element(&files, ft_strdup(entry->d_name));
+				free(file_with_path);
+			}
 		}
-		else
-			files.add_new_element(&files, entry->d_name);
+		else if (entry->d_name[0] != '.')
+		{
+			file_with_path = ft_strjoin(dir, entry->d_name);
+			stat(file_with_path, &file_stat);
+			if (S_ISDIR(file_stat.st_mode))
+				files.add_new_element(&files, ft_strjoin(entry->d_name, "/"));
+			else
+				files.add_new_element(&files, ft_strdup(entry->d_name));
+			free(file_with_path);
+		}
 	}
+	closedir(curr_directory);
 	return (files);
 }
 
@@ -108,6 +131,7 @@ char	*get_dir_to_search(t_rdline *rdl_vars)
 	while (i != 0 && hstry_line->elements[i - 1] != ' ')
 		i--;
 	start = i;
+	end = start;
 	while (hstry_line->elements[i] != ' ' && hstry_line->elements[i] != '\0')
 	{
 		if (hstry_line->elements[i] == '/')
@@ -115,7 +139,7 @@ char	*get_dir_to_search(t_rdline *rdl_vars)
 		i++;
 	}
 	if (end - start > 0)
-		dir_to_search = ft_substr(hstry_line->elements, start, end - start);
+		dir_to_search = ft_substr(hstry_line->elements, start, end - start + 1);
 	return (dir_to_search);
 }
 
@@ -155,23 +179,10 @@ void	print_list_of_matched_files(t_rdline *rdl_vars, t_str_vec files, int index)
 		
 		if (i == index)
 			tputs(rdl_vars->capability.enter_standout_mode, 1, put_char);
-		int	j = 0;
-		// while (j < len)
-		// {
-		// 	rdl_print_char(rdl_vars, files.elements[i][j], WHT);
-		// 	j++;
-		// }
-		// if (rdl_vars->curs_colm_pos + max_len > rdl_vars->width_of_screen)
-		// {
-		// 	move_cursor_start_of_next_line(rdl_vars);
-		// 	rdl_vars->curs_colm_pos = 0;
-		// 	rdl_vars->curs_row_pos++;
-		// }
 		write(1, files.elements[i], len);
 		rdl_vars->curs_colm_pos += len;
 		while (spaces > 0)
 		{
-			// rdl_print_char(rdl_vars, ' ', WHT);
 			write(1, " ", 1);
 			rdl_vars->curs_colm_pos++;
 			spaces--;
@@ -180,8 +191,7 @@ void	print_list_of_matched_files(t_rdline *rdl_vars, t_str_vec files, int index)
 			tputs(rdl_vars->capability.leave_standout_mode, 1, put_char);
 		i++;
 	}
-	// printf("\n");
-	// rdl_vars->curs_row_pos++;
+
 	restore_cursor_pos(rdl_vars);
 }
 
@@ -191,16 +201,20 @@ void	print_matched_file(t_rdline *rdl_vars, t_str_vec files, int curr_index)
 	int				i;
 	t_char_vec		*hstry_line;
 
+	// && hstry_line->elements[rdl_vars->c_i - 1] != '/')
 	hstry_line = &rdl_vars->history_vec.elements[rdl_vars->l_i];
-	while (hstry_line->elements[rdl_vars->c_i - 1] != ' ' && hstry_line->elements[rdl_vars->c_i - 1] != '/')
-	{
-		rdl_vars->c_i--;
-		hstry_line->delete_element_at_index(hstry_line, rdl_vars->c_i);
-		if (rdl_vars->curs_colm_pos == 0)
-			move_cursor_end_of_prec_line(rdl_vars);
-		else
-			move_cursor_left(rdl_vars);
-	}
+	// if (first_tab == true)
+		// while (rdl_vars->c_i != 0 && hstry_line->elements[rdl_vars->c_i - 1] != ' ')
+		// {
+		// 	rdl_vars->c_i--;
+		// 	hstry_line->delete_element_at_index(hstry_line, rdl_vars->c_i);
+		// 	if (rdl_vars->curs_colm_pos == 0)
+		// 		move_cursor_end_of_prec_line(rdl_vars);
+		// 	else
+		// 		move_cursor_left(rdl_vars);
+		// 	if (hstry_line->elements[rdl_vars->c_i - 1] == '/')
+		// 		break ;
+		// }
 	hstry_line->add_set_of_elements_at_index(hstry_line, files.elements[curr_index], rdl_vars->c_i);
 	print_after_cursor(rdl_vars, files.elements[curr_index], dont_restore);
 	rdl_vars->c_i += ft_strlen(files.elements[curr_index]);
@@ -209,33 +223,100 @@ void	print_matched_file(t_rdline *rdl_vars, t_str_vec files, int curr_index)
 }
 /////////////
 
-void	select_matched_file(t_rdline *rdl_vars)
-{
-	static int		curr_index = 0;
-	static char		*dir_to_search = NULL;
-	static char		*file_to_match = NULL;
-	t_str_vec		matched_files;
+// void	select_matched_file(t_rdline *rdl_vars, int curr_index, t_str_vec matched_files)
+// {
+// 	t_char_vec			*hstry_line;
 
-	if (rdl_vars->previous_key != tab)
+// 	hstry_line = &rdl_vars->history_vec.elements[rdl_vars->l_i];
+// 	if (hstry_line->elements[rdl_vars->c_i] != ' ' && hstry_line->elements[rdl_vars->c_i] != '\0')
+// 		return ;
+
+// 	if (matched_files.used_size > 0)
+// 	{
+// 		tputs(rdl_vars->capability.make_cursor_invisible, 1, put_char);
+// 		print_matched_file(rdl_vars, matched_files, curr_index);
+// 		if (matched_files.used_size > 1)
+// 			print_list_of_matched_files(rdl_vars, matched_files, curr_index);
+// 		tputs(rdl_vars->capability.return_cursor_to_normal, 1, put_char);
+// 	}
+// 	curr_index++;
+// }
+
+
+
+void	erase_prec_file(t_rdline *rdl_vars, t_tab_vars *tab_vars)
+{
+	t_char_vec		*hstry_line;
+
+	hstry_line = &rdl_vars->history_vec.elements[rdl_vars->l_i];
+	while (tab_vars->printd_matched_file_len > 0)
 	{
-		curr_index = 0;
-		dir_to_search = get_dir_to_search(rdl_vars);
-		file_to_match = get_file_to_match(rdl_vars);
-		if (dir_to_search == NULL)
-			dir_to_search = ft_strdup(".");
-		matched_files = get_matched_files(dir_to_search, file_to_match);
-		clear_curr_line_after_and_below_cursor(rdl_vars);
+		rdl_vars->c_i--;
+		hstry_line->delete_element_at_index(hstry_line, rdl_vars->c_i);
+		if (rdl_vars->curs_colm_pos == 0)
+			move_cursor_end_of_prec_line(rdl_vars);
+		else
+			move_cursor_left(rdl_vars);
+		tab_vars->printd_matched_file_len--;
 	}
-	if (curr_index > matched_files.last_index)
-		curr_index = 0;
-	print_matched_file(rdl_vars, matched_files, curr_index);
-	print_list_of_matched_files(rdl_vars, matched_files, curr_index);
-	curr_index++;
 }
+
+
 
 void	start_tab_action(t_rdline *rdl_vars)
 {
-	select_matched_file(rdl_vars);
+	int			curr_index;
+	int			key;
+	char		c;
+
+	if (rdl_vars->tab_mode == off)
+	{
+		rdl_vars->tab_mode = on;
+		initialize_tab_vars(&rdl_vars->tab_vars);
+		rdl_vars->tab_vars.dir_to_search = get_dir_to_search(rdl_vars);
+		rdl_vars->tab_vars.file_to_match = get_file_to_match(rdl_vars);
+		if (rdl_vars->tab_vars.dir_to_search == NULL)
+			rdl_vars->tab_vars.dir_to_search = ft_strdup("./");
+		rdl_vars->tab_vars.matched_files = get_matched_files(rdl_vars->tab_vars.dir_to_search, rdl_vars->tab_vars.file_to_match);
+		if (rdl_vars->tab_vars.matched_files.used_size == 0)
+		{
+			if (rdl_vars->tab_vars.dir_to_search != NULL)
+				free(rdl_vars->tab_vars.dir_to_search);
+			if (rdl_vars->tab_vars.file_to_match != NULL)
+				free(rdl_vars->tab_vars.file_to_match);
+			rdl_vars->tab_vars.matched_files.free(&rdl_vars->tab_vars.matched_files);
+			rdl_vars->tab_mode = off;
+			return ;
+		}
+		if (rdl_vars->tab_vars.file_to_match != NULL)
+			rdl_vars->tab_vars.printd_matched_file_len = ft_strlen(rdl_vars->tab_vars.file_to_match);
+		if (rdl_vars->tab_vars.matched_files.used_size == 1)
+		{
+			erase_prec_file(rdl_vars, &rdl_vars->tab_vars);
+			print_matched_file(rdl_vars, rdl_vars->tab_vars.matched_files, 0);
+			if (rdl_vars->tab_vars.dir_to_search != NULL)
+				free(rdl_vars->tab_vars.dir_to_search);
+			if (rdl_vars->tab_vars.file_to_match != NULL)
+				free(rdl_vars->tab_vars.file_to_match);
+			rdl_vars->tab_vars.matched_files.free(&rdl_vars->tab_vars.matched_files);
+			rdl_vars->tab_mode = off;
+			return ;
+		}
+		else
+			print_list_of_matched_files(rdl_vars, rdl_vars->tab_vars.matched_files, -1);
+	}
+	else
+	{
+		erase_prec_file(rdl_vars, &rdl_vars->tab_vars);
+		print_matched_file(rdl_vars, rdl_vars->tab_vars.matched_files, rdl_vars->tab_vars.curr_index);
+		tputs(rdl_vars->capability.make_cursor_invisible, 1, put_char);
+		print_list_of_matched_files(rdl_vars, rdl_vars->tab_vars.matched_files, rdl_vars->tab_vars.curr_index);
+		rdl_vars->tab_vars.printd_matched_file_len = ft_strlen(rdl_vars->tab_vars.matched_files.elements[rdl_vars->tab_vars.curr_index]);
+		rdl_vars->tab_vars.curr_index += 1;
+		if (rdl_vars->tab_vars.curr_index > rdl_vars->tab_vars.matched_files.last_index)
+			rdl_vars->tab_vars.curr_index = 0;
+		tputs(rdl_vars->capability.return_cursor_to_normal, 1, put_char);
+	}
 	rdl_vars->previous_key = tab;
 }
 
