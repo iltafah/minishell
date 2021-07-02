@@ -12,3 +12,4 @@ export = = = = =  = = = =  = = = =  = =
 unset HOME -> cd
 unset PWD -> cd .. -> echo $PWD
 export -dfnv -> invalid option
+./m ->> double free

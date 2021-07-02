@@ -6,67 +6,74 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 11:02:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/06/30 11:02:40 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/02 15:34:20 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
 #include "minishell.h"
 
+void	herdoc(t_redirection_vars *red)
+{
+	red->p = malloc(sizeof(int) * 2);
+	pipe(red->p);
+	write(red->p[1], red->head.redirections->file,
+		ft_strlen(red->head.redirections->file));
+	dup2(red->p[0], 0);
+	close (red->p[1]);
+	close (red->p[0]);
+	free(red->p);
+}
+
+void	append(t_redirection_vars *red)
+{
+	red->fd = open(red->head.redirections->file,
+			O_RDWR | O_APPEND | O_CREAT, 0644);
+	dup2(red->fd, 1);
+	close(red->fd);
+}
+
+void	red_output(t_redirection_vars *red)
+{
+	red->fd = open(red->head.redirections->file,
+			O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (red->head.args_vec.used_size)
+		dup2(red->fd, 1);
+	close(red->fd);
+}
+
+void	red_input(t_redirection_vars *red)
+{
+	red->fd = open(red->head.redirections->file, O_RDONLY);
+	if (red->fd == -1)
+	{
+		printf("minishell: %s: No such file or directory\n",
+			red->head.redirections->file);
+		g_vars.last_err_num = 1;
+	}
+	else
+	{
+		dup2(red->fd, 0);
+		close(red->fd);
+	}
+}
+
 void	check_redis(t_ast *scn)
 {
-	int fd;
-	int dep;
-	t_data_content head;
-	char	*input;
-	char	*all;
-	int		x;
-	int dupp;
-	int out;
-	int		*p;
+	t_redirection_vars	red;
 
-	head = scn->node.data;
-	x = 1;
-	while (head.redirections)
+	red.head = scn->node.data;
+	red.x = 1;
+	while (red.head.redirections)
 	{
-		if(!(ft_strcmp(head.redirections->type, ">")))
-		{
-			fd = open(head.redirections->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-			if(head.args_vec.used_size)
-				dup2(fd, 1);
-			close(fd);
-		}
-		else if(!(ft_strcmp(head.redirections->type, "<")))
-		{
-			fd = open(head.redirections->file, O_RDONLY);
-			if(fd == -1)
-			{
-				printf("minishell: %s: No such file or directory\n", head.redirections->file);
-				g_vars.last_err_num = 1;
-			}
-			else
-			{
-				dup2(fd, 0);
-				close(fd);
-			}
-		}
-		else if(!(ft_strcmp(head.redirections->type, ">>")))
-		{
-			fd = open(head.redirections->file, O_RDWR | O_APPEND | O_CREAT, 0644);
-			dup2(fd, 1);
-			close(fd);
-		}
-		else if(!(ft_strcmp(head.redirections->type, "<<")))
-		{
-			p = malloc(sizeof(int) * 2);
-			// dupp = dup(0);
-			pipe(p);
-			write(p[1], head.redirections->file, ft_strlen(head.redirections->file));
-			dup2(p[0], 0);
-			close (p[1]);
-			close (p[0]);
-			free(p);
-		}
-		head.redirections = head.redirections->next;
+		if (!(ft_strcmp(red.head.redirections->type, ">")))
+			red_output(&red);
+		else if (!(ft_strcmp(red.head.redirections->type, "<")))
+			red_input(&red);
+		else if (!(ft_strcmp(red.head.redirections->type, ">>")))
+			append(&red);
+		else if (!(ft_strcmp(red.head.redirections->type, "<<")))
+			herdoc(&red);
+		red.head.redirections = red.head.redirections->next;
 	}
 }

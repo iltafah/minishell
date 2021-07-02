@@ -6,52 +6,56 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:52:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/06/30 10:52:47 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/02 09:44:31 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "file.h"
 
-void	unset(t_ast *scn, t_varso *vars)
+void	remove_variable(char **a, int i, int x)
 {
-	int x;
-	int	i;
 	int	j;
-	char **args;
 
 	j = 0;
-	i = 1;
-	args = scn->node.data.args_vec.elements;
-	while (i <= scn->node.data.args_vec.last_index)
+	while (j <= g_vars.env_table.name.last_index)
 	{
-		x = 0;
-		while (args[i][x] && args[i][x] != '=')
-			x++;
-		if ((x == 1 && args[i][0] && args[i][0] == '='))
+		if (!(ft_strncmp(a[i], g_vars.env_table.name.elements[j], x)))
+		{
+			g_vars.env_table.name.delete_element_at_index(
+				&g_vars.env_table.name, j);
+			g_vars.env_table.value.delete_element_at_index(
+				&g_vars.env_table.value, j);
+		}
+		j++;
+	}
+}
+
+void	unset(t_ast *scn, t_varso *vars)
+{
+	t_unset_vars	u;
+
+	u.i = 1;
+	u.a = scn->node.data.args_vec.elements;
+	while (u.i <= scn->node.data.args_vec.last_index)
+	{
+		u.x = 0;
+		while (u.a[u.i][u.x] && u.a[u.i][u.x] != '=')
+			u.x++;
+		if ((u.x == 1 && u.a[u.i][0] && u.a[u.i][0] == '='))
 		{
 			printf("minishell: unset: `=': not a valid identifier\n");
 			g_vars.last_err_num = 1;
 		}
-		if (!ft_isalpha(args[i][0]) || (!ft_isalpha(args[i][ft_strlen(args[i]) - 1]) && !ft_isdigit(args[i][ft_strlen(args[i]) - 1])))
+		if (!ft_isalpha(u.a[u.i][0])
+		|| (!ft_isalpha(u.a[u.i][ft_strlen(u.a[u.i]) - 1])
+		&& !ft_isdigit(u.a[u.i][ft_strlen(u.a[u.i]) - 1])))
 		{
-			printf("minishell: unset: '%s': not a valid identifier\n", args[i]);
+			printf("minishell: unset: '%s': not a valid identifier\n", u.a[u.i]);
 			g_vars.last_err_num = 1;
 		}
 		else
-		{
-			j = 0;
-			while (j <= g_vars.env_table.name.last_index)
-			{
-				if(!(ft_strncmp(args[i], g_vars.env_table.name.elements[j], x)))
-				{
-					printf("%s | %d\n", args[i], x);
-					g_vars.env_table.name.delete_element_at_index(&g_vars.env_table.name, j);
-					g_vars.env_table.value.delete_element_at_index(&g_vars.env_table.value, j);
-				}
-				j++;
-			}
-		}
-		i++;
+			remove_variable(u.a, u.i, u.x);
+		u.i++;
 	}
 }
