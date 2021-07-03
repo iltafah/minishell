@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:51:14 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/02 12:59:04 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/03 11:35:56 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void	start_enter_action(t_rdline *rdl_vars)
 	{
 		hstry_line = &rdl_vars->history_vec.elements[rdl_vars->l_i];
 		clear_curr_line_after_and_below_cursor(rdl_vars);
-		if (hstry_line->elements[rdl_vars->c_i - 1] == '/')
-			print_line_with_chosen_method(rdl_vars, hstry_line->elements + rdl_vars->c_i, restore);
-		else
+		if (hstry_line->elements[rdl_vars->c_i - 1] != '/')
 			print_curr_char(rdl_vars, ' ');
 		rdl_vars->tab_vars.matched_files.free(&rdl_vars->tab_vars.matched_files);
 		if (rdl_vars->tab_vars.dir_to_search != NULL)
