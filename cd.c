@@ -6,19 +6,67 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:42:54 by iariss            #+#    #+#             */
-/*   Updated: 2021/06/30 10:43:56 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/03 11:59:40 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
 #include "minishell.h"
 
+char	*find_home(void)
+{
+	char	*home;
+	char	cwd[PATH_MAX];
+	int		i;
+	int		slash;
+
+	i = 0;
+	slash = 2;
+	getcwd(cwd, sizeof(cwd));
+	while (cwd[i] && slash)
+	{
+		i++;
+		if (cwd[i] == '/')
+			slash--;
+	}
+	home = ft_substr(cwd, 0, i);
+	return (home);
+}
+
+void	cd_2(char **path, t_varso *vars, int *f)
+{
+	char		cwd[PATH_MAX];
+	struct stat	buffer;
+
+	if (stat(*path, &buffer) == -1)
+	{
+		printf("minishell: cd: %s: No such file or directory\n", *path);
+		g_vars.last_err_num = 1;
+	}
+	else if (chdir(*path) != 0 && getcwd(cwd, sizeof(cwd)))
+	{
+		error_msg("chdir failed\n");
+		g_vars.last_err_num = 1;
+	}
+	else if (!getcwd(cwd, sizeof(cwd)))
+	{
+		printf("cd: error retrieving current directory: getcwd: cannot");
+		printf(" access parent directories: No such file or directory\n");
+		g_vars.last_err_num = 1;
+	}
+	getcwd(cwd, sizeof(cwd));
+	if (*f)
+		free(*path);
+	*path = ft_strdup(cwd);
+	change_value("PWD", *path);
+	free(*path);
+}
+
 void	cd(char **args, t_varso *vars)
 {
-	struct stat buffer;
-	char *path;
-	char *home;
-	char cwd[PATH_MAX];
+	char	*path;
+	char	*home;
+	char	cwd[PATH_MAX];
 	int		f;
 
 	f = 0;
@@ -35,39 +83,17 @@ void	cd(char **args, t_varso *vars)
 		}
 	}
 	else
-	{
 		path = args[1];
-	}
 	check_path(&path, vars, &f);
 	getcwd(cwd, sizeof(cwd));
 	vars->prev_path = cwd;
 	change_value("OLDPWD", vars->prev_path);
-	if (stat(path, &buffer) == -1)
-	{
-		error_msg("minishell: cd:No such file or directory\n");
-		g_vars.last_err_num = 1;
-	}
-	else if (chdir(path) != 0 && getcwd(cwd, sizeof(cwd)))
-	{
-		error_msg("chdir failed\n");
-		g_vars.last_err_num = 1;
-	}
-	else if (!getcwd(cwd, sizeof(cwd)))
-	{
-		printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
-		g_vars.last_err_num = 1;
-	}
-	getcwd(cwd, sizeof(cwd));
-	if (f)
-		free(path);
-	path = ft_strdup(cwd);
-	change_value("PWD", path);
-	free(path);
+	cd_2(&path, vars, &f);
 }
 
 void	check_path(char **path, t_varso *vars, int *f)
 {
-	char *new;
+	char	*new;
 
 	new = find_home();
 	if (*path[0] == '~' || !(ft_strcmp(*path, "~/")))
@@ -89,14 +115,16 @@ void	check_path(char **path, t_varso *vars, int *f)
 
 void	change_value(char *name, char *new_value)
 {
-	int i;
+	int	i;
+
 	i = 0;
-	
 	while (i <= g_vars.env_table.name.last_index)
 	{
-		if (!(ft_strncmp(g_vars.env_table.name.elements[i], name, ft_strlen(name))))
+		if (!(ft_strcmp(g_vars.env_table.name.elements[i]
+					, name)))
 		{
-			g_vars.env_table.value.replace_element_at_index( &g_vars.env_table.value, ft_strdup(new_value), i);
+			g_vars.env_table.value.replace_element_at_index(
+				&g_vars.env_table.value, ft_strdup(new_value), i);
 			return ;
 		}
 		i++;

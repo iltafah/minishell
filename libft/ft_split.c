@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 19:01:32 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/28 12:50:57 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/02 14:57:45 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ static int	split_it(char **tab, char const *s, size_t y_len, char c)
 	}
 	return (1);
 }
-#include <stdio.h>
 
 char	**ft_split(char const *s, char c)
 {

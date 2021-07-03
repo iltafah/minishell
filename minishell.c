@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/30 11:14:00 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/02 12:43:40 by iltafah          ###   ########.fr       */
+/*   Created: 2021/07/02 19:32:47 by iariss            #+#    #+#             */
+/*   Updated: 2021/07/02 19:32:49 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "./minishell.h"
 
@@ -234,7 +235,7 @@ void	execute_test(t_ast *ast)
 			wait = 0;
 			while(wait <= pid_index)
 			{
-				waitpid(pid[pid_index], 0, 0);
+				waitpid(pid[wait], 0, 0);
 				wait++;
 			}
 			dup2(dup1, 1);
