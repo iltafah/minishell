@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:42:54 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/01 13:01:19 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/03 11:59:40 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ void	change_value(char *name, char *new_value)
 	i = 0;
 	while (i <= g_vars.env_table.name.last_index)
 	{
-		if (!(ft_strncmp(g_vars.env_table.name.elements[i]
-					, name, ft_strlen(name))))
+		if (!(ft_strcmp(g_vars.env_table.name.elements[i]
+					, name)))
 		{
 			g_vars.env_table.value.replace_element_at_index(
 				&g_vars.env_table.value, ft_strdup(new_value), i);

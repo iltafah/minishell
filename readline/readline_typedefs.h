@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:17 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/30 20:01:21 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/02 12:40:40 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,16 @@ typedef struct s_trie_node
 	t_key				key;
 }				t_trie_node;
 
+typedef	struct s_tab_vars
+{
+	int			curr_index;
+	char		*dir_to_search;
+	char		*file_to_match;
+	t_str_vec	matched_files;
+	int			printd_matched_file_len;
+}				t_tab_vars;
+
+
 typedef struct s_capability
 {
 	char		*mv_cursor_down_vertically;
@@ -80,6 +90,7 @@ typedef struct s_rdline
 	t_capability	capability;
 	t_trie_node		*key_seq_trie;
 	t_vchar_vec		history_vec;
+	t_tab_vars		tab_vars;
 	struct termios	original_termios_state;
 	char			**old_history;
 	char			*line;
@@ -107,6 +118,7 @@ typedef struct s_rdline
 	int				syntax_highlighting;
 	int				auto_suggestions;
 	int				previous_key;
+	int				tab_mode;
 }					t_rdline;
 
 typedef union u_func_ptr

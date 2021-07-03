@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:57:19 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/02 17:45:18 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/03 12:00:02 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	merge_env(t_ast *scn, t_varso *vars)
 				"=");
 		if (!g_vars.env_table.value.elements[i])
 			g_vars.env_table.value.elements[i] = "";
-		vars->export.env[i] = ft_strjoin(vars->export.env[i],
-				g_vars.env_table.value.elements[i]);
+		vars->export.env[i] = join_free(vars->export.env[i],
+				g_vars.env_table.value.elements[i], 0);
 		i++;
 	}
 	vars->export.env[i] = NULL;
@@ -82,6 +82,7 @@ int	check_command(t_ast *scn, char *sticker, t_varso *vars, t_rand *num)
 {
 	char	cwd[PATH_MAX];
 	int		x;
+	char	*tmp;
 
 	getcwd(cwd, sizeof(cwd));
 	if (!ft_strcmp(scn->node.data.args_vec.elements[0], "./"))
@@ -99,7 +100,11 @@ int	check_command(t_ast *scn, char *sticker, t_varso *vars, t_rand *num)
 	}
 	else if (scn->node.data.args_vec.elements[0][0] != '/'
 			&& ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2))
+	{
+		tmp = num->tab[num->i];
 		num->tab[num->i] = ft_strjoin(num->tab[num->i], sticker);
+		free(tmp);
+	}
 	else if (!ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2))
 	{
 		num->tab[num->i] = ft_strjoin(cwd, sticker + 2);
@@ -107,10 +112,7 @@ int	check_command(t_ast *scn, char *sticker, t_varso *vars, t_rand *num)
 			add_one(vars);
 	}
 	else
-	{
 		num->tab[num->i] = ft_strdup(scn->node.data.args_vec.elements[0]);
-		num->x = 1;
-	}
 	return (1);
 }
 
@@ -164,10 +166,10 @@ void	execv_main_loop(t_rand *num, t_ast *scn, t_varso *vars)
 				g_vars.last_err_num = WEXITSTATUS(num->status);
 			if (WEXITSTATUS(num->status))
 				num->y = 1;
+			else if (!WEXITSTATUS(num->status))
+				change_value("_", num->tab[num->i]);
 			break ;
 		}
-		if (!num->x)
-			free(num->tab[num->i]);
 		num->i++;
 	}
 }
@@ -193,16 +195,15 @@ void	with_path(char *path, t_varso *vars, t_ast *scn)
 	if (stat(num.tab[num.i], &num.buff))
 		num.y = 1;
 	execv_errors(&num, scn, num.buff);
-	// free(num.tab);
-	int i = 0;
-	while (vars->export.env[i])
-		free(vars->export.env[i++]);
+	num.i = 0;
+	while (vars->export.env[num.i])
+		free(vars->export.env[num.i++]);
 	free(vars->export.env);
 	if (k)
 		free(num.sticker);
-	i = 0;
-	while (num.tab[i])
-		free(num.tab[i++]);
+	num.i = 0;
+	while (num.tab[num.i])
+		free(num.tab[num.i++]);
 	free(num.tab);
 }
 
@@ -223,6 +224,10 @@ void	execute_path(int *y, t_ast *scn, t_varso *vars)
 		g_vars.last_err_num = WEXITSTATUS(status);
 	if (WEXITSTATUS(status))
 		*y = 1;
+	else if (!WEXITSTATUS(status))
+	{
+		change_value("_", scn->node.data.args_vec.elements[0]);
+	}
 }
 
 void	without_path_slash(t_varso *vars, t_ast *scn)
