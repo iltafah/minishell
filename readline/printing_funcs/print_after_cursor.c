@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:49:29 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/04 20:56:40 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/04 21:34:24 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	print_after_cursor(t_rdline *rdl_vars, char *str, int option)
 		// fprintf(fd1, "len > w - col : curs pos (%d, %d) <== (%d / %d) \n", rdl_vars->curs_colm_pos, rdl_vars->curs_row_pos, len, rdl_vars->width_of_screen);
 		// fflush(fd1);
 	}
+	clear_curr_line_after_cursor(rdl_vars);
 
  	// if (rdl_vars->curs_colm_pos == rdl_vars->width_of_screen)
 	// {
