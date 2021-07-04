@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 16:40:58 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/03 12:29:34 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/04 21:24:10 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,12 +169,17 @@ void	print_list_of_matched_files(t_rdline *rdl_vars, t_str_vec files, int index)
 	i = 0;
 	max_len = get_max_len(files) + 2;
 	save_curr_cursor_pos(rdl_vars);
+	move_cursor_to_end_of_printed_line(rdl_vars);
 	move_cursor_start_of_next_line(rdl_vars);
 	// clear_curr_line_after_and_below_cursor(rdl_vars);
 	while (i < files.used_size)
 	{
 		if (rdl_vars->curs_colm_pos + max_len > rdl_vars->width_of_screen)
+		{
 			move_cursor_start_of_next_line(rdl_vars);
+			// fprintf(fd1, "meow\n");
+			// fflush(fd1);
+		}
 		len = ft_strlen(files.elements[i]);
 		spaces = max_len - len;
 		
@@ -182,7 +187,7 @@ void	print_list_of_matched_files(t_rdline *rdl_vars, t_str_vec files, int index)
 			tputs(rdl_vars->capability.enter_standout_mode, 1, put_char);
 		write(1, files.elements[i], len);
 		rdl_vars->curs_colm_pos += len;
-		while (spaces > 0)
+		while (spaces > 2)
 		{
 			write(1, " ", 1);
 			rdl_vars->curs_colm_pos++;
@@ -190,9 +195,20 @@ void	print_list_of_matched_files(t_rdline *rdl_vars, t_str_vec files, int index)
 		}
 		if (i == index)
 			tputs(rdl_vars->capability.leave_standout_mode, 1, put_char);
+		while (spaces > 0)
+		{
+			write(1, " ", 1);
+			rdl_vars->curs_colm_pos++;
+			spaces--;
+		}
 		i++;
 	}
-
+	if (rdl_vars->curs_colm_pos + max_len > rdl_vars->width_of_screen)
+	{
+		move_cursor_start_of_next_line(rdl_vars);
+		// fprintf(fd1, "meow\n");
+		// fflush(fd1);
+	}
 	restore_cursor_pos(rdl_vars);
 }
 
@@ -317,6 +333,7 @@ void	start_tab_action(t_rdline *rdl_vars)
 		erase_prec_file(rdl_vars, &rdl_vars->tab_vars);
 		print_matched_file(rdl_vars, rdl_vars->tab_vars.matched_files, rdl_vars->tab_vars.curr_index);
 		tputs(rdl_vars->capability.make_cursor_invisible, 1, put_char);
+		// clear_curr_line_after_and_below_cursor(rdl_vars);////////////////////////
 		print_list_of_matched_files(rdl_vars, rdl_vars->tab_vars.matched_files, rdl_vars->tab_vars.curr_index);
 		rdl_vars->tab_vars.printd_matched_file_len = ft_strlen(rdl_vars->tab_vars.matched_files.elements[rdl_vars->tab_vars.curr_index]);
 		rdl_vars->tab_vars.curr_index += 1;
@@ -360,18 +377,36 @@ void	process_input(t_rdline *rdl_vars, char *prompt)
 {
 	int		key;
 	char	c;
+	//////////////////////
+	
 
+	// fd1 = fopen("debug1", "w");
+	// fclose(fd1);
+	// fd1 = fopen("debug2", "w");
+	// fclose(fd2);
+	//////////////////////
 	key = none;
 	set_rdl_vars(rdl_vars, prompt);
 	print_prompt(rdl_vars);
 	while (read(STDIN_FILENO, &c, 1))
 	{
+		// fd1 = fopen("debug1", "a");
+		// fd2 = fopen("debug2", "a");
 		key = get_key(rdl_vars->key_seq_trie, c);
 		if (key == none || key == waiting)
 			SKIP ;
 		start_key_action(rdl_vars, key, c);
 		if (key == enter && rdl_vars->previous_key != disable_enter)
 			break ;
+
+		// fprintf(fd1, "curs pos (%d, %d)\n", rdl_vars->curs_colm_pos, rdl_vars->curs_row_pos);
+		// fflush(fd1);
+		// fprintf(fd2, "width of screen : %d\n", rdl_vars->width_of_screen);
+		// fflush(fd2);
+		// fclose(fd1);
+		// fclose(fd2);
 	}
 	free_array(&rdl_vars->old_history);
+	///////////////////////
+	///////////////////////
 }

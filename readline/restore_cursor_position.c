@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:06 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/29 20:44:54 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/04 19:15:18 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	restore_cursor_pos(t_rdline *rdl_vars)
 		move_cursor_left(rdl_vars);
 	while (rdl_vars->curs_colm_pos < old_curs_colm_pos)
 		move_cursor_right(rdl_vars);
+	// move_cursor_to_colum_and_row(rdl_vars, old_curs_colm_pos, old_curs_row_pos);
 }
 
 void	save_curr_cursor_pos(t_rdline *rdl_vars)
