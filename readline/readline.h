@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:09 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/02 11:57:35 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/04 21:24:16 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 enum 		e_restore {dont_restore, restore};
 enum 		e_is_found {not_found, found};
 enum 		e_is_on {off, on};
+
+// FILE *fd1;
+// FILE *fd2;
+
 
 int			put_char(int c);
 int			get_screen_width(void);

@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:35:38 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/23 20:01:57 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/03 20:09:17 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,35 @@ void	expand_args_vec(t_str_vec *args_vec)
 	}
 }
 
-void	expand_redirection_list(t_redirection *rdir_list)
+int		check_ambiguous_redirect(char *file)
+{
+	int		i;
+	char	*name;
+	char	*value;
+
+	i = 0;
+	while (file[i])
+	{
+		if (file[i] == '$')
+		{
+			name = get_dollar_name(file, &i);
+			if (name != NULL)
+			{
+				value = get_dollar_value(name);
+				free(name);
+				if (value != NULL)
+					return (NONE);
+			}
+			else
+				return (NONE);
+		}
+		else
+			return (NONE);
+	}
+	return (EXIST);
+}
+
+int		expand_redirection_list(t_redirection *rdir_list)
 {
 	t_redirection	*curr_redir_node;
 
@@ -34,20 +62,31 @@ void	expand_redirection_list(t_redirection *rdir_list)
 	{
 		if (strcmp(curr_redir_node->type, "<<") != 0)
 		{
+			if (check_ambiguous_redirect(curr_redir_node->file) == EXIST)
+			{
+				printf("bash: %s: ambiguous redirect\n", curr_redir_node->file);
+				g_vars.last_err_num = 1;
+				return (ERROR);
+			}
 			give_quotes_special_meaning(curr_redir_node->file);
 			expand_dollar_vars(&curr_redir_node->file);
 			remove_special_quotes(&curr_redir_node->file);
 		}
 		curr_redir_node = curr_redir_node->next;
 	}
+	return (NONE);
 }
 
-void	expand_curr_cmd(t_ast *curr_simple_cmd)
+int		expand_curr_cmd(t_ast *curr_simple_cmd)
 {
+	int		error;
 	t_ast	*data;
 
+	error = NONE;
 	data = curr_simple_cmd->node.dir.bottom;
 	expand_args_vec(&data->node.data.args_vec);
-	expand_redirection_list(data->node.data.redirections);
-	g_vars.last_err_num = 0;
+	error = expand_redirection_list(data->node.data.redirections);
+	if (error == NONE)
+		g_vars.last_err_num = 0;
+	return (error);
 }

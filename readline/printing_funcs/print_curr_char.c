@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:49:26 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/29 20:45:09 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/04 20:57:49 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,28 @@ void	print_curr_char(t_rdline *rdl_vars, char c)
 		restore);
 	if (rdl_vars->auto_suggestions == on)
 		print_suggestions(rdl_vars);
-	if (rdl_vars->curs_colm_pos == rdl_vars->width_of_screen - 1)
+	
+	move_cursor_right(rdl_vars);
+	if (rdl_vars->curs_colm_pos == rdl_vars->width_of_screen)
+	{
+		// sleep(2);
+		// fprintf(fd1, "print ? and make curs colm 0\n");
+		// fflush(fd1);
+		// put_char('?');
 		move_cursor_start_of_next_line(rdl_vars);
-	else
-		move_cursor_right(rdl_vars);
+		rdl_vars->curs_row_pos++;
+		rdl_vars->curs_colm_pos = 0;
+		// clear_curr_line_after_cursor(rdl_vars);
+	}
+	// else
+	// {
+	// 	fprintf(fd1, "don't move me right onichan\n");
+	// 	fflush(fd1);
+	// }
+	// if (rdl_vars->curs_colm_pos == rdl_vars->width_of_screen - 1)
+	// 	move_cursor_start_of_next_line(rdl_vars);
+	// else
+	// 	move_cursor_right(rdl_vars);
 	(*c_i)++;
 	update_cursor_data(rdl_vars);
 }
