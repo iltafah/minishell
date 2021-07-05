@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 11:11:21 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:33:35 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/05 16:58:31 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,19 @@ typedef struct s_redirection_vars
 	int				out;
 	int				*p;
 }				t_redirection_vars;
+
+typedef struct s_piping
+{
+	int		num_pipes;
+	int		*p;
+	int		*pid;
+	int		wait;
+	int		pid_index;
+	int		dup1;
+	int		dup02;
+	int		pipe_index;
+	int		i;
+}				t_piping;
 
 char	*find_env(char *targ);
 void	export(char **args, t_varso *vars, t_ast *sim_cmd_nd);
