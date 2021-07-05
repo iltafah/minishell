@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 19:32:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/03 16:30:59 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/05 15:28:17 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 void print_cmd_redirection(t_ast *data_node)
 {
 	t_redirection *curr_redir_node;
-	char *input_file = "STDIN";
-	char *output_file = "STDOUT";
+	// char *input_file = "STDIN";
+	// char *output_file = "STDOUT";
 
 	curr_redir_node = data_node->node.data.redirections;
 	printf("%s===========================================================\n", YEL);
