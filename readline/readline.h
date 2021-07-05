@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:09 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/04 21:24:16 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/05 13:56:49 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ enum 		e_is_on {off, on};
 
 // FILE *fd1;
 // FILE *fd2;
+
+
+void		get_matched_files(t_tab_vars *tvars);
+int			get_max_len(t_str_vec files);
+char		*get_file_to_match(t_rdline *rvars);
+void		print_list_of_matched_files(t_rdline *rvars, t_tab_vars *tvars);
+void		print_matched_file(t_rdline *vars, t_str_vec files, int index);
+void		erase_prec_file(t_rdline *rdl_vars, t_tab_vars *tab_vars);
+char		*get_dir_to_search(t_rdline *rdl_vars);
 
 
 int			put_char(int c);

@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:17 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/02 12:40:40 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/05 13:08:35 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef enum e_key
 	disable_enter
 }	t_key;
 
+typedef enum e_files_colors {white, red}	t_files_colors;
 typedef enum e_prototype {first, second}	t_prototype;
 
 typedef struct s_trie_node
@@ -66,6 +67,7 @@ typedef	struct s_tab_vars
 	char		*dir_to_search;
 	char		*file_to_match;
 	t_str_vec	matched_files;
+	t_int_vec	files_colors;
 	int			printd_matched_file_len;
 }				t_tab_vars;
 
