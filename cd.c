@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:42:54 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/03 11:59:40 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/03 17:22:39 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	cd_2(char **path, t_varso *vars, int *f)
 	}
 	else if (chdir(*path) != 0 && getcwd(cwd, sizeof(cwd)))
 	{
-		error_msg("chdir failed\n");
+		printf("chdir failed\n");
 		g_vars.last_err_num = 1;
 	}
 	else if (!getcwd(cwd, sizeof(cwd)))

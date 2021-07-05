@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 11:11:21 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/02 15:00:33 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/03 20:15:07 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	change_value(char *name, char *new_value);
 void	check_path(char **path, t_varso *vars, int *f);
 void	echo(char **v, t_varso *vars);
 int		check_echo(char **v);
-void	export(char **args, t_varso *vars, t_ast *sim_cmd_nd);
 void	swap_values(char **s1, char **s2);
 void	sort_expo(t_varso *vars);
 void	empty_expo(t_varso *vars);
@@ -122,11 +121,21 @@ void	enviro(void);
 void	exv(t_ast *scn, t_varso *vars);
 void	add_one(t_varso *vars);
 void	merge_env(t_ast *scn, t_varso *vars);
-void	check_redis(t_ast *scn);
+int		check_redis(t_ast *scn);
 void	ft_printf_string(char *s);
 void	error_msg(char *s);
 void	check_exit(t_ast *scn);
 int		check_exit_num(char *num, int j, t_ast *scn);
 void	builtins(t_ast *scn, t_varso *vars);
+void	pwd(void);
+void	handle_c(int sig_num);
+void	handle_quit(int sig_num);
+int		ft_strcmp(const char *s1, const char *s2);
+char	*find_env(char *targ);
+char	*join_free(char *s1, char *s2, int index);
+void	merge_env(t_ast *scn, t_varso *vars);
+void	add_one(t_varso *vars);
+int		check_command(t_ast *scn, char *sticker, t_varso *vars, t_rand *num);
+void	execv_errors(t_rand *num, t_ast *scn, struct stat buff);
 
 #endif

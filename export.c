@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:48:41 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/02 09:34:01 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/05 08:37:27 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,16 @@ void	export_add(char **args, int lp, int x)
 	{
 		g_vars.env_table.name.add_new_element(&g_vars.env_table.name,
 		ft_substr(args[lp], 0, x));
-		if (ft_strlen(args[lp]) == x && !args[lp][x])
+		if (ft_strlen(args[lp]) == x && !args[lp][x] && args[lp][x - 1] != '=')
+		{
 			g_vars.env_table.value.add_new_element(
 				&g_vars.env_table.value, NULL);
+		}
 		else
+		{
 			g_vars.env_table.value.add_new_element(&g_vars.env_table.value,
 			ft_substr(args[lp], x + 1, ft_strlen(args[lp]) - x));
+		}
 	}
 }
 
@@ -81,9 +85,9 @@ void	export(char **args, t_varso *vars, t_ast *sim_cmd_nd)
 	i = 0;
 	lp = 1;
 	vars->export.names = malloc(sizeof(char *)
-			* g_vars.env_table.name.used_size);
+			* g_vars.env_table.name.used_size + 1);
 	vars->export.values = malloc(sizeof(char *)
-			* g_vars.env_table.value.used_size);
+			* g_vars.env_table.value.used_size + 1);
 	if (!args[1])
 	{
 		empty_expo(vars);
@@ -161,8 +165,11 @@ void	empty_expo(t_varso *vars)
 	j = 0;
 	while (i <= g_vars.env_table.name.last_index)
 	{
-		vars->export.names[i] = g_vars.env_table.name.elements[i];
-		vars->export.values[i] = g_vars.env_table.value.elements[i];
+		vars->export.names[i] = ft_strdup(g_vars.env_table.name.elements[i]);
+		if (!g_vars.env_table.value.elements[i])
+			vars->export.values[i] = ft_strdup("");
+		else
+			vars->export.values[i] = ft_strdup(g_vars.env_table.value.elements[i]);
 		i++;
 	}
 	vars->export.names[i] = NULL;
@@ -208,7 +215,7 @@ void	sort_expo(t_varso *vars)
 		{
 			printf("declare -x %s\n", vars->export.names[exp.i]);
 		}
-		else
+		else if (vars->export.names[exp.i])
 		{
 			printf("declare -x %s=\"%s\"\n", vars->export.names[exp.i],
 				vars->export.values[exp.i]);

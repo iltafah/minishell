@@ -144,12 +144,14 @@ vectors/vector_of_string/replace_element_at_index.c \
 ./readline/usefull_history_vec_func.c\
 exec.c \
 execve.c \
+execve2.c \
 exit.c \
 export.c \
 echo.c \
 env.c \
 unset.c \
 redirections.c \
+small.c \
 cd.c
 
 OBJ_DIR = objs

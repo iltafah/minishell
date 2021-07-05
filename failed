@@ -19,3 +19,7 @@ export -dfnv -> invalid option
 echo hello > $PWD
 echo hello > $fgd
 /cd.c
+echo hello >"">f2
+echo hello >f2>" "
+echo hello > $kjsgkdh
+^C^C

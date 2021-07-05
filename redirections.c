@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 11:02:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/02 15:34:20 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/03 13:20:07 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,28 @@ void	append(t_redirection_vars *red)
 	close(red->fd);
 }
 
-void	red_output(t_redirection_vars *red)
+int	red_output(t_redirection_vars *red)
 {
 	red->fd = open(red->head.redirections->file,
 			O_CREAT | O_RDWR | O_TRUNC, 0644);
+	// printf("|%s|\n", red->head.redirections->file);
+	// if (red->fd == -1 && red->head.redirections->file[0] == '\0')
+	// {
+	// 	printf("bash: %s: ambiguous redirect\n", red->head.redirections->file);
+	// 	return (0);
+	// }
+	if (red->fd == -1)
+	{
+		printf("minishell: : No such file or directory\n");
+		return (0);
+	}
 	if (red->head.args_vec.used_size)
 		dup2(red->fd, 1);
 	close(red->fd);
+	return (1);
 }
 
-void	red_input(t_redirection_vars *red)
+int	red_input(t_redirection_vars *red)
 {
 	red->fd = open(red->head.redirections->file, O_RDONLY);
 	if (red->fd == -1)
@@ -50,15 +62,17 @@ void	red_input(t_redirection_vars *red)
 		printf("minishell: %s: No such file or directory\n",
 			red->head.redirections->file);
 		g_vars.last_err_num = 1;
+		return (0);
 	}
 	else
 	{
 		dup2(red->fd, 0);
 		close(red->fd);
 	}
+	return (1);
 }
 
-void	check_redis(t_ast *scn)
+int	check_redis(t_ast *scn)
 {
 	t_redirection_vars	red;
 
@@ -67,13 +81,20 @@ void	check_redis(t_ast *scn)
 	while (red.head.redirections)
 	{
 		if (!(ft_strcmp(red.head.redirections->type, ">")))
-			red_output(&red);
+		{
+			if (!red_output(&red))
+				return (0);
+		}
 		else if (!(ft_strcmp(red.head.redirections->type, "<")))
+		{
 			red_input(&red);
+			return (0);
+		}
 		else if (!(ft_strcmp(red.head.redirections->type, ">>")))
 			append(&red);
 		else if (!(ft_strcmp(red.head.redirections->type, "<<")))
 			herdoc(&red);
 		red.head.redirections = red.head.redirections->next;
 	}
+	return (1);
 }

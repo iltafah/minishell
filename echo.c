@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:45:42 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/01 13:47:22 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/03 16:39:02 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	echo(char **v, t_varso *vars)
 	echo_n(&j, num_args, v, &i);
 	while (v[j])
 	{
-		ft_printf_string(v[j]);
+		printf("%s\n", v[j]);
 		j++;
 		if (v[j])
 			write(1, " ", 1);
