@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:37:51 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 13:46:14 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	handle_quit(int sig_num)
 {
 	if (sig_num == SIGQUIT)
 	{
-		write(2, "^\\Quit: 3\n", 10);
+		write(2, "Quit: 3\n", 10);
 	}
 }
 

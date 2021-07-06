@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:47:17 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 13:17:15 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	merge_env(t_ast *scn, t_varso *vars)
 {
 	int		i;
 	char	*tmp;
+	char	*hello;
 
 	i = 0;
 	vars->export.env = (char **)malloc(sizeof(char *)
@@ -25,10 +26,11 @@ void	merge_env(t_ast *scn, t_varso *vars)
 	{
 		vars->export.env[i] = ft_strjoin(g_vars.env_table.name.elements[i],
 				"=");
+		hello = g_vars.env_table.value.elements[i];
 		if (!g_vars.env_table.value.elements[i])
-			g_vars.env_table.value.elements[i] = "";
+			hello = "";
 		vars->export.env[i] = join_free(vars->export.env[i],
-				g_vars.env_table.value.elements[i], 0);
+				hello, 0);
 		i++;
 	}
 	vars->export.env[i] = NULL;

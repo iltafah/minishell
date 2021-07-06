@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 10:54:02 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 11:24:57 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 11:00:15 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ void	ex(t_rand *num, t_varso *vars, t_ast *scn)
 	if (WIFEXITED(num->status))
 		g_vars.last_err_num = WEXITSTATUS(num->status);
 	if (WEXITSTATUS(num->status))
+	{
 		num->y = 1;
+	}
 }
 
 void	execv_main_loop(t_rand *num, t_ast *scn, t_varso *vars)

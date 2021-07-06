@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 10:44:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 10:49:20 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 09:32:50 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,26 @@ void	normal_expo(char **args, int lp, int x)
 
 void	export_add(char **args, int lp, int x)
 {
-	int	i;
-	int	in;
+	int		i;
+	int		in;
+	char	*tmp;
 
 	i = 0;
 	in = 0;
 	while (i <= g_vars.env_table.name.last_index)
 	{
-		if (!ft_strcmp(g_vars.env_table.name.elements[i],
-				ft_substr(args[lp], 0, x)) && args[lp][x])
+		tmp = ft_substr(args[lp], 0, x);
+		if (!ft_strcmp(g_vars.env_table.name.elements[i], tmp)
+			&& args[lp][x])
 		{
 			g_vars.env_table.value.replace_element_at_index(
 			&g_vars.env_table.value, ft_strdup(args[lp] + x + 1), i);
 			in = 1;
 		}
 		else if (!ft_strcmp(g_vars.env_table.name.elements[i],
-				ft_substr(args[lp], 0, x)) && !args[lp][x])
+				tmp) && !args[lp][x])
 			in = 1;
+		free(tmp);
 		i++;
 	}
 	if (!in)

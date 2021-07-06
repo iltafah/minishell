@@ -23,3 +23,10 @@ echo hello >"">f2
 echo hello >f2>" "
 echo hello > $kjsgkdh
 ^C^C
+
+
+unset a b /////important
+
+
+
+cd /////free

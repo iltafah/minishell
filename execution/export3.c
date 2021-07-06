@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 10:49:58 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 11:27:10 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 10:39:56 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	check_args(char **a, t_ast *all, int x, int lp)
 		printf("minishell: export: %s: invalid option\n", cv.subbed);
 		printf("export: usage: export [-nf] [name[=value] ...] or export -p\n");
 		g_vars.last_err_num = 2;
+		free(cv.subbed );
 	}
 	else if (ft_isdigit(a[lp][0]))
 	{

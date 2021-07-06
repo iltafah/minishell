@@ -6,22 +6,22 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:57:19 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 13:13:16 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "file.h"
 
-void	free_vars(t_rand *num, t_varso *vars)
+void	free_vars(t_rand num, t_varso *vars)
 {
-	num->i = 0;
-	while (num->tab[num->i])
-		free(num->tab[num->i++]);
-	free(num->tab);
-	num->i = 0;
-	while (vars->export.env[num->i])
-		free(vars->export.env[num->i++]);
+	num.i = 0;
+	while (num.tab[num.i])
+		free(num.tab[num.i++]);
+	free(num.tab);
+	num.i = 0;
+	while (vars->export.env[num.i])
+		free(vars->export.env[num.i++]);
 	free(vars->export.env);
 }
 
@@ -48,7 +48,7 @@ void	with_path(char *path, t_varso *vars, t_ast *scn)
 	execv_errors(&num, scn, num.buff);
 	if (k)
 		free(num.sticker);
-	free_vars(&num, vars);
+	free_vars(num, vars);
 }
 
 void	execute_path(int *y, t_ast *scn, t_varso *vars)
@@ -104,6 +104,12 @@ void	exv(t_ast *scn, t_varso *vars)
 	if (exv.path && scn->node.data.args_vec.elements[0][0])
 	{
 		with_path(exv.path, vars, scn);
+		// int i = 0;
+		// while (i <= g_vars.env_table.name.last_index)
+		// {
+		// 	printf("%s=%s\n", g_vars.env_table.name.elements[i], g_vars.env_table.value.elements[i]);
+		// 	i++;
+		// }
 	}
 	else if (!exv.path && scn->node.data.args_vec.elements[0][0] == '/')
 		without_path_slash(vars, scn);

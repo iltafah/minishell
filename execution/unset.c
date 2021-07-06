@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:52:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 10:47:37 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ void	remove_variable(char **a, int i, int x)
 	j = 0;
 	while (j <= g_vars.env_table.name.last_index)
 	{
-		if (!(ft_strncmp(a[i], g_vars.env_table.name.elements[j], x)))
+		if (!(ft_strcmp(a[i], g_vars.env_table.name.elements[j])))
 		{
 			g_vars.env_table.name.delete_element_at_index(
 				&g_vars.env_table.name, j);
+			// printf("in\n");
 			g_vars.env_table.value.delete_element_at_index(
 				&g_vars.env_table.value, j);
+			// printf("out\n");
+			return ;
 		}
 		j++;
 	}

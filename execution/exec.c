@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 12:56:09 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 13:47:08 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	execution(t_ast *scn, int num_pipes)
 	getcwd(cwd, sizeof(cwd));
 	vars.prev_path = cwd;
 	signal(SIGQUIT, handle_quit);
-	signal(SIGINT, handle_c);
+	// signal(SIGINT, handle_c);
 	if (scn->node.data.redirections)
 	{
 		if (!check_redis(scn))

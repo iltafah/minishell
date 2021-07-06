@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:42:54 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 13:48:39 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,11 @@ void	cd_2(char **path, t_varso *vars, int *f)
 	}
 	else if (!getcwd(cwd, sizeof(cwd)))
 	{
-		printf("cd: error retrieving current directory: getcwd: cannot");
-		printf(" access parent directories: No such file or directory\n");
+		if (!g_vars.last_err_num)
+		{
+			printf("cd: error retrieving current directory: getcwd: cannot");
+			printf(" access parent directories: No such file or directory\n");
+		}
 		g_vars.last_err_num = 1;
 	}
 	getcwd(cwd, sizeof(cwd));
@@ -108,8 +111,10 @@ void	check_path(char **path, t_varso *vars, int *f)
 			*path = ft_strjoin(new, *path + 1);
 			*f = 1;
 		}
+		free(new);
 		return ;
 	}
+	free(new);
 	return ;
 }
 
@@ -123,6 +128,7 @@ void	change_value(char *name, char *new_value)
 		if (!(ft_strcmp(g_vars.env_table.name.elements[i]
 					, name)))
 		{
+			// free(g_vars.env_table.value.elements[i]);
 			g_vars.env_table.value.replace_element_at_index(
 				&g_vars.env_table.value, ft_strdup(new_value), i);
 			return ;

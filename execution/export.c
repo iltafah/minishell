@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:48:41 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 09:32:04 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	export(char **args, t_varso *vars, t_ast *sim_cmd_nd)
 	if (!args[1])
 	{
 		empty_expo(vars);
+		free(vars->export.names);
+		free(vars->export.values);
 		return ;
 	}
 	else
@@ -40,21 +42,25 @@ void	export(char **args, t_varso *vars, t_ast *sim_cmd_nd)
 
 void	add_to_vars(char *add, int x)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	while (i <= g_vars.env_table.name.last_index)
 	{
+		tmp = ft_substr(add, 0, x);
 		if (!(ft_strcmp(g_vars.env_table.name.elements[i],
-					ft_substr(add, 0, x))))
+					tmp)))
 		{
 			if (!g_vars.env_table.value.elements[i])
 				g_vars.env_table.value.elements[i] = ft_strdup("");
 			g_vars.env_table.value.replace_element_at_index(
 				&g_vars.env_table.value,
 			ft_strjoin(g_vars.env_table.value.elements[i], add + x + 2), i);
+			free(tmp);
 			return ;
 		}
+		free(tmp);
 		i++;
 	}
 	g_vars.env_table.name.add_new_element(&g_vars.env_table.name,
@@ -124,4 +130,10 @@ void	sort_expo(t_varso *vars)
 		print_expo(vars, &exp);
 		exp.i++;
 	}
+	exp.i = 0;
+	while (vars->export.names[exp.i])
+		free(vars->export.names[exp.i++]);
+	exp.i = 0;
+	while (vars->export.values[exp.i])
+		free(vars->export.values[exp.i++]);
 }

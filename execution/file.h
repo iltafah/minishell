@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 11:11:21 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 16:58:31 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 13:43:25 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ void	pwd(void);
 void	handle_c(int sig_num);
 void	handle_quit(int sig_num);
 int		ft_strcmp(const char *s1, const char *s2);
-char	*find_env(char *targ);
 char	*join_free(char *s1, char *s2, int index);
 void	merge_env(t_ast *scn, t_varso *vars);
 void	add_one(t_varso *vars);
