@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 13:52:15 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/05 13:52:29 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/06 16:38:42 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_dir_to_search(t_rdline *rdl_vars)
 	t_char_vec		*hstry_line;
 
 	i = rdl_vars->c_i;
-	dir_to_search = NULL;	
+	dir_to_search = NULL;
 	hstry_line = &rdl_vars->history_vec.elements[rdl_vars->l_i];
 	while (i != 0 && hstry_line->elements[i - 1] != ' ')
 		i--;
@@ -35,5 +35,7 @@ char	*get_dir_to_search(t_rdline *rdl_vars)
 	}
 	if (end - start > 0)
 		dir_to_search = ft_substr(hstry_line->elements, start, end - start + 1);
+	else
+		dir_to_search = ft_strdup("./");
 	return (dir_to_search);
 }

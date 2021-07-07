@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   treat_herdocs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 17:55:27 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/29 18:43:19 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/05 15:28:38 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	store_expanded_heredocs(char *buffer_to_expand, t_char_vec *vec)
 
 char	*expand_heredocs_lines(char *buffer_to_expand, int is_quoted)
 {
-	int			i;
+	// int			i;
 	t_char_vec	expanded_buffer_vec;
 
 	if (is_quoted == false)

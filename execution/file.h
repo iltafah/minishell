@@ -6,14 +6,14 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 11:11:21 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/03 20:15:07 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/05 15:33:35 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILE_H
 # define FILE_H
 
-# include "libft/libft.h"
+# include "../libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
@@ -23,7 +23,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <dirent.h>
-# include "minishell.h"
+# include "../minishell.h"
 # include <signal.h>
 # include <sys/stat.h> 
 
@@ -137,5 +137,14 @@ void	merge_env(t_ast *scn, t_varso *vars);
 void	add_one(t_varso *vars);
 int		check_command(t_ast *scn, char *sticker, t_varso *vars, t_rand *num);
 void	execv_errors(t_rand *num, t_ast *scn, struct stat buff);
+void	print_expo(t_varso *vars, t_expo_vars *exp);
+void	export_add(char **args, int lp, int x);
+void	normal_expo(char **args, int lp, int x);
+void	swap_values(char **s1, char **s2);
+void	export_add_vars(t_ast *scn, char **args);
+int		check_args2(int lp, char **a);
+int		check_args(char **a, t_ast *all, int x, int lp);
+void	execv_main_loop(t_rand *num, t_ast *scn, t_varso *vars);
+void	ex(t_rand *num, t_varso *vars, t_ast *scn);
 
 #endif

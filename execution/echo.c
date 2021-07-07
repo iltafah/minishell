@@ -6,12 +6,12 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:45:42 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/03 16:39:02 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
-#include "minishell.h"
+#include "../minishell.h"
 
 void	echo_n(int *j, int num_args, char **v, int *i)
 {
@@ -54,7 +54,7 @@ void	echo(char **v, t_varso *vars)
 	echo_n(&j, num_args, v, &i);
 	while (v[j])
 	{
-		printf("%s\n", v[j]);
+		write(1, v[j], ft_strlen(v[j]));
 		j++;
 		if (v[j])
 			write(1, " ", 1);

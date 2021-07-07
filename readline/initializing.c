@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:43 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/05 12:32:46 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/07 12:39:34 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	initialize_printing_methods(t_rdline *rdl_vars)
 void	initialize_tab_vars(t_tab_vars *vars)
 {
 	vars->curr_index = 0;
+	vars->prec_index = 0;
 	vars->printd_matched_file_len = 0;
 	vars->dir_to_search = NULL;
 	vars->file_to_match = NULL;

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/02 19:32:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 12:24:07 by iltafah          ###   ########.fr       */
+/*   Created: 2021/07/05 16:27:18 by iltafah           #+#    #+#             */
+/*   Updated: 2021/07/06 20:34:07 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 void print_cmd_redirection(t_ast *data_node)
 {
 	t_redirection *curr_redir_node;
-	char *input_file = "STDIN";
-	char *output_file = "STDOUT";
+	// char *input_file = "STDIN";
+	// char *output_file = "STDOUT";
 
 	curr_redir_node = data_node->node.data.redirections;
 	printf("%s===========================================================\n", YEL);
@@ -253,9 +253,7 @@ void	execute_test(t_ast *ast)
 				dup02 = dup(0);
 				expand_curr_cmd(curr_simple_cmd);
 				curr_data = curr_simple_cmd->node.dir.bottom;
-				// printf("no pipe\n");
 				execution(curr_data, num_pipes);
-				// return ;
 				dup2(dup1, 1);
 				dup2(dup02, 0);
 				close(dup1);
@@ -263,38 +261,10 @@ void	execute_test(t_ast *ast)
 				curr_simple_cmd = get_curr_smpl_cmd_node(curr_pipeline_seq);
 			}
 		}
-		// free(p);
-		// free(pid);
 		curr_pipeline_seq = get_curr_pipeline_seq_node(ast);
 	}
-	// printf("outsside\n");
-		// printf("hre\n");
 }
 
-// void	execute_test(t_ast *ast)
-// {
-// 	t_ast *curr_pipeline_seq;
-// 	t_ast *curr_simple_cmd;
-// 	t_ast *curr_data;
-
-// 	curr_pipeline_seq = get_curr_pipeline_seq_node(ast);
-// 	while (curr_pipeline_seq)
-// 	{
-// 		curr_simple_cmd = get_curr_smpl_cmd_node(curr_pipeline_seq);
-// 		printf("%s ╔███████████████████████ Pipeline ███████████████████████╗\n\n",RED);
-// 		printf("%spipes count = %d\n", WHT, curr_pipeline_seq->node.pipe.pipes_count);
-// 		while (curr_simple_cmd)
-// 		{
-// 			expand_curr_cmd(curr_simple_cmd);
-// 			curr_data = curr_simple_cmd->node.dir.bottom;
-// 			print_cmd_redirection(curr_data);
-// 			print_args(curr_data);
-// 			curr_simple_cmd = get_curr_smpl_cmd_node(curr_pipeline_seq);
-// 		}
-// 		curr_pipeline_seq = get_curr_pipeline_seq_node(ast);
-// 	}
-// 	printf("\n\n\n%s███████████████████████████████████████████████████████████%s\n\n\n", GRN, WHT);
-// }
 /*
 ** ************************************************************************** **
 ** ************************************************************************** **
@@ -418,7 +388,7 @@ int		main(int argc, char **argv, char **env)
 			// 	temp_exit(&tokens_list, ast, line, prompt);
 			/////////////////////////////////
 	
-			// print_preorder(ast, 1, env_table);
+			// print_preorder(ast, 1, g_vars.env_table);
 
 			execute_test(ast);
 			/////////////////////////////////

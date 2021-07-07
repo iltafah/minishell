@@ -149,15 +149,20 @@ readline/text_highlighting_funcs/right_highlight.c \
 readline/text_highlighting_funcs/start_highlighting_mode.c \
 readline/update_cursor_data.c \
 readline/usefull_history_vec_func.c \
-exec.c \
-execve.c \
-exit.c \
-export.c \
-echo.c \
-env.c \
-unset.c \
-redirections.c \
-cd.c
+./execution/exec.c \
+./execution/execve.c \
+./execution/execve2.c \
+./execution/exit.c \
+./execution/export.c \
+./execution/echo.c \
+./execution/env.c \
+./execution/unset.c \
+./execution/redirections.c \
+./execution/small.c \
+./execution/cd.c \
+./execution/export2.c \
+./execution/export3.c \
+./execution/execve3.c
 
 OBJ_DIR = objs
 

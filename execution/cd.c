@@ -6,12 +6,12 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:42:54 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/03 17:22:39 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*find_home(void)
 {

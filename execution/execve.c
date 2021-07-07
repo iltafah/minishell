@@ -6,41 +6,23 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:57:19 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/03 20:14:50 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 #include "file.h"
 
-void	execv_main_loop(t_rand *num, t_ast *scn, t_varso *vars)
+void	free_vars(t_rand *num, t_varso *vars)
 {
+	num->i = 0;
 	while (num->tab[num->i])
-	{
-		num->y = 0;
-		num->x = 0;
-		if (!check_command(scn, num->sticker, vars, num))
-			return ;
-		if (!stat(num->tab[num->i], &num->buff))
-		{
-			num->pid = fork();
-			if (num->pid == 0)
-			{
-				if (execve(num->tab[num->i], scn->node.data.args_vec.elements,
-						vars->export.env) == -1)
-					exit(1);
-			}
-			waitpid(num->pid, &num->status, 0);
-			if (WIFEXITED(num->status))
-				g_vars.last_err_num = WEXITSTATUS(num->status);
-			if (WEXITSTATUS(num->status))
-				num->y = 1;
-			else if (!WEXITSTATUS(num->status))
-				change_value("_", num->tab[num->i]);
-			break ;
-		}
-		num->i++;
-	}
+		free(num->tab[num->i++]);
+	free(num->tab);
+	num->i = 0;
+	while (vars->export.env[num->i])
+		free(vars->export.env[num->i++]);
+	free(vars->export.env);
 }
 
 void	with_path(char *path, t_varso *vars, t_ast *scn)
@@ -64,19 +46,9 @@ void	with_path(char *path, t_varso *vars, t_ast *scn)
 	if (stat(num.tab[num.i], &num.buff))
 		num.y = 1;
 	execv_errors(&num, scn, num.buff);
-	// num.i = 0;
-	// while (vars->export.env[num.i])
-	// {
-	// 	if (vars->export.env[num.i++]);
-	// 	free(vars->export.env[num.i++]);
-	// }
-	// free(vars->export.env);
 	if (k)
 		free(num.sticker);
-	num.i = 0;
-	while (num.tab[num.i])
-		free(num.tab[num.i++]);
-	free(num.tab);
+	free_vars(&num, vars);
 }
 
 void	execute_path(int *y, t_ast *scn, t_varso *vars)
@@ -96,10 +68,6 @@ void	execute_path(int *y, t_ast *scn, t_varso *vars)
 		g_vars.last_err_num = WEXITSTATUS(status);
 	if (WEXITSTATUS(status))
 		*y = 1;
-	else if (!WEXITSTATUS(status))
-	{
-		change_value("_", scn->node.data.args_vec.elements[0]);
-	}
 }
 
 void	without_path_slash(t_varso *vars, t_ast *scn)

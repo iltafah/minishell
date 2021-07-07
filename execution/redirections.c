@@ -6,12 +6,12 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 11:02:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/03 13:20:07 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
-#include "minishell.h"
+#include "../minishell.h"
 
 void	herdoc(t_redirection_vars *red)
 {
@@ -35,23 +35,21 @@ void	append(t_redirection_vars *red)
 
 int	red_output(t_redirection_vars *red)
 {
-	red->fd = open(red->head.redirections->file,
-			O_CREAT | O_RDWR | O_TRUNC, 0644);
-	// printf("|%s|\n", red->head.redirections->file);
-	// if (red->fd == -1 && red->head.redirections->file[0] == '\0')
-	// {
-	// 	printf("bash: %s: ambiguous redirect\n", red->head.redirections->file);
-	// 	return (0);
-	// }
-	if (red->fd == -1)
-	{
-		printf("minishell: : No such file or directory\n");
-		return (0);
+	if (red->head.redirections->file[0] != '$')
+	{	
+		red->fd = open(red->head.redirections->file,
+				O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if (red->fd == -1)
+		{
+			printf("minishell: : No such file or directory\n");
+			return (0);
+		}
+		if (red->head.args_vec.used_size)
+			dup2(red->fd, 1);
+		close(red->fd);
+		return (1);
 	}
-	if (red->head.args_vec.used_size)
-		dup2(red->fd, 1);
-	close(red->fd);
-	return (1);
+	return (0);
 }
 
 int	red_input(t_redirection_vars *red)

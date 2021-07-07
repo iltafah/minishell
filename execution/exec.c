@@ -6,12 +6,12 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 12:56:09 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/03 19:47:50 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
-#include "minishell.h"
+#include "../minishell.h"
 #include <string.h>
 
 void	builtins(t_ast *scn, t_varso *vars)
@@ -42,9 +42,11 @@ void	builtins(t_ast *scn, t_varso *vars)
 void	execution(t_ast *scn, int num_pipes)
 {
 	char	*first_arg;
+	int		last_i;
 	char	cwd[PATH_MAX];
 	t_varso	vars;
 
+	last_i = scn->node.data.args_vec.last_index;
 	getcwd(cwd, sizeof(cwd));
 	vars.prev_path = cwd;
 	signal(SIGQUIT, handle_quit);
