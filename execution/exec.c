@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 12:56:09 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/06 13:47:08 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 13:02:18 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	builtins(t_ast *scn, t_varso *vars)
 
 	first_arg = scn->node.data.args_vec.elements[0];
 	if (!ft_strcmp(first_arg, "echo"))
-		echo(scn->node.data.args_vec.elements, vars);
+		echo(scn->node.data.args_vec.elements);
 	else if (!ft_strcmp(first_arg, "cd"))
 		cd(scn->node.data.args_vec.elements, vars);
 	else if (!ft_strcmp(first_arg, "pwd"))
@@ -28,7 +28,7 @@ void	builtins(t_ast *scn, t_varso *vars)
 	else if (!ft_strcmp(first_arg, "export"))
 		export(scn->node.data.args_vec.elements, vars, scn);
 	else if (!ft_strcmp(first_arg, "unset"))
-		unset(scn, vars);
+		unset(scn);
 	else if (!ft_strcmp(first_arg, "env"))
 		enviro();
 	else if (!ft_strcmp(first_arg, "exit"))
@@ -39,9 +39,8 @@ void	builtins(t_ast *scn, t_varso *vars)
 	}
 }
 
-void	execution(t_ast *scn, int num_pipes)
+void	execution(t_ast *scn)
 {
-	char	*first_arg;
 	int		last_i;
 	char	cwd[PATH_MAX];
 	t_varso	vars;
@@ -50,7 +49,6 @@ void	execution(t_ast *scn, int num_pipes)
 	getcwd(cwd, sizeof(cwd));
 	vars.prev_path = cwd;
 	signal(SIGQUIT, handle_quit);
-	// signal(SIGINT, handle_c);
 	if (scn->node.data.redirections)
 	{
 		if (!check_redis(scn))

@@ -6,30 +6,32 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:55:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 13:08:39 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "file.h"
 
-int	check_exit_num(char *num, int j, t_ast *scn)
+int	check_exit_num(char *num, int j)
 {
 	char	*max_long;
+	int		len;
 
 	max_long = "9223372036854775807";
-	if (num[0] != '-' && (ft_strlen(num) != j || (ft_strlen(num) > 19
-				&& num[0] != '0') || (ft_strlen(num) == 19
-				&& ft_strncmp(max_long, num, ft_strlen(num)) < 0)))
+	len = ft_strlen(num);
+	if (num[0] != '-' && (len != j || (len > 19 && num[0] != '0')
+			|| (len == 19 && ft_strncmp(max_long, num, len) < 0)))
 	{
-		printf("exit\nminishell: exit: %s: numeric argument required\n", num);
+		print_three("exit\nminishell: exit: ", num,
+			": numeric argument required\n");
 		exit(255);
 	}
-	else if (num[0] == '-' && (ft_strlen(num) != j || (ft_strlen(num) > 20
-				&& num[0] != '0') || (ft_strlen(num) == 20
-				&& ft_strncmp(max_long, num, ft_strlen(num)) < 0)))
+	else if (num[0] == '-' && (len != j || (len > 20 && num[0] != '0')
+			|| (len == 20 && ft_strncmp(max_long, num, len) < 0)))
 	{
-		printf("exit\nminishell: exit: %s: numeric argument required\n", num);
+		print_three("exit\nminishell: exit: ", num,
+			 ": numeric argument required\n");
 		exit(255);
 	}
 	else
@@ -51,27 +53,30 @@ void	one_exit_arg(t_ast *scn, int i)
 			break ;
 		j++;
 	}
-	check_exit_num(scn->node.data.args_vec.elements[i], j, scn);
+	check_exit_num(scn->node.data.args_vec.elements[i], j);
 }
 
 void	multi_exit_arg(t_ast *scn, int i)
 {
 	int	j;
+	int	len;
 
 	j = 1;
+	len = ft_strlen(scn->node.data.args_vec.elements[i]);
 	while (scn->node.data.args_vec.elements[i][j])
 	{
 		if (!ft_isdigit(scn->node.data.args_vec.elements[i][j]))
 			break ;
 		j++;
 	}
-	if (ft_strlen(scn->node.data.args_vec.elements[i]) != j)
+	if (len != j)
 	{
-		printf("exit\nminishell: exit: %s: numeric argument required\n",
-			scn->node.data.args_vec.elements[i]);
+		print_error("exit\nminishell: exit: ");
+		print_error(scn->node.data.args_vec.elements[i]);
+		print_error(": numeric argument required\n");
 		exit(ft_atoi(scn->node.data.args_vec.elements[i]));
 	}
-	printf("exit\nminishell: exit: too many arguments\n");
+	print_error("exit\nminishell: exit: too many arguments\n");
 	g_vars.last_err_num = 1;
 }
 
@@ -79,8 +84,6 @@ void	check_exit(t_ast *scn)
 {
 	int		i;
 	int		j;
-	char	*nb;
-	int		ex_num;
 
 	j = 0;
 	i = 1;

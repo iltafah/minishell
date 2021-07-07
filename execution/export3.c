@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 10:49:58 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/06 10:39:56 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 13:10:40 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,33 @@ int	check_args2(int lp, char **a)
 			&& a[lp][ft_strlen(a[lp]) - 1] != '=')))
 			&& a[lp][0] != '_' && a[lp][ft_strlen(a[lp]) - 1] != '_')
 	{
-		printf("minishell: export: '%s': not a valid identifier\n", a[lp]);
+		print_error("minishell: export: '");
+		print_error(a[lp]);
+		print_error("': not a valid identifier\n");
 		g_vars.last_err_num = 1;
 		return (0);
 	}
 	return (1);
 }
 
-int	check_args(char **a, t_ast *all, int x, int lp)
+int	check_middle(char *s)
+{
+	int	i;
+
+	i = 1;
+	while (s[i] && s[i] != '=' && i < (int)ft_strlen(s)
+		&& ft_strncmp(s + i, "+=", 2))
+	{
+		if (!ft_isalnum(s[i]))
+		{
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	check_args(char **a, int lp)
 {
 	t_expo_vars	cv;
 
@@ -34,18 +53,34 @@ int	check_args(char **a, t_ast *all, int x, int lp)
 	if (a[lp][0] == '-')
 	{
 		cv.subbed = ft_substr(a[lp], 0, 2);
-		printf("minishell: export: %s: invalid option\n", cv.subbed);
-		printf("export: usage: export [-nf] [name[=value] ...] or export -p\n");
+		print_error("minishell: export: ");
+		print_error(cv.subbed);
+		print_error(": invalid option\nexport: usage: ");
+		print_error("export [-nf] [name[=value] ...] or export -p\n");
 		g_vars.last_err_num = 2;
-		free(cv.subbed );
+		free(cv.subbed);
 	}
-	else if (ft_isdigit(a[lp][0]))
+	else if (ft_isdigit(a[lp][0]) || !check_middle(a[lp]))
 	{
-		printf("minishell: export: `%s': not a valid identifier\n", a[lp]);
+		print_error("minishell: export: `");
+		print_error(a[lp]);
+		print_error("': not a valid identifier\n");
 		g_vars.last_err_num = 1;
 		return (0);
 	}
 	else
 		return (check_args2(lp, a));
 	return (1);
+}
+
+void	print_error(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		write(2, &s[i], 1);
+		i++;
+	}
 }

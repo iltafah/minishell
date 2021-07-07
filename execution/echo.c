@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:45:42 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 12:52:03 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 void	echo_n(int *j, int num_args, char **v, int *i)
 {
 	int	k;
-	int	h;
 
 	k = 0;
 	while (*j < num_args && !ft_strncmp(v[*j], "-n", 2))
@@ -38,7 +37,7 @@ void	echo_n(int *j, int num_args, char **v, int *i)
 	}
 }
 
-void	echo(char **v, t_varso *vars)
+void	echo(char **v)
 {
 	int	i;
 	int	j;
@@ -78,4 +77,24 @@ int	check_echo(char **v)
 		return (0);
 	}
 	return (i);
+}
+
+char	*find_home(void)
+{
+	char	*home;
+	char	cwd[PATH_MAX];
+	int		i;
+	int		slash;
+
+	i = 0;
+	slash = 2;
+	getcwd(cwd, sizeof(cwd));
+	while (cwd[i] && slash)
+	{
+		i++;
+		if (cwd[i] == '/')
+			slash--;
+	}
+	home = ft_substr(cwd, 0, i);
+	return (home);
 }

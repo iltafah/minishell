@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:37:51 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/06 13:46:14 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/06 18:05:04 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	pwd(void)
 	else
 	{
 		g_vars.last_err_num = 1;
-		printf("error retrieving current directory: getcwd: cannot ");
-		printf("access parent directories: No such file or directory\n");
+		print_error("error retrieving current directory: getcwd: cannot ");
+		print_error("access parent directories: No such file or directory\n");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:48:41 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/06 09:32:04 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 12:58:12 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	export(char **args, t_varso *vars, t_ast *sim_cmd_nd)
 	int	i;
 	int	x;
 	int	lp;
-	int	in;
 
 	x = 0;
 	i = 0;
@@ -73,8 +72,6 @@ void	empty_expo(t_varso *vars)
 {
 	int		i;
 	int		j;
-	char	*tmp;
-	char	lost;
 
 	i = 0;
 	j = 0;

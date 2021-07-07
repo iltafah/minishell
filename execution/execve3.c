@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 10:54:02 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/06 11:00:15 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 12:33:55 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,11 @@ void	execv_main_loop(t_rand *num, t_ast *scn, t_varso *vars)
 		}
 		num->i++;
 	}
+}
+
+void	print_three(char *s1, char *s2, char *s3)
+{
+	print_error(s1);
+	print_error(s2);
+	print_error(s3);
 }

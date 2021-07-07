@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 11:11:21 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/06 13:43:25 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 13:00:45 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,31 +121,29 @@ int		ft_strcmp(const char *s1, const char *s2);
 char	*find_home(void);
 void	cd(char **args, t_varso *vars);
 void	change_value(char *name, char *new_value);
-void	check_path(char **path, t_varso *vars, int *f);
-void	echo(char **v, t_varso *vars);
+void	check_path(char **path, int *f);
+void	echo(char **v);
 int		check_echo(char **v);
 void	swap_values(char **s1, char **s2);
 void	sort_expo(t_varso *vars);
 void	empty_expo(t_varso *vars);
-int		check_args(char **args, t_ast *all, int x, int lp);
 void	add_to_vars(char *add, int x);
-void	unset(t_ast *scn, t_varso *vars);
+void	unset(t_ast *scn);
 void	enviro(void);
 void	exv(t_ast *scn, t_varso *vars);
 void	add_one(t_varso *vars);
-void	merge_env(t_ast *scn, t_varso *vars);
+void	merge_env(t_varso *vars);
 int		check_redis(t_ast *scn);
 void	ft_printf_string(char *s);
 void	error_msg(char *s);
 void	check_exit(t_ast *scn);
-int		check_exit_num(char *num, int j, t_ast *scn);
+int		check_exit_num(char *num, int j);
 void	builtins(t_ast *scn, t_varso *vars);
 void	pwd(void);
 void	handle_c(int sig_num);
 void	handle_quit(int sig_num);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*join_free(char *s1, char *s2, int index);
-void	merge_env(t_ast *scn, t_varso *vars);
 void	add_one(t_varso *vars);
 int		check_command(t_ast *scn, char *sticker, t_varso *vars, t_rand *num);
 void	execv_errors(t_rand *num, t_ast *scn, struct stat buff);
@@ -155,8 +153,10 @@ void	normal_expo(char **args, int lp, int x);
 void	swap_values(char **s1, char **s2);
 void	export_add_vars(t_ast *scn, char **args);
 int		check_args2(int lp, char **a);
-int		check_args(char **a, t_ast *all, int x, int lp);
+int		check_args(char **a, int lp);
 void	execv_main_loop(t_rand *num, t_ast *scn, t_varso *vars);
 void	ex(t_rand *num, t_varso *vars, t_ast *scn);
+void	print_error(char *s);
+void	print_three(char *s1, char *s2, char *s3);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:57:19 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/06 13:13:16 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 12:56:29 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	with_path(char *path, t_varso *vars, t_ast *scn)
 		num.sticker = ft_strjoin("/", scn->node.data.args_vec.elements[0]);
 		k = 1;
 	}
-	merge_env(scn, vars);
+	merge_env(vars);
 	num.i = 0;
 	execv_main_loop(&num, scn, vars);
 	if (stat(num.tab[num.i], &num.buff))
@@ -73,25 +73,25 @@ void	execute_path(int *y, t_ast *scn, t_varso *vars)
 void	without_path_slash(t_varso *vars, t_ast *scn)
 {
 	int			y;
-	pid_t		pid;
 	struct stat	buff;
-	int			status;
 
 	y = 0;
-	merge_env(scn, vars);
+	merge_env(vars);
 	if (!stat(scn->node.data.args_vec.elements[0], &buff))
 		execute_path(&y, scn, vars);
 	if (!stat(scn->node.data.args_vec.elements[0], &buff) && y)
 	{	
 		g_vars.last_err_num = 126;
-		printf("minishell: %s: is a directory\n",
-			scn->node.data.args_vec.elements[0]);
+		print_error("minishell: ");
+		print_error(scn->node.data.args_vec.elements[0]);
+		print_error(": is a directory\n");
 	}
 	else if (stat(scn->node.data.args_vec.elements[0], &buff))
 	{
 		g_vars.last_err_num = 127;
-		printf("minishell: %s: No such file or directory\n",
-			scn->node.data.args_vec.elements[0]);
+		print_error("minishell: ");
+		print_error(scn->node.data.args_vec.elements[0]);
+		print_error(": No such file or directory\n");
 	}
 }
 
@@ -102,19 +102,14 @@ void	exv(t_ast *scn, t_varso *vars)
 	getcwd(exv.cwd, sizeof(exv.cwd));
 	exv.path = find_env("PATH");
 	if (exv.path && scn->node.data.args_vec.elements[0][0])
-	{
 		with_path(exv.path, vars, scn);
-		// int i = 0;
-		// while (i <= g_vars.env_table.name.last_index)
-		// {
-		// 	printf("%s=%s\n", g_vars.env_table.name.elements[i], g_vars.env_table.value.elements[i]);
-		// 	i++;
-		// }
-	}
 	else if (!exv.path && scn->node.data.args_vec.elements[0][0] == '/')
 		without_path_slash(vars, scn);
 	else
-		printf("minishell : %s: command not found\n",
-			scn->node.data.args_vec.elements[0]);
+	{
+		print_error("minishell: ");
+		print_error(scn->node.data.args_vec.elements[0]);
+		print_error(": command not found\n");
+	}
 	return ;
 }
