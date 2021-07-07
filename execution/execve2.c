@@ -6,17 +6,17 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:47:17 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 12:55:45 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
 #include "../minishell.h"
 
-void	merge_env(t_ast *scn, t_varso *vars)
+void	merge_env(t_varso *vars)
 {
 	int		i;
-	char	*tmp;
+	char	*hello;
 
 	i = 0;
 	vars->export.env = (char **)malloc(sizeof(char *)
@@ -25,10 +25,11 @@ void	merge_env(t_ast *scn, t_varso *vars)
 	{
 		vars->export.env[i] = ft_strjoin(g_vars.env_table.name.elements[i],
 				"=");
+		hello = g_vars.env_table.value.elements[i];
 		if (!g_vars.env_table.value.elements[i])
-			g_vars.env_table.value.elements[i] = "";
+			hello = "";
 		vars->export.env[i] = join_free(vars->export.env[i],
-				g_vars.env_table.value.elements[i], 0);
+				hello, 0);
 		i++;
 	}
 	vars->export.env[i] = NULL;
@@ -74,19 +75,17 @@ void	check_command2(char *sticker, t_varso *vars, t_rand *num, t_ast *scn)
 
 int	check_command(t_ast *scn, char *sticker, t_varso *vars, t_rand *num)
 {
-	int		x;
-
 	if (!ft_strcmp(scn->node.data.args_vec.elements[0], "./"))
 	{
-		printf("minishell: ./: is a directory\n");
+		print_error("minishell: ./: is a directory\n");
 		g_vars.last_err_num = 126;
 		return (0);
 	}
 	else if (!ft_strcmp(scn->node.data.args_vec.elements[0], "."))
 	{
 		g_vars.last_err_num = 2;
-		printf("minishell: .: filename argument required\n");
-		printf(".: usage: . filename [arguments]\n");
+		print_error("minishell: .: filename argument required\n");
+		print_error(".: usage: . filename [arguments]\n");
 		return (0);
 	}
 	else
@@ -101,8 +100,8 @@ void	execv_errors(t_rand *num, t_ast *scn, struct stat buff)
 	if (stat(num->tab[num->i], &buff) && scn->node.data.args_vec.elements[0][0]
 	!= '/' && ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2))
 	{
-		printf("minishell : %s: command not found\n",
-			scn->node.data.args_vec.elements[0]);
+		print_three("minishell: ", scn->node.data.args_vec.elements[0],
+			(": command not found\n"));
 		g_vars.last_err_num = 127;
 	}
 	else if ((scn->node.data.args_vec.elements[0][0] == '/'
@@ -112,14 +111,14 @@ void	execv_errors(t_rand *num, t_ast *scn, struct stat buff)
 		if (!stat(num->tab[num->i], &buff))
 		{
 			g_vars.last_err_num = 126;
-			printf("minishell: %s: is a directory\n",
-				scn->node.data.args_vec.elements[0]);
+			print_three("minishell: ", scn->node.data.args_vec.elements[0],
+				(": is a directory\n"));
 		}
 		else
 		{
 			g_vars.last_err_num = 127;
-			printf("minishell: %s: No such file or directory\n",
-				scn->node.data.args_vec.elements[0]);
+			print_three("minishell: ", scn->node.data.args_vec.elements[0],
+				": No such file or directory\n");
 		}
 	}
 }

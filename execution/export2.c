@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 10:44:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 10:49:20 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 13:10:14 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ void	swap_values(char **s1, char **s2)
 
 void	normal_expo(char **args, int lp, int x)
 {
+	int	len;
+
+	len = ft_strlen(args[lp]);
 	g_vars.env_table.name.add_new_element(&g_vars.env_table.name,
 	ft_substr(args[lp], 0, x));
-	if (ft_strlen(args[lp]) == x && !args[lp][x] && args[lp][x - 1] != '=')
+	if (len == x && !args[lp][x] && args[lp][x - 1] != '=')
 	{
 		g_vars.env_table.value.add_new_element(
 			&g_vars.env_table.value, NULL);
@@ -33,29 +36,32 @@ void	normal_expo(char **args, int lp, int x)
 	else
 	{
 		g_vars.env_table.value.add_new_element(&g_vars.env_table.value,
-		ft_substr(args[lp], x + 1, ft_strlen(args[lp]) - x));
+		ft_substr(args[lp], x + 1, len - x));
 	}
 }
 
 void	export_add(char **args, int lp, int x)
 {
-	int	i;
-	int	in;
+	int		i;
+	int		in;
+	char	*tmp;
 
 	i = 0;
 	in = 0;
 	while (i <= g_vars.env_table.name.last_index)
 	{
-		if (!ft_strcmp(g_vars.env_table.name.elements[i],
-				ft_substr(args[lp], 0, x)) && args[lp][x])
+		tmp = ft_substr(args[lp], 0, x);
+		if (!ft_strcmp(g_vars.env_table.name.elements[i], tmp)
+			&& args[lp][x])
 		{
 			g_vars.env_table.value.replace_element_at_index(
 			&g_vars.env_table.value, ft_strdup(args[lp] + x + 1), i);
 			in = 1;
 		}
 		else if (!ft_strcmp(g_vars.env_table.name.elements[i],
-				ft_substr(args[lp], 0, x)) && !args[lp][x])
+				tmp) && !args[lp][x])
 			in = 1;
+		free(tmp);
 		i++;
 	}
 	if (!in)
@@ -89,7 +95,7 @@ void	export_add_vars(t_ast *scn, char **args)
 		while (args[lp][x] && args[lp][x] != '=' &&
 		ft_strncmp(args[lp] + x, "+=", 2))
 			x++;
-		if (check_args(args, scn, x, lp))
+		if (check_args(args, lp))
 		{	
 			if (!ft_strncmp(args[lp] + x, "+=", 2))
 				add_to_vars(args[lp], x);

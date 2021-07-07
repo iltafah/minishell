@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:17 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/07 12:39:25 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/07 20:25:38 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_trie_node
 typedef	struct s_tab_vars
 {
 	int			curr_index;
-	int			prec_index;
+	int			max_file_case_len;
 	char		*dir_to_search;
 	char		*file_to_match;
 	t_str_vec	matched_files;

@@ -6,32 +6,33 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:52:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/05 15:32:58 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 13:01:40 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "file.h"
 
-void	remove_variable(char **a, int i, int x)
+void	remove_variable(char **a, int i)
 {
 	int	j;
 
 	j = 0;
 	while (j <= g_vars.env_table.name.last_index)
 	{
-		if (!(ft_strncmp(a[i], g_vars.env_table.name.elements[j], x)))
+		if (!(ft_strcmp(a[i], g_vars.env_table.name.elements[j])))
 		{
 			g_vars.env_table.name.delete_element_at_index(
 				&g_vars.env_table.name, j);
 			g_vars.env_table.value.delete_element_at_index(
 				&g_vars.env_table.value, j);
+			return ;
 		}
 		j++;
 	}
 }
 
-void	unset(t_ast *scn, t_varso *vars)
+void	unset(t_ast *scn)
 {
 	t_unset_vars	u;
 
@@ -42,20 +43,17 @@ void	unset(t_ast *scn, t_varso *vars)
 		u.x = 0;
 		while (u.a[u.i][u.x] && u.a[u.i][u.x] != '=')
 			u.x++;
-		if ((u.x == 1 && u.a[u.i][0] && u.a[u.i][0] == '='))
-		{
-			printf("minishell: unset: `=': not a valid identifier\n");
-			g_vars.last_err_num = 1;
-		}
 		if (!ft_isalpha(u.a[u.i][0])
 		|| (!ft_isalpha(u.a[u.i][ft_strlen(u.a[u.i]) - 1])
 		&& !ft_isdigit(u.a[u.i][ft_strlen(u.a[u.i]) - 1])))
 		{
-			printf("minishell: unset: '%s': not a valid identifier\n", u.a[u.i]);
+			print_error("minishell: '");
+			print_error(u.a[u.i]);
+			print_error("': not a valid identifier\n");
 			g_vars.last_err_num = 1;
 		}
 		else
-			remove_variable(u.a, u.i, u.x);
+			remove_variable(u.a, u.i);
 		u.i++;
 	}
 }

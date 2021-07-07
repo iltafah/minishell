@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:46:57 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/14 10:46:09 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/07 22:05:54 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	show_new_prompt(void)
 	t_vchar_vec		*history_vec;
 
 	history_vec = &g_vars.rdl_vars.history_vec;
+	move_cursor_to_end_of_printed_line(&g_vars.rdl_vars);
+	clear_curr_line_after_and_below_cursor(&g_vars.rdl_vars);
 	quit_highlighting_mode(&g_vars.rdl_vars, enter);
 	g_vars.rdl_vars.history_vec.delete_last_element(history_vec);
 	add_empty_char_vec_to_history_vec(history_vec);

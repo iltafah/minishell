@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:36:47 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/05 14:22:22 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 12:53:35 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_gvars				g_vars;
 char	*get_prompt_name(void);
 char	*get_curr_dir_name(void);
 char	*treat_heredocs(char *delimiter);
-void	execution(t_ast *scn, int num_pipes);
+void	execution(t_ast *scn);
 int		ft_strcmp(const char *s1, const char *s2);
 void	change_value(char *name, char *new_value);
 
