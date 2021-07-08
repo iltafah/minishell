@@ -6,11 +6,11 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 11:02:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/07 12:30:37 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 21:43:48 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "file.h"
+#include "./file.h"
 #include "../minishell.h"
 
 void	herdoc(t_redirection_vars *red)

@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 19:32:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/07 12:42:14 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/07 20:02:05 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	without_pipes(t_ast *curr_simple_cmd, t_piping num, t_ast *pipeline_seq)
 		num.dup02 = dup(0);
 		expand_curr_cmd(curr_simple_cmd);
 		curr_data = curr_simple_cmd->node.dir.bottom;
-		execution(curr_data, num.num_pipes);
+		execution(curr_data);
 		dup2(num.dup1, 1);
 		dup2(num.dup02, 0);
 		close(num.dup1);
@@ -207,7 +207,7 @@ void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq)
 			}
 			expand_curr_cmd(curr_simple_cmd);
 			curr_data = curr_simple_cmd->node.dir.bottom;
-			execution(curr_data, num->num_pipes);
+			execution(curr_data);
 			exit(g_vars.last_err_num);
 		}
 		curr_simple_cmd = get_curr_smpl_cmd_node(pipeline_seq);
