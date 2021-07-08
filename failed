@@ -32,3 +32,9 @@ cd /////free
 export b=lol export b+=haha b-=ha
 echo hi > $PWD 
 echo hi | grep hi | sort | export = > f1
+
+
+
+//////leaks///////////////
+suggestions
+cat << kk

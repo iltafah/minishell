@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 21:47:39 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/18 21:47:57 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/06 20:33:39 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_dollar_value(char *name)
 		while (name_vec.elements[i])
 		{
 			if (strcmp(name, name_vec.elements[i]) == 0)
-				value = value_vec.elements[i];
+				value = ft_strdup(value_vec.elements[i]);
 			i++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:43 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/02 12:56:39 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/07 21:54:28 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,39 +51,22 @@ void	initialize_capabilities(t_capability *capability)
 	capability->leave_standout_mode = tgetstr("se", NULL);
 }
 
-void	initialize_printing_methods(t_rdline *rdl_vars)
+void	initialize_rdl_vars_second_part(t_rdline *rdl_vars)
 {
-	char	*value;
-
-	value = getenv("SYNTAX_HIGHLIGHTING");
-	if (value == NULL)
-		rdl_vars->syntax_highlighting = off;
-	else
-	{
-		if (strcmp(value, "ON") == 0)
-			rdl_vars->syntax_highlighting = on;
-		else
-			rdl_vars->syntax_highlighting = off;
-	}
-	value = getenv("AUTO_SUGGESTIONS");
-	if (value == NULL)
-		rdl_vars->auto_suggestions = off;
-	else
-	{
-		if (strcmp(value, "ON") == 0)
-			rdl_vars->auto_suggestions = on;
-		else
-			rdl_vars->auto_suggestions = off;
-	}
-}
-
-void	initialize_tab_vars(t_tab_vars *vars)
-{
-	vars->curr_index = 0;
-	vars->printd_matched_file_len = 0;
-	vars->dir_to_search = NULL;
-	vars->file_to_match = NULL;
-	// initialize_vec_content(&vars->matched_files);
+	rdl_vars->reverse_video_mode = 0;
+	rdl_vars->reverse_video_mode = 0;
+	rdl_vars->curr_hilitd_char_index = 0;
+	rdl_vars->starting_hilitd_colm = 0;
+	rdl_vars->starting_hilitd_row = 0;
+	rdl_vars->starting_hilitd_index = 0;
+	rdl_vars->beg_hilitd_index = 0;
+	rdl_vars->last_hilitd_index = 0;
+	rdl_vars->previous_key = 0;
+	rdl_vars->tab_mode = 0;
+	rdl_vars->hilitd_txt = NULL;
+	rdl_vars->line = NULL;
+	rdl_vars->prompt = NULL;
+	rdl_vars->old_history = NULL;
 }
 
 void	initialize_rdl_vars(t_rdline *rdl_vars)
@@ -100,22 +83,9 @@ void	initialize_rdl_vars(t_rdline *rdl_vars)
 	rdl_vars->width_of_screen = 0;
 	rdl_vars->matched_history_index = 0;
 	rdl_vars->is_matched_history = 0;
-	rdl_vars->reverse_video_mode = 0;
-	rdl_vars->reverse_video_mode = 0;
-	rdl_vars->curr_hilitd_char_index = 0;
-	rdl_vars->starting_hilitd_colm = 0;
-	rdl_vars->starting_hilitd_row = 0;
-	rdl_vars->starting_hilitd_index = 0;
-	rdl_vars->beg_hilitd_index = 0;
-	rdl_vars->last_hilitd_index = 0;
-	rdl_vars->previous_key = 0;
-	rdl_vars->tab_mode = 0;
-	rdl_vars->hilitd_txt = NULL;
-	rdl_vars->line = NULL;
-	rdl_vars->prompt = NULL;
-	rdl_vars->old_history = NULL;
-	initialize_tab_vars(&rdl_vars->tab_vars);
+	initialize_rdl_vars_second_part(rdl_vars);
 	rdl_vars->key_seq_trie = initialize_key_seq_trie();
+	initialize_tab_vars(&rdl_vars->tab_vars);
 	initialize_vec_of_char_vec(&rdl_vars->history_vec);
 	initialize_vec_of_int(&rdl_vars->old_curs_colm_pos_stack);
 	initialize_vec_of_int(&rdl_vars->old_curs_row_pos_stack);

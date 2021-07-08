@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:42:50 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/20 14:54:34 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/05 12:54:21 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ void	vector_free(t_str_vec *vec)
 
 	i = 0;
 	while (i < vec->used_size)
-		free(vec->elements[i++]);
+	{
+		free(vec->elements[i]);
+		vec->elements[i++] = NULL;
+	}
 	free(vec->elements);
+	vec->elements = NULL;
 }

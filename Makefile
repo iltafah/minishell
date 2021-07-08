@@ -95,6 +95,7 @@ vectors/vector_of_string/replace_element_at_index.c \
 ./readline/key_actions_funcs/start_right_arrow_action.c \
 ./readline/key_actions_funcs/start_shift_left_arrow_action.c \
 ./readline/key_actions_funcs/start_shift_right_arrow_action.c \
+./readline/key_actions_funcs/start_tab_action.c \
 ./readline/key_actions_funcs/start_up_arrow_action.c \
 ./readline/load_history_file_to_vec.c \
 ./readline/move_cursor_to_funcs/move_cursor_end_of_prec_line.c \
@@ -132,6 +133,18 @@ vectors/vector_of_string/replace_element_at_index.c \
 ./readline/syntax_highlighting_funcs/check_if_cmd_exist.c \
 ./readline/syntax_highlighting_funcs/check_if_file_exist.c \
 ./readline/syntax_highlighting_funcs/print_with_syntax_highlighting.c \
+./readline/syntax_highlighting_funcs/select_printing_method.c \
+./readline/tab_selection_funcs/enter_tab_mode.c \
+./readline/tab_selection_funcs/erase_prec_file.c \
+./readline/tab_selection_funcs/free_tab_vars.c \
+./readline/tab_selection_funcs/get_dir_to_search.c \
+./readline/tab_selection_funcs/get_file_to_match.c \
+./readline/tab_selection_funcs/get_matched_files.c \
+./readline/tab_selection_funcs/get_max_len.c \
+./readline/tab_selection_funcs/initialize_tab_vars.c \
+./readline/tab_selection_funcs/print_list_of_matched_files.c \
+./readline/tab_selection_funcs/print_matched_file.c \
+./readline/tab_selection_funcs/select_next_file.c \
 ./readline/text_highlighting_funcs/copy_highlighted_text.c \
 ./readline/text_highlighting_funcs/cut_highlighted_text.c \
 ./readline/text_highlighting_funcs/determine_beg_last_highlighted_text_index.c \
@@ -141,7 +154,7 @@ vectors/vector_of_string/replace_element_at_index.c \
 ./readline/text_highlighting_funcs/right_highlight.c \
 ./readline/text_highlighting_funcs/start_highlighting_mode.c \
 ./readline/update_cursor_data.c \
-./readline/usefull_history_vec_func.c\
+./readline/usefull_history_vec_func.c \
 ./execution/exec.c \
 ./execution/execve.c \
 ./execution/execve2.c \

@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/02 19:32:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/07 20:02:05 by iariss           ###   ########.fr       */
+/*   Created: 2021/07/08 08:49:57 by iariss            #+#    #+#             */
+/*   Updated: 2021/07/08 08:51:04 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #include "./minishell.h"
@@ -403,7 +404,7 @@ int		main(int argc, char **argv, char **env)
 			// 	temp_exit(&tokens_list, ast, line, prompt);
 			/////////////////////////////////
 	
-			// print_preorder(ast, 1, env_table);
+			// print_preorder(ast, 1, g_vars.env_table);
 
 			execute_test(ast);
 			/////////////////////////////////

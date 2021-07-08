@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_int_to_str.c                               :+:      :+:    :+:   */
+/*   free_tab_vars.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 19:29:41 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/06 20:33:34 by iltafah          ###   ########.fr       */
+/*   Created: 2021/07/07 21:40:34 by iltafah           #+#    #+#             */
+/*   Updated: 2021/07/07 21:40:48 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft.h"
-#include <stdio.h>
-char	*convert_int_to_str(int num)
-{
-	char	*str;
-	int		digits;
-	int		len;
+#include "../readline.h"
 
-	digits = count_digits(num);
-	len = digits + 1;
-	str = malloc(sizeof(char) * len);
-	str[digits] = '\0';
-	while (digits-- > 0)
-	{
-		str[digits] = (num % 10) + '0';
-		num /= 10;
-	}
-	return (str);
+void	free_tab_vars(t_tab_vars *tab_vars)
+{
+	if (tab_vars->dir_to_search != NULL)
+		free(tab_vars->dir_to_search);
+	if (tab_vars->file_to_match != NULL)
+		free(tab_vars->file_to_match);
+	tab_vars->matched_files.free(&tab_vars->matched_files);
 }

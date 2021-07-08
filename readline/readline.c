@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:14 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/04 15:10:30 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/07 21:49:58 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*read_line(char *prompt)
 		initialize_tty_device(rdl_vars);
 		initialize_termios_struct(&rdl_vars->original_termios_state);
 		initialize_capabilities(&rdl_vars->capability);
-		initialize_printing_methods(rdl_vars);
+		select_printing_method(rdl_vars);
 		load_history(rdl_vars);
 		is_initialized = true;
 	}

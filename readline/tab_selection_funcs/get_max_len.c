@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   get_max_len.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/30 10:54:37 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/01 13:49:51 by iariss           ###   ########.fr       */
+/*   Created: 2021/07/05 13:52:41 by iltafah           #+#    #+#             */
+/*   Updated: 2021/07/05 13:52:58 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "file.h"
-#include "minishell.h"
+#include "../readline.h"
 
-void	enviro(void)
+int		get_max_len(t_str_vec files)
 {
-	int	i;
+	int		i;
+	int		len;
+	int		curr_len;
 
 	i = 0;
-	while (i <= g_vars.env_table.name.last_index)
+	len = 0;
+	curr_len = 0;
+	while (i < files.used_size)
 	{
-		if (g_vars.env_table.value.elements[i] != NULL)
-		{
-			printf("%s=%s\n", g_vars.env_table.name.elements[i],
-				g_vars.env_table.value.elements[i]);
-		}
+		curr_len = ft_strlen(files.elements[i]);
+		if (curr_len > len)
+			len = curr_len;
 		i++;
 	}
+	return (len);
 }
