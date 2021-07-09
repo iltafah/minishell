@@ -6,13 +6,13 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 17:55:27 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/09 11:59:33 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 17:11:58 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-int		is_delimiter_quoted(char *delimiter, char **unquoted_delimiter)
+int	is_delimiter_quoted(char *delimiter, char **unquoted_delimiter)
 {
 	int			i;
 	int			is_quoted;

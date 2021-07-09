@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:35:38 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/08 18:04:44 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/09 17:12:19 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	expand_args_vec(t_str_vec *args_vec)
 	}
 }
 
-int		check_ambiguous_redirect(char *file)
+int	check_ambiguous_redirect(char *file)
 {
 	int		i;
 	char	*name;
@@ -53,7 +53,7 @@ int		check_ambiguous_redirect(char *file)
 	return (EXIST);
 }
 
-int		expand_redirection_list(t_redirection *rdir_list)
+int	expand_redirection_list(t_redirection *rdir_list)
 {
 	t_redirection	*curr_redir_node;
 
@@ -77,7 +77,7 @@ int		expand_redirection_list(t_redirection *rdir_list)
 	return (NONE);
 }
 
-int		expand_curr_cmd(t_ast *curr_simple_cmd)
+int	expand_curr_cmd(t_ast *curr_simple_cmd)
 {
 	int		error;
 	t_ast	*data;
