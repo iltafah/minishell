@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:09 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/07 21:57:24 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 12:13:44 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,9 @@
 
 # define SKIP continue
 
-enum 		e_restore {dont_restore, restore};
-enum 		e_is_found {not_found, found};
-enum 		e_is_on {off, on};
-
-// FILE *fd1;
-// FILE *fd2;
-
+enum		e_restore {dont_restore, restore};
+enum		e_is_found {not_found, found};
+enum		e_is_on {off, on};
 
 void		get_matched_files(t_tab_vars *tvars);
 int			get_max_len(t_str_vec files);
@@ -50,7 +46,6 @@ void		select_next_file(t_rdline *rdl_vars, t_tab_vars *tab_vars);
 void		enter_tab_mode(t_rdline *rdl_vars, t_tab_vars *tab_vars);
 void		free_tab_vars(t_tab_vars *tab_vars);
 void		select_printing_method(t_rdline *rdl_vars);
-
 
 int			put_char(int c);
 int			get_screen_width(void);

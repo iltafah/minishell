@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:17 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/07 20:25:38 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 12:14:38 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_trie_node
 	t_key				key;
 }				t_trie_node;
 
-typedef	struct s_tab_vars
+typedef struct s_tab_vars
 {
 	int			curr_index;
 	int			max_file_case_len;
@@ -69,7 +69,6 @@ typedef	struct s_tab_vars
 	t_str_vec	matched_files;
 	int			printd_matched_file_len;
 }				t_tab_vars;
-
 
 typedef struct s_capability
 {

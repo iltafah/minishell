@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 13:51:03 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/07 21:46:04 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 12:21:08 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	print_curr_file_with_colors(t_rdline *r_vars, t_tab_vars *t_vars, int i)
 	file_len = ft_strlen(t_vars->matched_files.elements[i]);
 	spaces = t_vars->max_file_case_len - file_len;
 	file_full_path = ft_strjoin(t_vars->dir_to_search,
-		t_vars->matched_files.elements[i]);
+			t_vars->matched_files.elements[i]);
 	stat(file_full_path, &file_stat);
+	free(file_full_path);
 	if (S_ISDIR(file_stat.st_mode))
 		write(1, PRP, ft_strlen(PRP));
 	else if (file_stat.st_mode & S_IXUSR)
@@ -45,7 +46,6 @@ void	print_curr_file_with_colors(t_rdline *r_vars, t_tab_vars *t_vars, int i)
 		file_len += 1;
 		spaces -= 1;
 	}
-	free(file_full_path);
 	print_spaces(spaces);
 	r_vars->curs_colm_pos += (file_len + spaces);
 }
@@ -60,8 +60,9 @@ void	print_file_with_hiliting(t_rdline *r_vars, t_tab_vars *t_vars, int i)
 	file_len = ft_strlen(t_vars->matched_files.elements[i]);
 	hilited_spaces = t_vars->max_file_case_len - file_len - 2;
 	file_full_path = ft_strjoin(t_vars->dir_to_search,
-		t_vars->matched_files.elements[i]);
+			t_vars->matched_files.elements[i]);
 	stat(file_full_path, &file_stat);
+	free(file_full_path);
 	tputs(r_vars->capability.enter_standout_mode, 1, put_char);
 	write(1, t_vars->matched_files.elements[i], file_len);
 	write(1, WHT, ft_strlen(WHT));

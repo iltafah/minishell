@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 16:40:58 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/07 21:57:22 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 11:28:32 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,36 +84,18 @@ void	process_input(t_rdline *rdl_vars, char *prompt)
 {
 	int		key;
 	char	c;
-	//////////////////////
-	
 
-	// fd1 = fopen("debug1", "w");
-	// fclose(fd1);
-	// fd1 = fopen("debug2", "w");
-	// fclose(fd2);
-	//////////////////////
 	key = none;
 	set_rdl_vars(rdl_vars, prompt);
 	print_prompt(rdl_vars);
 	while (read(STDIN_FILENO, &c, 1))
 	{
-		// fd1 = fopen("debug1", "a");
-		// fd2 = fopen("debug2", "a");
 		key = get_key(rdl_vars->key_seq_trie, c);
 		if (key == none || key == waiting)
 			SKIP ;
 		start_key_action(rdl_vars, key, c);
 		if (key == enter && rdl_vars->previous_key != disable_enter)
 			break ;
-
-		// fprintf(fd1, "curs pos (%d, %d)\n", rdl_vars->curs_colm_pos, rdl_vars->curs_row_pos);
-		// fflush(fd1);
-		// fprintf(fd2, "width of screen : %d\n", rdl_vars->width_of_screen);
-		// fflush(fd2);
-		// fclose(fd1);
-		// fclose(fd2);
 	}
 	free_array(&rdl_vars->old_history);
-	///////////////////////
-	///////////////////////
 }

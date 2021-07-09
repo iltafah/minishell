@@ -6,13 +6,13 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 13:52:41 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/05 13:52:58 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 12:18:28 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../readline.h"
 
-int		get_max_len(t_str_vec files)
+int	get_max_len(t_str_vec files)
 {
 	int		i;
 	int		len;

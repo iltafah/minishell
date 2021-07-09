@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:48:49 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:48:50 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 12:32:55 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	*get_highlighting_color(t_quotes *vars, char *line, int i, int *len)
 	return (color);
 }
 
-void	print_with_syntax_highlighting(t_rdline *rdl_vars, int option)
+static void	start_printing(t_rdline *rdl_vars)
 {
 	int				i;
 	int				len;
@@ -73,9 +73,6 @@ void	print_with_syntax_highlighting(t_rdline *rdl_vars, int option)
 	i = 0;
 	len = 0;
 	hstry_line = &rdl_vars->history_vec.elements[rdl_vars->l_i];
-	if (option == restore)
-		save_curr_cursor_pos(rdl_vars);
-	move_cursor_to_colum_and_row(rdl_vars, rdl_vars->prompt_len, 0);
 	initialize_quotes_vars(&syntax_vars);
 	while (i < hstry_line->used_size)
 	{
@@ -87,6 +84,17 @@ void	print_with_syntax_highlighting(t_rdline *rdl_vars, int option)
 		rdl_print_char(rdl_vars, hstry_line->elements[i], color);
 		i++;
 	}
+}
+
+void	print_with_syntax_highlighting(t_rdline *rdl_vars, int option)
+{
+	if (option == restore)
+		save_curr_cursor_pos(rdl_vars);
+	tputs(rdl_vars->capability.make_cursor_invisible, 1, put_char);
+	move_cursor_to_colum_and_row(rdl_vars, rdl_vars->prompt_len, 0);
+	start_printing(rdl_vars);
+	clear_curr_line_after_and_below_cursor(rdl_vars);
+	tputs(rdl_vars->capability.return_cursor_to_normal, 1, put_char);
 	if (option == restore)
 		restore_cursor_pos(rdl_vars);
 }

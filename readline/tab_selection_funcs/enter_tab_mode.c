@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 21:39:50 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/07 21:40:04 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 12:18:21 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	enter_tab_mode(t_rdline *rdl_vars, t_tab_vars *tab_vars)
 {
 	initialize_tab_vars(tab_vars);
 	tab_vars->dir_to_search = get_dir_to_search(rdl_vars);
-	tab_vars->file_to_match = get_file_to_match(rdl_vars);		
+	tab_vars->file_to_match = get_file_to_match(rdl_vars);
 	initialize_vec_content(&tab_vars->matched_files);
 	get_matched_files(tab_vars);
 	tab_vars->max_file_case_len = get_max_len(tab_vars->matched_files) + 3;

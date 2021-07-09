@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 13:53:14 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/07 14:33:23 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 12:21:31 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	get_matched_files(t_tab_vars *vars)
 		if (vars->file_to_match != NULL)
 		{
 			if (ft_strncmp(vars->file_to_match, entry->d_name,
-				ft_strlen(vars->file_to_match)) == 0)
+					ft_strlen(vars->file_to_match)) == 0)
 				vars->matched_files.add_new_element(&vars->matched_files,
 					ft_strdup(entry->d_name));
 		}

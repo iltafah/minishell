@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 13:50:21 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/07 14:39:51 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 12:20:19 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	add_slash_if_directory(t_rdline *rdl_vars, t_tab_vars *tab_vars)
 
 	hstry_line = &rdl_vars->history_vec.elements[rdl_vars->l_i];
 	curr_matched_file = tab_vars->matched_files.elements[tab_vars->curr_index];
-	file_full_path = ft_strjoin(tab_vars->dir_to_search, curr_matched_file);	
+	file_full_path = ft_strjoin(tab_vars->dir_to_search, curr_matched_file);
 	stat(file_full_path, &file_stat);
 	if (S_ISDIR(file_stat.st_mode))
 	{

@@ -3,39 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   treat_herdocs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 17:55:27 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/05 15:28:38 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/09 11:59:33 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-int		is_delimiter_quoted(char **delimiter)
+int		is_delimiter_quoted(char *delimiter, char **unquoted_delimiter)
 {
 	int			i;
 	int			is_quoted;
 	t_quotes	quotes;
-	t_char_vec	unqotd_delimiter;
+	t_char_vec	vec;
 
 	i = -1;
 	is_quoted = false;
-	initialize_vec_of_char(&unqotd_delimiter);
+	initialize_vec_of_char(&vec);
 	initialize_quotes_vars(&quotes);
-	while ((*delimiter)[++i] != '\0')
+	while (delimiter[++i] != '\0')
 	{
-		open_and_close_quotes((*delimiter)[i], &quotes);
+		open_and_close_quotes(delimiter[i], &quotes);
 		change_quotes_state(&quotes);
 		if (quotes.curr_state != quotes.old_state)
 		{
 			is_quoted = true;
 			continue ;
 		}
-		unqotd_delimiter.add_new_element(&unqotd_delimiter, (*delimiter)[i]);
-		does_backslash_exist((*delimiter)[i], &quotes);
+		vec.add_new_element(&vec, delimiter[i]);
+		does_backslash_exist(delimiter[i], &quotes);
 	}
-	*delimiter = unqotd_delimiter.elements;
+	*unquoted_delimiter = vec.elements;
 	return (is_quoted);
 }
 
@@ -68,7 +68,6 @@ static void	store_expanded_heredocs(char *buffer_to_expand, t_char_vec *vec)
 
 char	*expand_heredocs_lines(char *buffer_to_expand, int is_quoted)
 {
-	// int			i;
 	t_char_vec	expanded_buffer_vec;
 
 	if (is_quoted == false)
@@ -86,14 +85,15 @@ char	*treat_heredocs(char *delimiter)
 	int			is_quoted;
 	char		*herdoc_line;
 	char		*expanded_heredoc;
+	char		*unquoted_delimiter;
 	t_char_vec	buffer_vec;
 
-	is_quoted = is_delimiter_quoted(&delimiter);
+	is_quoted = is_delimiter_quoted(delimiter, &unquoted_delimiter);
 	initialize_vec_of_char(&buffer_vec);
 	while (true)
 	{
 		herdoc_line = readline(">> ");
-		if (herdoc_line == NULL || strcmp(herdoc_line, delimiter) == 0)
+		if (herdoc_line == NULL || strcmp(herdoc_line, unquoted_delimiter) == 0)
 			break ;
 		buffer_vec.add_set_of_elements(&buffer_vec, herdoc_line);
 		buffer_vec.add_new_element(&buffer_vec, '\n');
@@ -102,5 +102,6 @@ char	*treat_heredocs(char *delimiter)
 	free(herdoc_line);
 	expanded_heredoc = expand_heredocs_lines(buffer_vec.elements, is_quoted);
 	buffer_vec.free(&buffer_vec);
+	free(unquoted_delimiter);
 	return (expanded_heredoc);
 }

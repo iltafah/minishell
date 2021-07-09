@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 17:09:28 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/07 17:11:49 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 12:00:18 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,49 +323,6 @@ void print_header()
 	printf("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n");
 }
 
-// void	signal_handler(int sig_num)
-// {
-// 	if (sig_num == SIGINT)
-// 	{
-// 		printf("\n");
-// 		rl_on_new_line();
-// 		rl_replace_line("", 0);
-// 		rl_redisplay();
-// 		g_vars.last_err_num = 1;
-// 	}
-// }
-
-// void	disable_echoctl_flag(void)
-// {
-// 	struct termios	state;
-// 	char			*tty;
-// 	int				fd;
-
-// 	tty = ttyname(0);
-// 	fd = open(tty, O_WRONLY);
-// 	ioctl(fd,  TIOCGETA, &state);
-// 	state.c_lflag &= ~(ECHOCTL);
-// 	ioctl(fd, TIOCSETA, &state);
-// 	close(fd);
-// }
-
-// void	enable_echoctl_flag(void)
-// {
-// 	struct termios	state;
-// 	char			*tty;
-// 	int				fd;
-
-// 	tty = ttyname(0);
-// 	fd = open(tty, O_WRONLY);
-// 	ioctl(fd,  TIOCGETA, &state);
-// 	state.c_lflag &= ~(IEXTEN);
-// 	state.c_lflag |= ECHOCTL;
-// 	ioctl(fd, TIOCSETA, &state);
-// 	close(fd);
-// }
-
-
-
 int		main(int argc, char **argv, char **env)
 {
 	char		*line;
@@ -382,13 +339,9 @@ int		main(int argc, char **argv, char **env)
 		create_env_table(&g_vars.env_table, env);
 		while (1337)
 		{
-			// signal(SIGINT, signal_handler);
-			// signal(SIGQUIT, SIG_IGN);
 			prompt = get_prompt_name();
 			line = read_line(prompt);
-			// add_history(line);
 			line_tokenization(line, &tokens_list);
-			//print_tokens(tokens_list);
 			if (check_tokens_syntax(tokens_list) == ERROR)
 			{
 				free_tokens_list(&tokens_list);
@@ -397,13 +350,6 @@ int		main(int argc, char **argv, char **env)
 				continue ;
 			}
 			create_abstract_syntax_tree(&ast, tokens_list);
-			/////////////////////////////////
-			/**				exit		**///
-			// if (strcmp(line, "exit") == 0)
-			// 	temp_exit(&tokens_list, ast, line, prompt);
-			/////////////////////////////////
-	
-			// print_preorder(ast, 1, g_vars.env_table);
 
 			execute_test(ast);
 			/////////////////////////////////
