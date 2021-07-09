@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:55:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/07 13:08:39 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/08 18:05:55 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	multi_exit_arg(t_ast *scn, int i)
 	g_vars.last_err_num = 1;
 }
 
-void	check_exit(t_ast *scn)
+void	check_exit(t_ast *scn, int x)
 {
 	int		i;
 	int		j;
@@ -99,5 +99,7 @@ void	check_exit(t_ast *scn)
 		i++;
 	}
 	if (scn->node.data.args_vec.last_index == 0)
-		exit(g_vars.last_err_num);
+	{
+		exit(x);
+	}
 }

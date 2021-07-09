@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 12:56:09 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/07 20:01:02 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/09 11:16:45 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 
 void	builtins(t_ast *scn, t_varso *vars)
 {
-	char	*first_arg;
+	char		*first_arg;
+	static int	prev_error;
+	int			go;
 
 	first_arg = scn->node.data.args_vec.elements[0];
 	if (!ft_strcmp(first_arg, "echo"))
@@ -32,11 +34,13 @@ void	builtins(t_ast *scn, t_varso *vars)
 	else if (!ft_strcmp(first_arg, "env"))
 		enviro();
 	else if (!ft_strcmp(first_arg, "exit"))
-		check_exit(scn);
-	else
 	{
-		exv(scn, vars);
+		go = prev_error;
+		check_exit(scn, go);
 	}
+	else
+		exv(scn, vars);
+	prev_error = g_vars.last_err_num;
 }
 
 void	execution(t_ast *scn)

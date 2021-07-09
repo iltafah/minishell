@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 11:02:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/08 09:48:29 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/08 15:39:37 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ int	check_redis(t_ast *scn)
 		}
 		else if (!(ft_strcmp(red.head.redirections->type, "<")))
 		{
-			red_input(&red);
-			return (0);
+			if (!red_input(&red))
+				return (0);
 		}
 		else if (!(ft_strcmp(red.head.redirections->type, ">>")))
 			append(&red);
