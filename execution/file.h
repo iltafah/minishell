@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/17 11:11:21 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/07 13:00:45 by iariss           ###   ########.fr       */
+/*   Created: 2021/07/07 21:42:28 by iariss            #+#    #+#             */
+/*   Updated: 2021/07/08 18:32:03 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	merge_env(t_varso *vars);
 int		check_redis(t_ast *scn);
 void	ft_printf_string(char *s);
 void	error_msg(char *s);
-void	check_exit(t_ast *scn);
+void	check_exit(t_ast *scn, int x);
 int		check_exit_num(char *num, int j);
 void	builtins(t_ast *scn, t_varso *vars);
 void	pwd(void);

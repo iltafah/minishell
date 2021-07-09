@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:45:42 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/07 12:52:03 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/08 16:17:05 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	echo(char **v)
 	}
 	if (!i)
 		write(1, "\n", 1);
+	g_vars.last_err_num = 0;
 }
 
 int	check_echo(char **v)

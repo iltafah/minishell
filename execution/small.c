@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:37:51 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/06 18:05:04 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/08 16:31:27 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	handle_quit(int sig_num)
 {
 	if (sig_num == SIGQUIT)
 	{
-		write(2, "Quit: 3\n", 10);
+		g_vars.last_err_num = 131;
+		write(2, "Quit: 3\n", 8);
 	}
 }
 
@@ -59,7 +60,8 @@ void	handle_c(int sig_num)
 {
 	if (sig_num == SIGINT)
 	{
-		write(2, "^C\n", 3);
+		g_vars.last_err_num = 130;
+		write(2, "\n", 1);
 	}
 }
 
@@ -76,5 +78,7 @@ void	pwd(void)
 		g_vars.last_err_num = 1;
 		print_error("error retrieving current directory: getcwd: cannot ");
 		print_error("access parent directories: No such file or directory\n");
+		return ;
 	}
+	g_vars.last_err_num = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:47:17 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/07 12:55:45 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/09 11:40:12 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,17 @@ void	check_command2(char *sticker, t_varso *vars, t_rand *num, t_ast *scn)
 	}
 	else if (!ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2))
 	{
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, SIG_IGN);
 		num->tab[num->i] = ft_strjoin(cwd, sticker + 2);
 		if (!ft_strcmp(scn->node.data.args_vec.elements[0], "./minishell"))
 			add_one(vars);
 	}
 	else
+	{
+		free(num->tab[num->i]);
 		num->tab[num->i] = ft_strdup(scn->node.data.args_vec.elements[0]);
+	}
 }
 
 int	check_command(t_ast *scn, char *sticker, t_varso *vars, t_rand *num)
