@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:52:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/07 13:01:40 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/09 21:36:34 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,20 @@ void	unset(t_ast *scn)
 		else
 			remove_variable(u.a, u.i);
 		u.i++;
+	}
+}
+
+void	add_one(t_varso *vars)
+{
+	int	i;
+
+	i = 0;
+	while (vars->export.env[i])
+	{
+		if (!(ft_strncmp(vars->export.env[i], "SHLVL", 5)))
+		{
+			vars->export.env[i][6] = vars->export.env[i][6] + 1;
+		}
+		i++;
 	}
 }

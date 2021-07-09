@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:57:19 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/09 11:30:10 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/09 21:28:58 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,18 @@ void	without_path_slash(t_varso *vars, t_ast *scn)
 {
 	int			y;
 	struct stat	buff;
+	int			i;
 
 	y = 0;
+	i = 0;
 	merge_env(vars);
 	if (!stat(scn->node.data.args_vec.elements[0], &buff))
 		execute_path(&y, scn, vars);
 	if (!stat(scn->node.data.args_vec.elements[0], &buff) && y)
 	{	
 		g_vars.last_err_num = 126;
-		print_error("minishell: ");
-		print_error(scn->node.data.args_vec.elements[0]);
-		print_error(": is a directory\n");
+		print_three("minishell: ", scn->node.data.args_vec.elements[0],
+			": is a directory\n");
 	}
 	else if (stat(scn->node.data.args_vec.elements[0], &buff))
 	{
@@ -93,6 +94,9 @@ void	without_path_slash(t_varso *vars, t_ast *scn)
 		print_error(scn->node.data.args_vec.elements[0]);
 		print_error(": No such file or directory\n");
 	}
+	while (vars->export.env[i])
+		free(vars->export.env[i++]);
+	free(vars->export.env);
 }
 
 void	exv(t_ast *scn, t_varso *vars)
