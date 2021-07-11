@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:47:17 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/09 11:40:12 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/09 21:36:32 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,10 @@ void	merge_env(t_varso *vars)
 	vars->export.env[i] = NULL;
 }
 
-void	add_one(t_varso *vars)
+void	normal_commands(t_rand *num, t_ast *scn)
 {
-	int	i;
-
-	i = 0;
-	while (vars->export.env[i])
-	{
-		if (!(ft_strncmp(vars->export.env[i], "SHLVL", 5)))
-		{
-			vars->export.env[i][6] = vars->export.env[i][6] + 1;
-		}
-		i++;
-	}
+	free(num->tab[num->i]);
+	num->tab[num->i] = ft_strdup(scn->node.data.args_vec.elements[0]);
 }
 
 void	check_command2(char *sticker, t_varso *vars, t_rand *num, t_ast *scn)
@@ -65,17 +56,18 @@ void	check_command2(char *sticker, t_varso *vars, t_rand *num, t_ast *scn)
 	}
 	else if (!ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2))
 	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, SIG_IGN);
+		free(num->tab[num->i]);
 		num->tab[num->i] = ft_strjoin(cwd, sticker + 2);
-		if (!ft_strcmp(scn->node.data.args_vec.elements[0], "./minishell"))
+		if (!ft_strcmp(scn->node.data.args_vec.elements[0], "./minishell")
+			|| !ft_strcmp(scn->node.data.args_vec.elements[0], "./MINISHELL"))
+		{	
+			signal(SIGQUIT, SIG_IGN);
+			signal(SIGINT, SIG_IGN);
 			add_one(vars);
+		}
 	}
 	else
-	{
-		free(num->tab[num->i]);
-		num->tab[num->i] = ft_strdup(scn->node.data.args_vec.elements[0]);
-	}
+		normal_commands(num, scn);
 }
 
 int	check_command(t_ast *scn, char *sticker, t_varso *vars, t_rand *num)
@@ -117,7 +109,7 @@ void	execv_errors(t_rand *num, t_ast *scn, struct stat buff)
 		{
 			g_vars.last_err_num = 126;
 			print_three("minishell: ", scn->node.data.args_vec.elements[0],
-				(": is a directory\n"));
+				(": is a directory or couldn't open file\n"));
 		}
 		else
 		{
