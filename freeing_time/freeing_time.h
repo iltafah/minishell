@@ -6,14 +6,13 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:45:57 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:45:58 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/11 15:34:19 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FREEING_TIME_H
 # define FREEING_TIME_H
 
-// # include "../minishell.h"
 # include "../parser/parser.h"
 
 void	free_array(char ***array_addr);

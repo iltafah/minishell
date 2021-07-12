@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:49:57 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:49:58 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/11 15:34:28 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ static void	print_matched_history(t_rdline *vars)
 		vars->is_matched_history = false;
 	}
 }
-		// print_after_cursor(vars, history_line[*l_i].elements + *c_i,
-		// 	dont_restore);
-		// print_with_syntax_highlighting(vars);
 
 void	move_right(t_rdline *rdl_vars)
 {
