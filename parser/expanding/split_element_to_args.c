@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:39:22 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/20 15:11:15 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/11 14:40:04 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,24 @@
 void	get_splitted_arg_and_insert_it(char **arg, t_str_vec *args_vec, int i)
 {
 	t_char_vec	splitted_arg;
+	int			backslash;
 
 	initialize_vec_of_char(&splitted_arg);
-	while (**arg != ' ' && **arg != '\0')
+	while ((**arg != ' ' || backslash == EXIST) && **arg != '\0')
 	{
-		if (**arg == SP_DOUBLE_QUOTES)
+		backslash = NONE;
+		if (**arg == SP_DOUBLE_QUOTES || **arg == SP_SINGLE_QUOTES)
 		{
 			while (TRUE)
 			{
 				splitted_arg.add_new_element(&splitted_arg, **arg);
 				(*arg)++;
-				if (**arg == SP_DOUBLE_QUOTES)
+				if (**arg == SP_DOUBLE_QUOTES || **arg == SP_SINGLE_QUOTES)
 					break ;
 			}
 		}
+		if (**arg == SP_BACKSLASH)
+			backslash = EXIST;
 		splitted_arg.add_new_element(&splitted_arg, **arg);
 		(*arg)++;
 	}

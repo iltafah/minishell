@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:49:14 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/19 15:12:16 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/09 18:58:37 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,17 @@ void	print_suggestions(t_rdline *rdl_vars)
 	l_i = rdl_vars->l_i;
 	i = hstry_line[l_i].last_index + 1;
 	save_curr_cursor_pos(rdl_vars);
+	tputs(rdl_vars->capability.make_cursor_invisible, 1, put_char);
 	erase_suggestions(rdl_vars);
 	search_for_matched_history(rdl_vars);
 	if (rdl_vars->is_matched_history == true)
 	{
-		while (i < hstry_line[rdl_vars->matched_history_index].used_size)
-		{
-			rdl_print_char(rdl_vars,
-				hstry_line[rdl_vars->matched_history_index].elements[i],
-				GRY);
-			i++;
-		}
+		write(1, GRY, ft_strlen(GRY));
+		print_after_cursor(rdl_vars,
+			hstry_line[rdl_vars->matched_history_index].elements + i,
+			dont_restore);
+		write(1, WHT, ft_strlen(WHT));
 	}
 	restore_cursor_pos(rdl_vars);
+	tputs(rdl_vars->capability.return_cursor_to_normal, 1, put_char);
 }

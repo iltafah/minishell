@@ -38,3 +38,11 @@ echo hi | grep hi | sort | export = > f1
 //////leaks///////////////
 suggestions
 cat << kk
+
+
+env -i ./minishell
+
+return status of last command in pipe line seq
+
+export TEST="ls\ "
+
