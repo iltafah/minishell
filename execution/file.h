@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 21:42:28 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/08 18:32:03 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/12 11:25:11 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "../minishell.h"
 # include <signal.h>
 # include <sys/stat.h> 
+# include "../parser/parser_typedefs.h"
 
 typedef struct s_env
 {
@@ -102,19 +103,6 @@ typedef struct s_redirection_vars
 	int				*p;
 }				t_redirection_vars;
 
-typedef struct s_piping
-{
-	int		num_pipes;
-	int		*p;
-	int		*pid;
-	int		wait;
-	int		pid_index;
-	int		dup1;
-	int		dup02;
-	int		pipe_index;
-	int		i;
-}				t_piping;
-
 char	*find_env(char *targ);
 void	export(char **args, t_varso *vars, t_ast *sim_cmd_nd);
 int		ft_strcmp(const char *s1, const char *s2);
@@ -158,5 +146,11 @@ void	execv_main_loop(t_rand *num, t_ast *scn, t_varso *vars);
 void	ex(t_rand *num, t_varso *vars, t_ast *scn);
 void	print_error(char *s);
 void	print_three(char *s1, char *s2, char *s3);
+void	with_path(char *path, t_varso *vars, t_ast *scn);
+void	free_vars(t_rand num, t_varso *vars);
+void	execute_path(int *y, t_ast *scn, t_varso *vars);
+void	without_path_slash(t_varso *vars, t_ast *scn);
+void	status_check_w_err(t_rand *num, t_ast *scn, struct stat buff);
+void	status_check(t_redirection_vars *red);
 
 #endif
