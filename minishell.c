@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:14:43 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 13:14:46 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/12 13:35:43 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,24 +166,24 @@ void	print_args(t_ast *data_node)
 	printf("%s", WHT);
 }
 
-void	without_pipes(t_ast *curr_simple_cmd, t_piping num, t_ast *pipeline_seq)
-{
-	t_ast	*curr_data;
+// void	without_pipes(t_ast *curr_simple_cmd, t_piping num, t_ast *pipeline_seq)
+// {
+// 	t_ast	*curr_data;
 
-	while (curr_simple_cmd)
-	{	
-		num.dup1 = dup(1);
-		num.dup02 = dup(0);
-		expand_curr_cmd(curr_simple_cmd);
-		curr_data = curr_simple_cmd->node.dir.bottom;
-		execution(curr_data);
-		dup2(num.dup1, 1);
-		dup2(num.dup02, 0);
-		close(num.dup1);
-		close(num.dup02);
-		curr_simple_cmd = get_curr_smpl_cmd_node(pipeline_seq);
-	}
-}
+// 	while (curr_simple_cmd)
+// 	{	
+// 		num.dup1 = dup(1);
+// 		num.dup02 = dup(0);
+// 		expand_curr_cmd(curr_simple_cmd);
+// 		curr_data = curr_simple_cmd->node.dir.bottom;
+// 		execution(curr_data);
+// 		dup2(num.dup1, 1);
+// 		dup2(num.dup02, 0);
+// 		close(num.dup1);
+// 		close(num.dup02);
+// 		curr_simple_cmd = get_curr_smpl_cmd_node(pipeline_seq);
+// 	}
+// }
 
 void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq)
 {
@@ -196,8 +196,8 @@ void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq)
 		signal(SIGINT, handle_c);
 		if (num->pid[num->pid_index] == 0)
 		{
-			signal(SIGQUIT, handle_quit);
-			signal(SIGINT, handle_c);
+			signal(SIGQUIT, handle_child_quit);
+			signal(SIGINT, handle_child_c);
 			if (curr_simple_cmd->node.dir.next)
 				dup2(num->p[num->pipe_index + 1], 1);
 			if (num->pid_index != 0)
@@ -219,45 +219,45 @@ void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq)
 	}
 }
 
-void	wait_cloce_free(t_piping num)
-{
-	num.i = 0;
-	while (num.i < (num.num_pipes * 2))
-	{
-		close(num.p[num.i]);
-		num.i++;
-	}
-	num.wait = 0;
-	while (num.wait <= num.pid_index)
-	{
-		waitpid(num.pid[num.wait], 0, 0);
-		num.wait++;
-	}
-	dup2(num.dup1, 1);
-	dup2(num.dup02, 0);
-	close(num.dup1);
-	close(num.dup02);
-	free(num.p);
-	free(num.pid);
-}
+// void	wait_cloce_free(t_piping num)
+// {
+// 	num.i = 0;
+// 	while (num.i < (num.num_pipes * 2))
+// 	{
+// 		close(num.p[num.i]);
+// 		num.i++;
+// 	}
+// 	num.wait = 0;
+// 	while (num.wait <= num.pid_index)
+// 	{
+// 		waitpid(num.pid[num.wait], 0, 0);
+// 		num.wait++;
+// 	}
+// 	dup2(num.dup1, 1);
+// 	dup2(num.dup02, 0);
+// 	close(num.dup1);
+// 	close(num.dup02);
+// 	free(num.p);
+// 	free(num.pid);
+// }
 
-void	allocate_startp(t_piping *num)
-{
-	num->p = malloc(sizeof(int) * num->num_pipes * 2);
-	num->pid = malloc(sizeof(int) * num->num_pipes + 1);
-	num->pid_index = 0;
-	num->pipe_index = num->num_pipes;
-	num->i = 0;
-	while (num->pipe_index)
-	{
-		pipe(&num->p[num->i]);
-		num->pipe_index--;
-		num->i += 2;
-	}
-	num->pipe_index = 0;
-	num->dup1 = dup(1);
-	num->dup02 = dup(0);
-}
+// void	allocate_startp(t_piping *num)
+// {
+// 	num->p = malloc(sizeof(int) * num->num_pipes * 2);
+// 	num->pid = malloc(sizeof(int) * num->num_pipes + 1);
+// 	num->pid_index = 0;
+// 	num->pipe_index = num->num_pipes;
+// 	num->i = 0;
+// 	while (num->pipe_index)
+// 	{
+// 		pipe(&num->p[num->i]);
+// 		num->pipe_index--;
+// 		num->i += 2;
+// 	}
+// 	num->pipe_index = 0;
+// 	num->dup1 = dup(1);
+// 	num->dup02 = dup(0);
+// }
 
 void	execute_test(t_ast *ast)
 {

@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:14:04 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 13:14:10 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/12 13:47:44 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	handle_quit(int sig_num)
 	if (sig_num == SIGQUIT)
 	{
 		g_vars.last_err_num = 131;
-		// write(2, "Quit: 3\n", 8);
+		write(2, "Quit: 3\n", 8);
 	}
 }
 
@@ -61,7 +61,7 @@ void	handle_c(int sig_num)
 	if (sig_num == SIGINT)
 	{
 		g_vars.last_err_num = 130;
-		// write(2, "\n", 1);
+		write(2, "\n", 1);
 	}
 }
 

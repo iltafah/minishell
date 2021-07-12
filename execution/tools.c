@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:07:32 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 11:08:11 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/12 13:47:52 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,16 @@ char	*join_free(char *s1, char *s2, int index)
 	else if (index == 1)
 		free(s2);
 	return (str);
+}
+
+void	handle_child_quit(int sig_num)
+{
+	if (sig_num == SIGQUIT)
+		g_vars.last_err_num = 131;
+}
+
+void	handle_child_c(int sig_num)
+{
+	if (sig_num == SIGINT)
+		g_vars.last_err_num = 130;
 }
