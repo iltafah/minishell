@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:59:45 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 11:59:51 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/12 13:11:37 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,8 +173,12 @@ void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq)
 	while (curr_simple_cmd)
 	{			
 		num->pid[num->pid_index] = fork();
+		signal(SIGQUIT, handle_quit);
+		signal(SIGINT, handle_c);
 		if (num->pid[num->pid_index] == 0)
 		{
+			signal(SIGQUIT, handle_quit);
+			signal(SIGINT, handle_c);
 			if (curr_simple_cmd->node.dir.next)
 				dup2(num->p[num->pipe_index + 1], 1);
 			if (num->pid_index != 0)
