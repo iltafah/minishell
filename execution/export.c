@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:48:41 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/07 12:58:12 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/12 08:54:52 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,27 @@
 void	export(char **args, t_varso *vars, t_ast *sim_cmd_nd)
 {
 	int	i;
-	int	x;
 	int	lp;
 
-	x = 0;
 	i = 0;
 	lp = 1;
 	vars->export.names = malloc(sizeof(char *)
 			* g_vars.env_table.name.used_size + 1);
 	vars->export.values = malloc(sizeof(char *)
 			* g_vars.env_table.value.used_size + 1);
-	if (!args[1])
+	if (g_vars.env_table.name.used_size)
 	{
-		empty_expo(vars);
-		free(vars->export.names);
-		free(vars->export.values);
-		return ;
+		if (!args[1])
+		{
+			empty_expo(vars);
+			free(vars->export.names);
+			free(vars->export.values);
+			return ;
+		}
+		else
+			export_add_vars(sim_cmd_nd, args);
 	}
-	else
+	else if (args[1])
 		export_add_vars(sim_cmd_nd, args);
 	free(vars->export.names);
 	free(vars->export.values);
@@ -45,7 +48,7 @@ void	add_to_vars(char *add, int x)
 	char	*tmp;
 
 	i = 0;
-	while (i <= g_vars.env_table.name.last_index)
+	while (i < g_vars.env_table.name.used_size)
 	{
 		tmp = ft_substr(add, 0, x);
 		if (!(ft_strcmp(g_vars.env_table.name.elements[i],

@@ -155,7 +155,7 @@ vectors/vector_of_string/replace_element_at_index.c \
 ./readline/text_highlighting_funcs/start_highlighting_mode.c \
 ./readline/update_cursor_data.c \
 ./readline/usefull_history_vec_func.c \
-./execution/exec.c \
+./execution/execution_start.c \
 ./execution/execve.c \
 ./execution/execve2.c \
 ./execution/exit.c \
@@ -168,7 +168,11 @@ vectors/vector_of_string/replace_element_at_index.c \
 ./execution/cd.c \
 ./execution/export2.c \
 ./execution/export3.c \
-./execution/execve3.c
+./execution/file_status_check.c \
+./execution/tools.c \
+./execution/execute_w_path.c \
+./execution/execute_without_path.c \
+./execution_loop.c
 
 OBJ_DIR = objs
 

@@ -6,21 +6,27 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 10:49:58 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/08 18:03:16 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/11 17:09:29 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
 
-int	check_args2(int lp, char **a)
+int	check_args2(int lp, char **arg)
 {
-	if (((!ft_isalpha(a[lp][0])
-			|| (!ft_isalnum(a[lp][ft_strlen(a[lp]) - 1])
-			&& a[lp][ft_strlen(a[lp]) - 1] != '=')))
-			&& a[lp][0] != '_' && a[lp][ft_strlen(a[lp]) - 1] != '_')
+	int	x;
+
+	x = 0;
+	while (arg[lp][x] && arg[lp][x] != '=')
+		x++;
+	if (((!ft_isalpha(arg[lp][0])
+			|| (!ft_isalnum(arg[lp][x - 1])
+			&& arg[lp][x - 1] != '=')))
+			&& arg[lp][0] != '_' && arg[lp][x - 1] != '_')
 	{
+		printf("|%c|\n", arg[lp][x]);
 		print_error("minishell: export: '");
-		print_error(a[lp]);
+		print_error(arg[lp]);
 		print_error("': not a valid identifier\n");
 		g_vars.last_err_num = 1;
 		return (0);

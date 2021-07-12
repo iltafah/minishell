@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 11:02:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/08 15:39:37 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/12 09:21:56 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,13 @@ void	append(t_redirection_vars *red)
 
 int	red_output(t_redirection_vars *red)
 {
-	struct stat	buff;
-
 	if (red->head.redirections->file[0] != '$')
 	{	
 		red->fd = open(red->head.redirections->file,
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (red->fd == -1)
 		{
-			if (!stat(red->head.redirections->file, &buff))
-				print_three("minishell: ", red->head.redirections->file,
-					": Is a directory\n");
-			else
-				print_three("minishell: ", red->head.redirections->file,
-					": No such file or directory\n");
+			status_check(red);
 			return (0);
 		}
 		if (red->head.args_vec.used_size)
@@ -61,28 +54,15 @@ int	red_output(t_redirection_vars *red)
 
 int	red_input(t_redirection_vars *red)
 {
-	struct stat	buff;
-
 	red->fd = open(red->head.redirections->file, O_RDWR);
 	if (red->fd == -1)
 	{
-		if (!stat(red->head.redirections->file, &buff))
-			printf("minishell: %s: Is a directory\n",
-				red->head.redirections->file);
-		else
-		{
-			print_error("minishell: ");
-			print_error(red->head.redirections->file);
-			print_error(": No such file or directory\n");
-		}
+		status_check(red);
 		g_vars.last_err_num = 1;
 		return (0);
 	}
-	else
-	{
-		dup2(red->fd, 0);
-		close(red->fd);
-	}
+	dup2(red->fd, 0);
+	close(red->fd);
 	return (1);
 }
 
