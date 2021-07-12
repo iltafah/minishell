@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:36:47 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/09 11:58:42 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/11 15:31:00 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ t_gvars				g_vars;
 
 char	*get_prompt_name(void);
 char	*get_curr_dir_name(void);
-char	*treat_heredocs(char *delimiter);
 void	execution(t_ast *scn);
 int		ft_strcmp(const char *s1, const char *s2);
 void	change_value(char *name, char *new_value);

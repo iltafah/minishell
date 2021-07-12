@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:48:49 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/09 12:32:55 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/11 22:49:57 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ void	print_with_syntax_highlighting(t_rdline *rdl_vars, int option)
 	tputs(rdl_vars->capability.return_cursor_to_normal, 1, put_char);
 	if (option == restore)
 		restore_cursor_pos(rdl_vars);
+	write(1, WHT, ft_strlen(WHT));
 }

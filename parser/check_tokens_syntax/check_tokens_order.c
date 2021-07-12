@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:34:24 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/25 11:27:43 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/11 15:51:00 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	check_pipe_token_order(t_vars *vars)
 {
 	if (vars->command == NONE)
 	{
-		printf("%sbash: syntax error near unexpected token `|'\n", RED);
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
+			STDERR_FILENO);
 		vars->error = EXIST;
 		g_vars.last_err_num = 258;
 	}
@@ -27,7 +28,8 @@ void	check_semicolon_token_order(t_vars *vars)
 {
 	if (vars->command == NONE)
 	{
-		printf("%sbash: syntax error near unexpected token `;'\n", RED);
+		ft_putstr_fd("minishell: syntax error near unexpected token `;'\n",
+			STDERR_FILENO);
 		vars->error = EXIST;
 		g_vars.last_err_num = 258;
 	}
@@ -42,14 +44,16 @@ void	check_redirection_token_order(t_vars *vars, int type)
 	if (vars->redirection == EXIST)
 	{
 		if (type == less)
-			redir = "<";
+			redir = "`<'\n";
 		else if (type == great)
-			redir = ">";
+			redir = "`>'\n";
 		else if (type == double_great)
-			redir = ">>";
+			redir = "`>>'\n";
 		else if (type == double_less)
-			redir = "<<";
-		printf("%sbash: syntax error near unexpected token `%s'\n", RED, redir);
+			redir = "`<<'\n";
+		ft_putstr_fd("minishell: syntax error near unexpected token ",
+			STDERR_FILENO);
+		ft_putstr_fd(redir, STDERR_FILENO);
 		vars->error = EXIST;
 		g_vars.last_err_num = 258;
 	}
@@ -60,13 +64,15 @@ void	check_newline_token_order(t_vars *vars)
 {
 	if (vars->redirection == EXIST)
 	{
-		printf("%sbash: syntax error near unexpected token `newline'\n", RED);
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
+			STDERR_FILENO);
 		vars->error = EXIST;
 		g_vars.last_err_num = 258;
 	}
 	else if (vars->pipe == EXIST)
 	{
-		printf("%s> Error: multiline commands not allowed\n", RED);
+		ft_putstr_fd("minishell: multiline commands not allowed\n",
+			STDERR_FILENO);
 		vars->error = EXIST;
 		g_vars.last_err_num = 258;
 	}
