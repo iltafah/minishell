@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:18:30 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/13 17:38:05 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 18:22:40 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,17 @@ void	without_path_slash(t_varso *vars, t_ast *scn)
 	merge_env(vars);
 	if (!stat(scn->node.data.args_vec.elements[0], &buff))
 		execute_path(&y, scn, vars);
-	if (!stat(scn->node.data.args_vec.elements[0], &buff) && y && buff.st_mode & S_IFDIR)
-	{	
+	if (!stat(scn->node.data.args_vec.elements[0], &buff) && y)
+	{
+		if (buff.st_mode & S_IFDIR)
+			print_three("minishell: ", scn->node.data.args_vec.elements[0],
+				": is a directory\n");
+		else
+			print_three("minishell: ", scn->node.data.args_vec.elements[0],
+				(": Permission denied\n"));
 		g_vars.last_err_num = 126;
-		print_three("minishell: ", scn->node.data.args_vec.elements[0],
-			": is a directory\n");
 	}
-	else if (stat(scn->node.data.args_vec.elements[0], &buff))
+	else if (stat(scn->node.data.args_vec.elements[0], &buff) )
 	{
 		g_vars.last_err_num = 127;
 		print_error("minishell: ");
