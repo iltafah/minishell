@@ -187,7 +187,7 @@ $(LIBFT): force
 	make -C ./libft
 
 $(OBJ): $(OBJ_DIR)/%.o : %.c
-	mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
