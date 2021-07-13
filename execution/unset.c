@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:52:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/09 21:36:34 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 11:09:46 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	remove_variable(char **a, int i)
 	int	j;
 
 	j = 0;
-	while (j <= g_vars.env_table.name.last_index)
+	while (j < g_vars.env_table.name.used_size)
 	{
 		if (!(ft_strcmp(a[i], g_vars.env_table.name.elements[j])))
 		{

@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:04:06 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 11:06:37 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/12 17:22:34 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ void	status_check(t_redirection_vars *red)
 
 void	status_check_w_err(t_rand *num, t_ast *scn, struct stat buff)
 {
+	if (!num->tab[num->i])
+	{
+		num->tab[num->i] = ft_strdup(scn->node.data.args_vec.elements[0]);
+	}
 	if (!stat(num->tab[num->i], &buff))
 	{
 		if (buff.st_mode & S_IFDIR)

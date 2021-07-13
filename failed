@@ -46,3 +46,7 @@ return status of last command in pipe line seq
 
 export TEST="ls\ "
 
+
+execution/cd.c
+export a= b c=lfjdhjs d e=j k1 _l k1+=
+loooong wrong commands

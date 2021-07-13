@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:42:54 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/08 08:45:38 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 11:09:10 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ void	cd(char **args, t_varso *vars)
 	int		f;
 
 	f = 0;
+	// printf("start<<<<<<<<<\n");
 	home = find_env("HOME");
+	// printf("end>>>>>>>\n");
 	if (!args[1])
 	{
 		if (home)
@@ -114,7 +116,7 @@ void	change_value(char *name, char *new_value)
 	int	i;
 
 	i = 0;
-	while (i <= g_vars.env_table.name.last_index)
+	while (i < g_vars.env_table.name.used_size)
 	{
 		if (!(ft_strcmp(g_vars.env_table.name.elements[i]
 					, name)))
