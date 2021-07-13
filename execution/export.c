@@ -6,13 +6,12 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:48:41 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/13 11:12:50 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 20:35:39 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
 #include "../minishell.h"
-
 
 void	add_to_vars(char *add, int x)
 {
@@ -42,7 +41,6 @@ void	add_to_vars(char *add, int x)
 	g_vars.env_table.value.add_new_element(&g_vars.env_table.value,
 	ft_strdup(add + x + 2));
 }
-
 
 void	sort_loop(t_expo_vars *exp, t_varso *vars)
 {

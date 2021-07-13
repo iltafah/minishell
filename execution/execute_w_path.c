@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:10:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/13 17:39:38 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 20:34:40 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void	execv_errors(t_rand *num, t_ast *scn, struct stat buff)
 		g_vars.last_err_num = 127;
 	}
 	else if ((scn->node.data.args_vec.elements[0][0] == '/'
-		|| (!ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2) ||
-		(ft_strchr(scn->node.data.args_vec.elements[0], '/'))))
-		&& num->y)
-		{
-			status_check_w_err(num, scn, buff);
-		}
+		|| (!ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2)
+			|| (ft_strchr(scn->node.data.args_vec.elements[0], '/'))))
+			&& num->y)
+	{
+		status_check_w_err(num, scn, buff);
+	}
 }
 
 void	ex(t_rand *num, t_varso *vars, t_ast *scn)

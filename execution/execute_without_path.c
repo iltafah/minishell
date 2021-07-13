@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:18:30 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/13 18:22:40 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 20:41:47 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,28 @@ void	execute_path(int *y, t_ast *scn, t_varso *vars)
 		*y = 1;
 }
 
+void	error_handling(t_ast *scn, int y)
+{
+	struct stat	buff;
+
+	if (!stat(scn->node.data.args_vec.elements[0], &buff) && y)
+	{
+		if (buff.st_mode & S_IFDIR)
+			print_three("minishell: ", scn->node.data.args_vec.elements[0],
+				": is a directory\n");
+		else
+			print_three("minishell: ", scn->node.data.args_vec.elements[0],
+				(": Permission denied\n"));
+		g_vars.last_err_num = 126;
+	}
+	else if (stat(scn->node.data.args_vec.elements[0], &buff))
+	{
+		g_vars.last_err_num = 127;
+		print_three("minishell: ", scn->node.data.args_vec.elements[0],
+			(": No such file or directory\n"));
+	}
+}
+
 void	without_path_slash(t_varso *vars, t_ast *scn)
 {
 	int			y;
@@ -49,23 +71,7 @@ void	without_path_slash(t_varso *vars, t_ast *scn)
 	merge_env(vars);
 	if (!stat(scn->node.data.args_vec.elements[0], &buff))
 		execute_path(&y, scn, vars);
-	if (!stat(scn->node.data.args_vec.elements[0], &buff) && y)
-	{
-		if (buff.st_mode & S_IFDIR)
-			print_three("minishell: ", scn->node.data.args_vec.elements[0],
-				": is a directory\n");
-		else
-			print_three("minishell: ", scn->node.data.args_vec.elements[0],
-				(": Permission denied\n"));
-		g_vars.last_err_num = 126;
-	}
-	else if (stat(scn->node.data.args_vec.elements[0], &buff) )
-	{
-		g_vars.last_err_num = 127;
-		print_error("minishell: ");
-		print_error(scn->node.data.args_vec.elements[0]);
-		print_error(": No such file or directory\n");
-	}
+	error_handling(scn, y);
 	while (vars->export.env[i])
 		free(vars->export.env[i++]);
 	free(vars->export.env);
