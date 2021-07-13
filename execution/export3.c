@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 10:49:58 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/11 17:09:29 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 15:08:10 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_args2(int lp, char **arg)
 	int	x;
 
 	x = 0;
-	while (arg[lp][x] && arg[lp][x] != '=')
+	while (arg[lp][x] && (arg[lp][x] != '=' || ft_strncmp(arg[lp] + x, "+=", 2)))
 		x++;
 	if (((!ft_isalpha(arg[lp][0])
 			|| (!ft_isalnum(arg[lp][x - 1])

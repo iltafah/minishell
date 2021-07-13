@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:14:04 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 13:47:44 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 11:07:54 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*find_env(char *targ)
 	int	i;
 
 	i = 0;
-	while (i <= g_vars.env_table.name.last_index)
+	while (i < g_vars.env_table.name.used_size)
 	{
 		if (!(ft_strncmp(g_vars.env_table.name.elements[i],
 					targ, ft_strlen(targ))))

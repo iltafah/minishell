@@ -6,11 +6,30 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:48:57 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:48:58 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/13 15:57:08 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../readline.h"
+
+static int	check_if_cmd_is_builtin(char *cmd)
+{
+	if (strcmp(cmd, "export") == 0)
+		return (true);
+	else if (strcmp(cmd, "echo") == 0)
+		return (true);
+	else if (strcmp(cmd, "env") == 0)
+		return (true);
+	else if (strcmp(cmd, "unset") == 0)
+		return (true);
+	else if (strcmp(cmd, "cd") == 0)
+		return (true);
+	else if (strcmp(cmd, "pwd") == 0)
+		return (true);
+	else if (strcmp(cmd, "exit") == 0)
+		return (true);
+	return (false);
+}
 
 static char	*join_cmd_with_path(char *path, char *cmd)
 {
@@ -60,5 +79,9 @@ int	check_if_cmd_exist(char *cmd)
 	path_env = get_value_of_env_name(g_vars.env_table, "PATH");
 	if (path_env != NULL)
 		does_it_exist = check_if_cmd_exists_in_given_paths(cmd, path_env);
-	return (does_it_exist);
+	if (does_it_exist == EXIST)
+		return (EXIST);
+	if (check_if_cmd_is_builtin(cmd) == true)
+		return (EXIST);
+	return (NONE);
 }

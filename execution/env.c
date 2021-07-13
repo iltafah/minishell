@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:54:37 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 11:11:10 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 11:13:00 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	enviro(void)
 	int		i;
 
 	i = 0;
-	while (i <= g_vars.env_table.name.last_index)
+	while (i < g_vars.env_table.name.used_size)
 	{
 		if (g_vars.env_table.value.elements[i] != NULL)
 		{

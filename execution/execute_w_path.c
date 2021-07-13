@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_w_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:10:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 11:22:49 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 17:47:35 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,20 @@ void	free_vars(t_rand num, t_varso *vars)
 void	execv_errors(t_rand *num, t_ast *scn, struct stat buff)
 {
 	if (stat(num->tab[num->i], &buff) && scn->node.data.args_vec.elements[0][0]
-	!= '/' && ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2))
+	!= '/' && ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2) &&
+	(!ft_strchr(scn->node.data.args_vec.elements[0], '/')))
 	{
 		print_three("minishell: ", scn->node.data.args_vec.elements[0],
 			(": command not found\n"));
 		g_vars.last_err_num = 127;
 	}
 	else if ((scn->node.data.args_vec.elements[0][0] == '/'
-		|| (!ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2)))
+		|| (!ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2) ||
+		(ft_strchr(scn->node.data.args_vec.elements[0], '/'))))
 		&& num->y)
-		status_check_w_err(num, scn, buff);
+		{
+			status_check_w_err(num, scn, buff);
+		}
 }
 
 void	ex(t_rand *num, t_varso *vars, t_ast *scn)
