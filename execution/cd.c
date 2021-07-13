@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:42:54 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/13 11:09:10 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 17:40:58 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ void	cd(char **args, t_varso *vars)
 	int		f;
 
 	f = 0;
-	// printf("start<<<<<<<<<\n");
 	home = find_env("HOME");
-	// printf("end>>>>>>>\n");
 	if (!args[1])
 	{
 		if (home)

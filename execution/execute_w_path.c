@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:10:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 17:20:39 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 17:39:38 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	free_vars(t_rand num, t_varso *vars)
 {
-	// num.i = 0;
-	// while (num.tab[num.i])
-	// 	free(num.tab[num.i++]);
+	num.i = 0;
+	while (num.tab[num.i])
+		free(num.tab[num.i++]);
 	free(num.tab);
 	num.i = 0;
 	while (vars->export.env[num.i])

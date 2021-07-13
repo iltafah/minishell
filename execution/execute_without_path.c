@@ -6,13 +6,11 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:18:30 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/13 11:46:05 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 17:38:05 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
-
-
 
 void	execute_path(int *y, t_ast *scn, t_varso *vars)
 {

@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 10:49:58 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 15:26:47 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 15:14:02 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@ int	check_args2(int lp, char **arg)
 	int	x;
 
 	x = 0;
-	while (arg[lp][x] && (arg[lp][x] != '=' || ft_strncmp(arg[lp] + x, "+=", 2)))
+	while (arg[lp][x] && arg[lp][x] != '=' && ft_strncmp(arg[lp] + x, "+=", 2))
 		x++;
 	if (((!ft_isalpha(arg[lp][0])
 			|| (!ft_isalnum(arg[lp][x - 1])
 			&& arg[lp][x - 1] != '=')))
 			&& arg[lp][0] != '_' && arg[lp][x - 1] != '_')
 	{
-		printf("|%c|\n", arg[lp][x]);
 		print_error("minishell: export: '");
 		print_error(arg[lp]);
 		print_error("': not a valid identifier\n");
