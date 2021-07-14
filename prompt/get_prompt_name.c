@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freeing_time.h                                     :+:      :+:    :+:   */
+/*   get_prompt_name.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 19:45:57 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/14 21:48:11 by iltafah          ###   ########.fr       */
+/*   Created: 2021/06/13 19:41:58 by iltafah           #+#    #+#             */
+/*   Updated: 2021/07/14 21:44:23 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FREEING_TIME_H
-# define FREEING_TIME_H
+#include "../minishell.h"
 
-# include "../minishell.h"
+char	*get_prompt_name(void)
+{
+	static char	arrow[] = "༺  ";
+	static char	spaces[] = " ";
+	char		*curr_dir;
+	char		*tmp_ptr;
+	char		*prompt;
 
-void	free_array(char ***array_addr);
-void	free_abstract_syntax_tree(t_ast **ast);
-void	free_tokens_list(t_tokens **tokens_list);
-void	free_main_allocated_memory(t_main_data *main_vars);
-
-#endif
+	prompt = NULL;
+	curr_dir = get_curr_dir_name();
+	if (curr_dir != NULL)
+	{
+		prompt = ft_strjoin(arrow, curr_dir);
+		free(curr_dir);
+		tmp_ptr = ft_strjoin(prompt, spaces);
+		free(prompt);
+		prompt = tmp_ptr;
+	}
+	return (prompt);
+}

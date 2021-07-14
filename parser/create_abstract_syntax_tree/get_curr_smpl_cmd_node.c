@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_prompt_name.c                                  :+:      :+:    :+:   */
+/*   get_curr_smpl_cmd_node.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 19:41:58 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/29 18:47:14 by iltafah          ###   ########.fr       */
+/*   Created: 2021/07/14 21:51:16 by iltafah           #+#    #+#             */
+/*   Updated: 2021/07/14 21:51:29 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "./create_abstract_syntax_tree.h"
 
-char	*get_prompt_name(void)
+t_ast *get_curr_smpl_cmd_node(t_ast *pipeline_seq)
 {
-	static char	arrow[] = "༺  ";
-	static char	spaces[] = " ";
-	char		*curr_dir;
-	char		*tmp_ptr;
-	char		*prompt;
+	static t_ast	*curr_smpl_cmd = NULL;
+	static int		first = 1;
 
-	prompt = NULL;
-	curr_dir = get_curr_dir_name();
-	if (curr_dir != NULL)
+	if (pipeline_seq)
 	{
-		prompt = ft_strjoin(arrow, curr_dir);
-		free(curr_dir);
-		tmp_ptr = ft_strjoin(prompt, spaces);
-		free(prompt);
-		prompt = tmp_ptr;
+		if (first == 1)
+			curr_smpl_cmd = pipeline_seq->node.pipe.dir.bottom;
+		else if (curr_smpl_cmd != NULL)
+			curr_smpl_cmd = curr_smpl_cmd->node.dir.next;
+		first++;
 	}
-	return (prompt);
+	if (curr_smpl_cmd == NULL)
+		first = 1;
+	return (curr_smpl_cmd);
 }

@@ -6,51 +6,11 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:14:43 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/13 14:49:00 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/14 21:51:38 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "./minishell.h"
-#include "./execution/file.h"
-
-t_ast *get_curr_pipeline_seq_node(t_ast *ast)
-{
-	static t_ast	*curr_pipeline_seq = NULL;
-	static int		first = 1;
-
-	if (ast)
-	{
-		if (first == 1)
-			curr_pipeline_seq = ast->node.dir.bottom;
-		else if (curr_pipeline_seq != NULL)
-			curr_pipeline_seq = curr_pipeline_seq->node.pipe.dir.next;
-		first++;
-	}
-	if (curr_pipeline_seq == NULL)
-		first = 1;	
-	return (curr_pipeline_seq);
-}
-
-t_ast *get_curr_smpl_cmd_node(t_ast *pipeline_seq)
-{
-	static t_ast	*curr_smpl_cmd = NULL;
-	static int		first = 1;
-
-	if (pipeline_seq)
-	{
-		if (first == 1)
-			curr_smpl_cmd = pipeline_seq->node.pipe.dir.bottom;
-		else if (curr_smpl_cmd != NULL)
-			curr_smpl_cmd = curr_smpl_cmd->node.dir.next;
-		first++;
-	}
-	if (curr_smpl_cmd == NULL)
-		first = 1;
-	return (curr_smpl_cmd);
-}
-
-
 
 void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq)
 {
@@ -110,16 +70,19 @@ void	execute_test(t_ast *ast)
 	}
 }
 
+void	initialize_main_vars(t_main_data *main_vars)
+{
+	main_vars->ast = NULL;
+	main_vars->line = NULL;
+	main_vars->prompt = NULL;
+	main_vars->tokens_list = NULL;
+}
 
 int		main(int argc, char **argv, char **env)
 {
-	char		*line;
-	char		*prompt;
-	t_tokens	*tokens_list = NULL;
-	t_ast		*ast = NULL;
+	t_main_data	main_vars;
 	
-	line = NULL;
-	prompt = NULL;
+	initialize_main_vars(&main_vars);
 	if (argc == 1)
 	{
 		(void)argv;
@@ -127,27 +90,17 @@ int		main(int argc, char **argv, char **env)
 		create_env_table(&g_vars.env_table, env);
 		while (1337)
 		{
-			prompt = get_prompt_name();
-			line = read_line(prompt);
-			line_tokenization(line, &tokens_list);
-			if (check_tokens_syntax(tokens_list) == ERROR)
+			main_vars.prompt = get_prompt_name();
+			main_vars.line = read_line(main_vars.prompt);
+			line_tokenization(main_vars.line, &main_vars.tokens_list);
+			if (check_tokens_syntax(main_vars.tokens_list) == ERROR)
 			{
-				free_tokens_list(&tokens_list);
-				free(line);
-				free(prompt);
+				free_main_allocated_memory(&main_vars);
 				continue ;
 			}
-			create_abstract_syntax_tree(&ast, tokens_list);
-
-			execute_test(ast);
-			/////////////////////////////////
-			/**		  freeing time		**///
-			/////////////////////////////////
-			free_tokens_list(&tokens_list);//
-			free_abstract_syntax_tree(ast);//
-			free(line);					   //
-			free(prompt);				   //
-			/////////////////////////////////
+			create_abstract_syntax_tree(&main_vars.ast, main_vars.tokens_list);
+			execute_test(main_vars.ast);
+			free_main_allocated_memory(&main_vars);
 		}
 	}
 	return (0);

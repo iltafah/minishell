@@ -6,13 +6,27 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 17:55:27 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/11 15:32:11 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/14 18:48:58 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./create_abstract_syntax_tree.h"
 
-int	is_delimiter_quoted(char *delimiter, char **unquoted_delimiter)
+static void	set_and_restore_signals(int option)
+{
+	if (option == set_sig)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (option == restore_sig)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+	}
+}
+
+static int	is_delimiter_quoted(char *delimiter, char **unquoted_delimiter)
 {
 	int			i;
 	int			is_quoted;
@@ -66,7 +80,7 @@ static void	store_expanded_heredocs(char *buffer_to_expand, t_char_vec *vec)
 	}
 }
 
-char	*expand_heredocs_lines(char *buffer_to_expand, int is_quoted)
+static char	*expand_heredocs_lines(char *buffer_to_expand, int is_quoted)
 {
 	t_char_vec	expanded_buffer_vec;
 
@@ -88,6 +102,7 @@ char	*treat_heredocs(char *delimiter)
 	char		*unquoted_delimiter;
 	t_char_vec	buffer_vec;
 
+	set_and_restore_signals(set_sig);
 	is_quoted = is_delimiter_quoted(delimiter, &unquoted_delimiter);
 	initialize_vec_of_char(&buffer_vec);
 	while (true)
@@ -103,5 +118,6 @@ char	*treat_heredocs(char *delimiter)
 	expanded_heredoc = expand_heredocs_lines(buffer_vec.elements, is_quoted);
 	buffer_vec.free(&buffer_vec);
 	free(unquoted_delimiter);
+	set_and_restore_signals(restore_sig);
 	return (expanded_heredoc);
 }

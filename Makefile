@@ -12,11 +12,12 @@ environment/get_value_of_env_name.c \
 freeing_time/free_abstract_syntax_tree.c \
 freeing_time/free_array_of_pointers.c \
 freeing_time/free_tokens_list.c \
-get_curr_dir_name.c \
+freeing_time/free_main_allocated_memory.c \
 get_next_line/get_next_line.c \
 get_next_line/get_next_line_utils.c \
-get_prompt_name.c \
 minishell.c \
+prompt/get_curr_dir_name.c \
+prompt/get_prompt_name.c \
 parser/check_tokens_syntax/check_simple_word_syntax.c \
 parser/check_tokens_syntax/check_tokens_order.c \
 parser/check_tokens_syntax/check_tokens_syntax.c \
@@ -27,6 +28,8 @@ parser/create_abstract_syntax_tree/get_suitable_nodes.c \
 parser/create_abstract_syntax_tree/initialize_ast_vars.c \
 parser/create_abstract_syntax_tree/store_redirection_in_suitable_node.c \
 parser/create_abstract_syntax_tree/store_word_in_suitable_node.c \
+./parser/create_abstract_syntax_tree/get_curr_pipeline_seq_node.c \
+./parser/create_abstract_syntax_tree/get_curr_smpl_cmd_node.c \
 parser/expanding/expand_dollar_variables.c \
 parser/expanding/expanding.c \
 parser/expanding/get_dollar_name.c \

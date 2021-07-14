@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_curr_dir_name.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlimouni <hlimouni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:42:12 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/15 18:22:43 by hlimouni         ###   ########.fr       */
+/*   Updated: 2021/07/14 21:44:20 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
 char	*get_curr_dir_name(void)
 {

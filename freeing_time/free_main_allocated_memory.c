@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freeing_time.h                                     :+:      :+:    :+:   */
+/*   free_main_allocated_memory.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 19:45:57 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/14 21:48:11 by iltafah          ###   ########.fr       */
+/*   Created: 2021/07/14 21:48:52 by iltafah           #+#    #+#             */
+/*   Updated: 2021/07/14 21:49:07 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FREEING_TIME_H
-# define FREEING_TIME_H
+#include "./freeing_time.h"
 
-# include "../minishell.h"
-
-void	free_array(char ***array_addr);
-void	free_abstract_syntax_tree(t_ast **ast);
-void	free_tokens_list(t_tokens **tokens_list);
-void	free_main_allocated_memory(t_main_data *main_vars);
-
-#endif
+void	free_main_allocated_memory(t_main_data *main_vars)
+{
+	if (main_vars->line != NULL)
+		free(main_vars->line);
+	if (main_vars->prompt != NULL)
+		free(main_vars->prompt);
+	if (main_vars->tokens_list != NULL)
+		free_tokens_list(&main_vars->tokens_list);
+	if (main_vars->ast != NULL)
+		free_abstract_syntax_tree(&main_vars->ast);
+}

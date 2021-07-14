@@ -54,3 +54,6 @@ loooong wrong commands
 
 
 ************I need to replace strcmp() with ft_strcmp()**********
+
+
+************ DON'T FORGET TO UNCOMMENT FLAGS WITHIN MAKEFILE *************

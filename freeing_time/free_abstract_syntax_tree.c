@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:45:47 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/25 10:17:49 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/14 21:43:13 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,22 @@ void	free_data_node_content(t_data_content *node_data)
 	free_redirection_list(&node_data->redirections);
 }
 
-void	free_abstract_syntax_tree(t_ast *ast)
+void	free_abstract_syntax_tree(t_ast **ast)
 {
-	if (ast == NULL)
+	if (*ast == NULL)
 		return ;
-	if (ast->tag == e_cmdline_node || ast->tag == e_simple_cmd_node)
+	if ((*ast)->tag == e_cmdline_node || (*ast)->tag == e_simple_cmd_node)
 	{
-		free_abstract_syntax_tree(ast->node.dir.bottom);
-		free_abstract_syntax_tree(ast->node.dir.next);
+		free_abstract_syntax_tree(&(*ast)->node.dir.bottom);
+		free_abstract_syntax_tree(&(*ast)->node.dir.next);
 	}
-	else if (ast->tag == e_pipeline_node)
+	else if ((*ast)->tag == e_pipeline_node)
 	{
-		free_abstract_syntax_tree(ast->node.pipe.dir.bottom);
-		free_abstract_syntax_tree(ast->node.pipe.dir.next);
+		free_abstract_syntax_tree(&(*ast)->node.pipe.dir.bottom);
+		free_abstract_syntax_tree(&(*ast)->node.pipe.dir.next);
 	}
-	else if (ast->tag == e_data_node)
-		free_data_node_content(&ast->node.data);
-	free(ast);
+	else if ((*ast)->tag == e_data_node)
+		free_data_node_content(&(*ast)->node.data);
+	free(*ast);
+	*ast = NULL;
 }
