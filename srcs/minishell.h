@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 12:45:07 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/14 21:58:21 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/15 15:00:07 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # include "./freeing_time/freeing_time.h"
 # include "./get_next_line/get_next_line.h"
 
-
 # define CYN "\e[1;96m"
 # define YEL "\e[1;93m"
 # define RED "\e[1;91m"
@@ -47,13 +46,9 @@
 
 enum e_bool {false, true};
 
-
-
 extern t_gvars		g_vars;
 
 t_gvars				g_vars;
-
-
 
 void	execution(t_ast *scn);
 char	*get_prompt_name(void);
@@ -66,7 +61,7 @@ char	*treat_heredocs(char *delimiter);
 int		ft_strcmp(const char *s1, const char *s2);
 void	change_value(char *name, char *new_value);
 t_ast	*get_curr_smpl_cmd_node(t_ast *pipeline_seq);
+void	without_pipes(t_ast *curr_smpl_cmd, t_piping num, t_ast *pipeline_seq);
 void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq);
-void	without_pipes(t_ast *curr_simple_cmd, t_piping num, t_ast *pipeline_seq);
 
 #endif

@@ -6,11 +6,16 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:51:14 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/09 12:21:56 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/15 17:28:58 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../readline.h"
+
+void	reset_colors(void)
+{
+	write(1, RST, ft_strlen(RST));
+}
 
 void	exit_tab_mode(t_rdline *rl_vars)
 {
@@ -41,6 +46,7 @@ void	start_enter_action(t_rdline *rl_vars)
 		move_cursor_to_end_of_printed_line(rl_vars);
 		if (rl_vars->auto_suggestions == on)
 			erase_suggestions(rl_vars);
+		reset_colors();
 		put_char('\n');
 	}
 }
