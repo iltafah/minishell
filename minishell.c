@@ -3,168 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:14:43 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 17:25:30 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/14 21:51:38 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
-#include "./execution/file.h"
-
-/*
-** ************************************************************************** **
-							printing functions
-** ************************************************************************** **
-*/
-
-void print_cmd_redirection(t_ast *data_node)
-{
-	t_redirection *curr_redir_node;
-	char *input_file = "STDIN";
-	char *output_file = "STDOUT";
-
-	curr_redir_node = data_node->node.data.redirections;
-	printf("%s===========================================================\n", YEL);
-	printf("%sredirections:\n", PRP);
-	while (curr_redir_node)
-	{
-		printf("\n");
-		printf("%stype %s: {%s%s%s}\n", GRN, WHT, YEL, curr_redir_node->type, WHT);
-		printf("%sfile %s: \n{%s%s%s}\n", GRN, WHT, YEL, curr_redir_node->file, WHT);
-		curr_redir_node = curr_redir_node->next;
-		printf("\n");
-	}
-	printf("%s===========================================================\n", YEL);
-	printf("%s", WHT);
-
-}
-
-void print_tokens(t_tokens *tokens)
-{
-	int spaces = 50;
-	int len;
-	int spaces_time;
-	char type[9][13] = {"start", "pipe", "semicolon", "word", "less",
-	"great", "double_less", "double_great", "new_line"};
-
-	while (tokens)
-	{
-		printf("%s", WHT);
-		if (tokens->data)
-		{
-			if (tokens->data[0] == '\n')
-				tokens->data = "\\n";
-			len = strlen(tokens->data);
-			spaces_time = spaces - len;
-			printf("|%s%s%s| %*s type : = %s%s\n", CYN, tokens->data, WHT,
-				   spaces_time, " ", YEL, type[tokens->type]);
-		}
-		tokens = tokens->next;
-	}
-}
-
-void print_preorder(t_ast *node, int i, t_env_table env_table)
-{
-	if (node == NULL)
-	{
-		printf("\n");
-		return;
-	}
-	if (node->tag == e_cmdline_node)
-		printf("\n\n%s   »»»»» Command line «««««\n", GRN);
-	else if (node->tag == e_pipeline_node)
-		printf("\n\n%s█████████ [%d] pipline █████████\n", RED, i++);
-	else if (node->tag == e_data_node)
-	{
-		int i;
-		print_cmd_redirection(node);
-		
-		i = 0;
-		if (node->node.data.args_vec.elements[i] != NULL)
-			while (node->node.data.args_vec.elements[i])
-				printf("%s%s \n", YEL, node->node.data.args_vec.elements[i++]);
-		printf("\n");
-		return;
-	}
-	else if (node->tag == e_simple_cmd_node)
-	{
-		printf("%s\n\n>>>simple command<<<    ", CYN);
-		expand_curr_cmd(node);
-	}
-	print_preorder(node->node.dir.bottom, i, env_table);
-	print_preorder(node->node.dir.next, i, env_table);
-}
-
-
-
-
-/*
-** ************************************************************************** **
-							execute_test(ast)
-** ************************************************************************** **
-*/
-t_ast *get_curr_pipeline_seq_node(t_ast *ast)
-{
-	static t_ast	*curr_pipeline_seq = NULL;
-	static int		first = 1;
-
-	if (ast)
-	{
-		if (first == 1)
-			curr_pipeline_seq = ast->node.dir.bottom;
-		else if (curr_pipeline_seq != NULL)
-			curr_pipeline_seq = curr_pipeline_seq->node.pipe.dir.next;
-		first++;
-	}
-	if (curr_pipeline_seq == NULL)
-		first = 1;	
-	return (curr_pipeline_seq);
-}
-
-t_ast *get_curr_smpl_cmd_node(t_ast *pipeline_seq)
-{
-	static t_ast	*curr_smpl_cmd = NULL;
-	static int		first = 1;
-
-	if (pipeline_seq)
-	{
-		if (first == 1)
-			curr_smpl_cmd = pipeline_seq->node.pipe.dir.bottom;
-		else if (curr_smpl_cmd != NULL)
-			curr_smpl_cmd = curr_smpl_cmd->node.dir.next;
-		first++;
-	}
-	if (curr_smpl_cmd == NULL)
-		first = 1;
-	return (curr_smpl_cmd);
-}
-
-void	print_args(t_ast *data_node)
-{
-	int		i;
-	int		len;
-	int		max_len;
-	char	**args;
-
-	i = 0;
-	len = 0;
-	max_len = 0;
-	args = data_node->node.data.args_vec.elements;
-	printf("%sArguments:\n", PRP);
-	printf("%s[\n%s", PRP,WHT);
-	while (args[i])
-	{
-		len = printf("  %s\n", args[i++]);
-		if (max_len < len)
-			max_len = len;
-	}
-	printf("%*s",max_len, "");
-	printf("%s]\n", PRP);
-	printf("-----------------------------CMD END-----------------------------\n\n\n");
-	printf("%s", WHT);
-}
 
 void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq)
 {
@@ -224,58 +70,19 @@ void	execute_test(t_ast *ast)
 	}
 }
 
-/*
-** ************************************************************************** **
-** ************************************************************************** **
-*/
-
-void	temp_exit(t_tokens **tokens_list, t_ast *ast, char *line, char *prompt)
+void	initialize_main_vars(t_main_data *main_vars)
 {
-	/////////////////////////////////
-	/**		  freeing time		**///
-	/////////////////////////////////
-	free_tokens_list(tokens_list);//
-	free_abstract_syntax_tree(ast);//
-	free(line);					   //
-	free(prompt);
-	// free_env_table(env_table);
-	/////////////////////////////////
-	exit(0);
-}
-
-
-
-
-
-
-
-
-/*
-** ************************************************************************** **
-								Header
-** ************************************************************************** **
-*/
-
-void print_header()
-{
-	printf(CYN);
-	printf("███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     \n");
-	printf("████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     \n");
-	printf("██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     \n");
-	printf("██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     \n");
-	printf("██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗\n");
-	printf("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n");
+	main_vars->ast = NULL;
+	main_vars->line = NULL;
+	main_vars->prompt = NULL;
+	main_vars->tokens_list = NULL;
 }
 
 int		main(int argc, char **argv, char **env)
 {
-	char		*line;
-	char		*prompt;
-	t_tokens	*tokens_list = NULL;
-	t_ast		*ast = NULL;
+	t_main_data	main_vars;
 	
-	line = NULL;
-	prompt = NULL;
+	initialize_main_vars(&main_vars);
 	if (argc == 1)
 	{
 		(void)argv;
@@ -283,27 +90,17 @@ int		main(int argc, char **argv, char **env)
 		create_env_table(&g_vars.env_table, env);
 		while (1337)
 		{
-			prompt = get_prompt_name();
-			line = read_line(prompt);
-			line_tokenization(line, &tokens_list);
-			if (check_tokens_syntax(tokens_list) == ERROR)
+			main_vars.prompt = get_prompt_name();
+			main_vars.line = read_line(main_vars.prompt);
+			line_tokenization(main_vars.line, &main_vars.tokens_list);
+			if (check_tokens_syntax(main_vars.tokens_list) == ERROR)
 			{
-				free_tokens_list(&tokens_list);
-				free(line);
-				free(prompt);
+				free_main_allocated_memory(&main_vars);
 				continue ;
 			}
-			create_abstract_syntax_tree(&ast, tokens_list);
-
-			execute_test(ast);
-			/////////////////////////////////
-			/**		  freeing time		**///
-			/////////////////////////////////
-			free_tokens_list(&tokens_list);//
-			free_abstract_syntax_tree(ast);//
-			free(line);					   //
-			free(prompt);				   //
-			/////////////////////////////////
+			create_abstract_syntax_tree(&main_vars.ast, main_vars.tokens_list);
+			execute_test(main_vars.ast);
+			free_main_allocated_memory(&main_vars);
 		}
 	}
 	return (0);
@@ -324,3 +121,4 @@ int		main(int argc, char **argv, char **env)
 
 /*[3] "echo $jfhjdf=kdjskdgs" */
 /*[4] echo $ilias_1337_man$  */     //underscor?? dollar at the end??
+

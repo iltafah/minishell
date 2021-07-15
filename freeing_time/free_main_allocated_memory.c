@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_program.c                                     :+:      :+:    :+:   */
+/*   free_main_allocated_memory.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/15 20:13:48 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/13 12:58:54 by iltafah          ###   ########.fr       */
+/*   Created: 2021/07/14 21:48:52 by iltafah           #+#    #+#             */
+/*   Updated: 2021/07/14 21:49:07 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./readline.h"
+#include "./freeing_time.h"
 
-void	exit_program(t_rdline *rdl_vars)
+void	free_main_allocated_memory(t_main_data *main_vars)
 {
-	t_vchar_vec		*history_vec;
-	t_char_vec		*history_line;
-
-	history_vec = &rdl_vars->history_vec;
-	history_line = history_vec->elements;
-	if (history_line[rdl_vars->l_i].used_size == 0)
-	{
-		g_vars.rdl_vars.history_vec.delete_last_element(history_vec);
-		overwrite_history_file(rdl_vars);
-		ft_putstr_fd("exit\n", rdl_vars->tty_fd);
-		exit(0);
-	}
+	if (main_vars->line != NULL)
+		free(main_vars->line);
+	if (main_vars->prompt != NULL)
+		free(main_vars->prompt);
+	if (main_vars->tokens_list != NULL)
+		free_tokens_list(&main_vars->tokens_list);
+	if (main_vars->ast != NULL)
+		free_abstract_syntax_tree(&main_vars->ast);
 }

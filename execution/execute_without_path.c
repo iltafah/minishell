@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:18:30 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/13 20:41:47 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/15 13:06:05 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,18 @@ void	error_handling(t_ast *scn, int y)
 	if (!stat(scn->node.data.args_vec.elements[0], &buff) && y)
 	{
 		if (buff.st_mode & S_IFDIR)
+		{
 			print_three("minishell: ", scn->node.data.args_vec.elements[0],
 				": is a directory\n");
-		else
+			g_vars.last_err_num = 126;
+		}
+		else if (open(scn->node.data.args_vec.elements[0], O_RDONLY) != -1
+			&& !(buff.st_mode & S_IXUSR))
+		{
 			print_three("minishell: ", scn->node.data.args_vec.elements[0],
 				(": Permission denied\n"));
-		g_vars.last_err_num = 126;
+			g_vars.last_err_num = 126;
+		}
 	}
 	else if (stat(scn->node.data.args_vec.elements[0], &buff))
 	{

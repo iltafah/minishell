@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_program.c                                     :+:      :+:    :+:   */
+/*   get_prompt_name.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/15 20:13:48 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/13 12:58:54 by iltafah          ###   ########.fr       */
+/*   Created: 2021/06/13 19:41:58 by iltafah           #+#    #+#             */
+/*   Updated: 2021/07/14 21:44:23 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./readline.h"
+#include "../minishell.h"
 
-void	exit_program(t_rdline *rdl_vars)
+char	*get_prompt_name(void)
 {
-	t_vchar_vec		*history_vec;
-	t_char_vec		*history_line;
+	static char	arrow[] = "༺  ";
+	static char	spaces[] = " ";
+	char		*curr_dir;
+	char		*tmp_ptr;
+	char		*prompt;
 
-	history_vec = &rdl_vars->history_vec;
-	history_line = history_vec->elements;
-	if (history_line[rdl_vars->l_i].used_size == 0)
+	prompt = NULL;
+	curr_dir = get_curr_dir_name();
+	if (curr_dir != NULL)
 	{
-		g_vars.rdl_vars.history_vec.delete_last_element(history_vec);
-		overwrite_history_file(rdl_vars);
-		ft_putstr_fd("exit\n", rdl_vars->tty_fd);
-		exit(0);
+		prompt = ft_strjoin(arrow, curr_dir);
+		free(curr_dir);
+		tmp_ptr = ft_strjoin(prompt, spaces);
+		free(prompt);
+		prompt = tmp_ptr;
 	}
+	return (prompt);
 }

@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 13:52:15 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/06 16:38:42 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/14 16:04:52 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ char	*get_dir_to_search(t_rdline *rdl_vars)
 	while (hstry_line->elements[i] != ' ' && hstry_line->elements[i] != '\0')
 	{
 		if (hstry_line->elements[i] == '/')
-			end = i;
+			end = i + 1;
 		i++;
 	}
 	if (end - start > 0)
-		dir_to_search = ft_substr(hstry_line->elements, start, end - start + 1);
+		dir_to_search = ft_substr(hstry_line->elements, start, end - start);
 	else
 		dir_to_search = ft_strdup("./");
 	return (dir_to_search);

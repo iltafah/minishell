@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 08:21:52 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 10:56:56 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/13 13:47:38 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	without_pipes(t_ast *curr_simple_cmd, t_piping num, t_ast *pipeline_seq)
 	t_ast	*curr_data;
 
 	while (curr_simple_cmd)
-	{	
+	{
 		num.dup1 = dup(1);
 		num.dup02 = dup(0);
 		expand_curr_cmd(curr_simple_cmd);
