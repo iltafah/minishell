@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:14:43 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/14 21:51:38 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/15 14:38:01 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
+
+void	child_dup(t_piping *num, t_ast *curr_simple_cmd)
+{
+	if (curr_simple_cmd->node.dir.next)
+		dup2(num->p[num->pipe_index + 1], 1);
+	if (num->pid_index != 0)
+		dup2(num->p[num->pipe_index - 2], 0);
+}
 
 void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq)
 {
@@ -23,10 +31,7 @@ void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq)
 		{
 			signal(SIGQUIT, handle_child_quit);
 			signal(SIGINT, handle_child_c);
-			if (curr_simple_cmd->node.dir.next)
-				dup2(num->p[num->pipe_index + 1], 1);
-			if (num->pid_index != 0)
-				dup2(num->p[num->pipe_index - 2], 0);
+			child_dup(num, curr_simple_cmd);
 			num->i = 0;
 			while (num->i < (num->num_pipes * 2))
 			{
