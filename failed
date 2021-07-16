@@ -49,9 +49,6 @@ export TEST="ls\ "
 
 execution/cd.c
 export a= b c=lfjdhjs d e=j k1 _l k1+=
-<<<<<<< HEAD
-
-=======
 loooong wrong commands
 
 
@@ -60,4 +57,3 @@ loooong wrong commands
 
 
 ************ DON'T FORGET TO UNCOMMENT FLAGS WITHIN MAKEFILE *************
->>>>>>> b6e28858eaf196a6de70b7929d935e87086071a8

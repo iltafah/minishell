@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:39:30 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/21 19:14:00 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/16 20:58:16 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	treat_quotes(char *line, char sd_quote)
 	backslash = 0;
 	while (line[i] != '\0' && (backslash == EXIST || line[i] != sd_quote))
 	{
-		if ((line)[i] == BACKSLASH)
+		if ((line)[i] == BACKSLASH && backslash == NONE
+			&& sd_quote == DOUBLE_QUOTES)
 			backslash = EXIST;
 		else
 			backslash = NONE;

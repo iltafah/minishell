@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 08:21:52 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/13 13:47:38 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/16 11:28:55 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	wait_cloce_free(t_piping num)
 		num.i++;
 	}
 	num.wait = 0;
-	while (num.wait <= num.pid_index)
+	while (num.wait < num.pid_index)
 	{
 		waitpid(num.pid[num.wait], &status, 0);
 		num.wait++;
