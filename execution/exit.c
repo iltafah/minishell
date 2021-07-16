@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:55:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/08 18:05:55 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/15 16:27:18 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	check_exit(t_ast *scn, int x)
 	}
 	if (scn->node.data.args_vec.last_index == 0)
 	{
+		overwrite_history_file(&g_vars.rdl_vars);
 		exit(x);
 	}
 }

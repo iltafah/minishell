@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:14:43 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/15 14:38:01 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/15 16:07:19 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq)
 	}
 }
 
-void	execute_test(t_ast *ast)
+void	start_execution(t_ast *ast)
 {
 	t_ast		*curr_pipeline_seq;
 	t_ast		*curr_simple_cmd;
@@ -104,7 +104,7 @@ int		main(int argc, char **argv, char **env)
 				continue ;
 			}
 			create_abstract_syntax_tree(&main_vars.ast, main_vars.tokens_list);
-			execute_test(main_vars.ast);
+			start_execution(main_vars.ast);
 			free_main_allocated_memory(&main_vars);
 		}
 	}

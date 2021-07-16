@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_curr_pipeline_seq_node.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 21:50:48 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/14 21:51:08 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/15 16:11:51 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ t_ast *get_curr_pipeline_seq_node(t_ast *ast)
 		first++;
 	}
 	if (curr_pipeline_seq == NULL)
-		first = 1;	
+		first = 1;
 	return (curr_pipeline_seq);
 }
