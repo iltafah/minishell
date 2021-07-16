@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 11:02:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 09:21:56 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/16 11:22:24 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ int	red_output(t_redirection_vars *red)
 			return (0);
 		}
 		if (red->head.args_vec.used_size)
+		{
 			dup2(red->fd, 1);
+		}
 		close(red->fd);
 		return (1);
 	}

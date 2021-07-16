@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:10:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/16 10:49:28 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/16 11:35:48 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ void	ex(t_rand *num, t_varso *vars, t_ast *scn)
 	num->pid = fork();
 	if (num->pid == 0)
 	{
-		if (execve(num->tab[num->i], scn->node.data.args_vec.elements,
-				vars->export.env) == -1)
-			exit(1);
+		execve(num->tab[num->i], scn->node.data.args_vec.elements,
+				vars->export.env);
+		// if (execve(num->tab[num->i], scn->node.data.args_vec.elements,
+		// 		vars->export.env) == -1)
+			// exit(1);
 	}
 	waitpid(num->pid, &num->status, 0);
 	if (WIFEXITED(num->status))

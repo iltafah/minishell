@@ -4,7 +4,7 @@ LIBFT = ./srcs/libft/libft.a
 
 CC := gcc
 
-CFLAGS := #clea-Wall -Wextra -Werror
+CFLAGS := #-Wall -Wextra -Werror
 
 SRC := srcs/minishell.c \
 srcs/environment/convert_env_table_to_array.c \
