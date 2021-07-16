@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 21:47:39 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/09 18:27:49 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/16 11:12:20 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_dollar_value(char *name)
 		value_vec = g_vars.env_table.value;
 		while (name_vec.elements[i])
 		{
-			if (strcmp(name, name_vec.elements[i]) == 0)
+			if (ft_strcmp(name, name_vec.elements[i]) == 0)
 			{
 				if (value_vec.elements[i] != NULL)
 					value = ft_strdup(value_vec.elements[i]);

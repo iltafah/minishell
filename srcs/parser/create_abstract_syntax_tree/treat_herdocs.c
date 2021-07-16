@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 17:55:27 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/14 18:48:58 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/16 11:12:01 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,16 @@ char	*treat_heredocs(char *delimiter)
 	int			is_quoted;
 	char		*herdoc_line;
 	char		*expanded_heredoc;
-	char		*unquoted_delimiter;
+	char		*unqtd_delimiter;
 	t_char_vec	buffer_vec;
 
 	set_and_restore_signals(set_sig);
-	is_quoted = is_delimiter_quoted(delimiter, &unquoted_delimiter);
+	is_quoted = is_delimiter_quoted(delimiter, &unqtd_delimiter);
 	initialize_vec_of_char(&buffer_vec);
 	while (true)
 	{
 		herdoc_line = readline(">> ");
-		if (herdoc_line == NULL || strcmp(herdoc_line, unquoted_delimiter) == 0)
+		if (herdoc_line == NULL || ft_strcmp(herdoc_line, unqtd_delimiter) == 0)
 			break ;
 		buffer_vec.add_set_of_elements(&buffer_vec, herdoc_line);
 		buffer_vec.add_new_element(&buffer_vec, '\n');
@@ -117,7 +117,7 @@ char	*treat_heredocs(char *delimiter)
 	free(herdoc_line);
 	expanded_heredoc = expand_heredocs_lines(buffer_vec.elements, is_quoted);
 	buffer_vec.free(&buffer_vec);
-	free(unquoted_delimiter);
+	free(unqtd_delimiter);
 	set_and_restore_signals(restore_sig);
 	return (expanded_heredoc);
 }
