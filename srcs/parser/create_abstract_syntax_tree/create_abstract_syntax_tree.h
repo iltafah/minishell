@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:38:20 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/14 21:52:43 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/15 15:03:50 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../parser.h"
 
-typedef enum e_sig_option {restore_sig, set_sig} t_sig_option;
+enum e_sig_option {restore_sig, set_sig};
 
 typedef struct s_node_state
 {
@@ -42,8 +42,8 @@ t_ast	*create_single_node(t_tag tag);
 char	*treat_heredocs(char *delimiter);
 void	initialize_ast_vars(t_ast_vars *ast);
 void	initialize_node_states(t_state *state);
-t_ast 	*get_curr_pipeline_seq_node(t_ast *ast);
-t_ast 	*get_curr_smpl_cmd_node(t_ast *pipeline_seq);
+t_ast	*get_curr_pipeline_seq_node(t_ast *ast);
+t_ast	*get_curr_smpl_cmd_node(t_ast *pipeline_seq);
 t_ast	**create_data_node(t_ast **curr_node, int dir);
 t_ast	**create_pipe_seq_node(t_ast **curr_node, int dir);
 t_ast	**create_smpl_cmd_node(t_ast **curr_node, int dir);

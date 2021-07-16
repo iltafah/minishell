@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_w_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:10:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/14 22:04:24 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/16 10:49:28 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	execv_errors(t_rand *num, t_ast *scn, struct stat buff)
 	else if ((scn->node.data.args_vec.elements[0][0] == '/'
 		|| (!ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2)
 			|| (ft_strchr(scn->node.data.args_vec.elements[0], '/'))))
-			&& num->y)
+			&& num->y && !num->command_exists)
 	{
 		status_check_w_err(num, scn, buff);
 	}
@@ -57,9 +57,7 @@ void	ex(t_rand *num, t_varso *vars, t_ast *scn)
 		g_vars.last_err_num = WEXITSTATUS(num->status);
 	if (WEXITSTATUS(num->status)
 		&& ft_strcmp(scn->node.data.args_vec.elements[0], "./minishell"))
-	{
 		num->y = 1;
-	}
 }
 
 void	execv_main_loop(t_rand *num, t_ast *scn, t_varso *vars)
@@ -88,6 +86,7 @@ void	with_path(char *path, t_varso *vars, t_ast *scn)
 	k = 0;
 	num.tab = ft_split(path, ':');
 	getcwd(cwd, sizeof(cwd));
+	num.command_exists = 1;
 	num.sticker = scn->node.data.args_vec.elements[0];
 	if (scn->node.data.args_vec.elements[0][0] != '/')
 	{
@@ -98,7 +97,7 @@ void	with_path(char *path, t_varso *vars, t_ast *scn)
 	num.i = 0;
 	execv_main_loop(&num, scn, vars);
 	if (stat(num.tab[num.i], &num.buff))
-		num.y = 1;
+		num.command_exists = 0;
 	execv_errors(&num, scn, num.buff);
 	if (k)
 		free(num.sticker);

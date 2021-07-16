@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:09 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/13 16:42:13 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/15 17:28:27 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define PNK "\e[38;5;200m"
 # define ORN "\e[38;5;202m"
 # define L_CYN "\e[38;5;159m"
+# define RST "\033[0m"
 
 # define SKIP continue
 

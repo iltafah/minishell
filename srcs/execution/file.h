@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 21:42:28 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/12 11:25:11 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/16 10:47:44 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_rand
 	struct stat	buff;
 	int			status;
 	pid_t		pid;
+	int			command_exists;
 }				t_rand;
 
 typedef struct s_expo_vars

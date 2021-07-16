@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/12 13:14:43 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/15 16:07:19 by iariss           ###   ########.fr       */
+/*   Created: 2021/07/16 08:27:58 by iariss            #+#    #+#             */
+/*   Updated: 2021/07/16 08:28:03 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ void	initialize_main_vars(t_main_data *main_vars)
 	main_vars->tokens_list = NULL;
 }
 
-int		main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_main_data	main_vars;
-	
+
 	initialize_main_vars(&main_vars);
 	if (argc == 1)
 	{
@@ -110,20 +110,3 @@ int		main(int argc, char **argv, char **env)
 	}
 	return (0);
 }
-
-
-// Tests to fix
-
-// echo hello world > file
-//echo $8891
-//echo $_dfedde
-/*[1337] echo $"PWD" */
-/*[42] $fairjfgaiejr\ "ls" */ //noice
-/*[1] echo hello > "" */
-/*[2] echo hello > $ */
-/*[6666666666] env -i ./minishell */
-/*[696] echo $@ */
-
-/*[3] "echo $jfhjdf=kdjskdgs" */
-/*[4] echo $ilias_1337_man$  */     //underscor?? dollar at the end??
-
