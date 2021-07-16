@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 12:45:07 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/15 15:00:07 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/16 11:02:08 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	wait_cloce_free(t_piping num);
 void	allocate_startp(t_piping *num);
 void	handle_child_quit(int sig_num);
 char	*treat_heredocs(char *delimiter);
-int		ft_strcmp(const char *s1, const char *s2);
 void	change_value(char *name, char *new_value);
 t_ast	*get_curr_smpl_cmd_node(t_ast *pipeline_seq);
 void	without_pipes(t_ast *curr_smpl_cmd, t_piping num, t_ast *pipeline_seq);

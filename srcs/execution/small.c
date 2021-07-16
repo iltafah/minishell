@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:14:04 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/13 11:07:54 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/16 10:56:24 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,6 @@ char	*find_env(char *targ)
 		i++;
 	}
 	return (NULL);
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	unsigned char	*a1;
-	unsigned char	*a2;
-
-	a1 = (unsigned char *)s1;
-	a2 = (unsigned char *)s2;
-	while (*a1 && *a2)
-	{
-		if (*a1 != *a2)
-			return (*a1 - *a2);
-		a1++;
-		a2++;
-	}
-	return (*a1 - *a2);
 }
 
 void	handle_quit(int sig_num)
