@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:18:30 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/16 11:36:07 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/17 08:28:12 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,9 @@ void	execute_path(int *y, t_ast *scn, t_varso *vars)
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(scn->node.data.args_vec.elements[0],
-				scn->node.data.args_vec.elements, vars->export.env);
-		// if (execve(scn->node.data.args_vec.elements[0],
-		// 		scn->node.data.args_vec.elements, vars->export.env) == -1)
-			// exit(1);
+		if (execve(scn->node.data.args_vec.elements[0],
+				scn->node.data.args_vec.elements, vars->export.env) == -1)
+			exit(1);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))

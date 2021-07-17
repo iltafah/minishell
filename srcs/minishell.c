@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 08:27:58 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/16 08:28:03 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/16 18:40:31 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	loop_w_pipe(t_piping *num, t_ast *curr_simple_cmd, t_ast *pipeline_seq)
 	t_ast	*curr_data;
 
 	while (curr_simple_cmd)
-	{			
+	{
 		num->pid[num->pid_index] = fork();
 		if (num->pid[num->pid_index] == 0)
 		{

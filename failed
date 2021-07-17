@@ -49,9 +49,6 @@ export TEST="ls\ "
 
 execution/cd.c
 export a= b c=lfjdhjs d e=j k1 _l k1+=
-<<<<<<< HEAD
-
-=======
 loooong wrong commands
 
 
@@ -60,4 +57,11 @@ loooong wrong commands
 
 
 ************ DON'T FORGET TO UNCOMMENT FLAGS WITHIN MAKEFILE *************
->>>>>>> b6e28858eaf196a6de70b7929d935e87086071a8
+
+
+export ; export a="\\" ; export b='\\' ; export c="\b" ; export
+export TEST_$USER=hallo$LOGNAME
+exit a aa a ----
+Echo ; echo \n ' \n this is the; "first line"' ; echo "and right here;;; 'We have the second'" ; echo and" a fe"'w 'here'; with some slash and quotes   .'   '\' ; echo '\\' ; echo "\\" ; echo    "\"" ; echo   \\ ; echo   \' ; echo   \" "\\"    "\""   \\   \'   \"
+export ; export a="\\" ; export b='\\' ; export c="\b" ; export.  +++++++
+/bibdlsmn/ls

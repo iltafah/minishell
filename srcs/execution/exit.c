@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:55:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/15 16:27:18 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/16 20:22:41 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	multi_exit_arg(t_ast *scn, int i)
 	int	j;
 	int	len;
 
-	j = 1;
+	j = 0;
 	len = ft_strlen(scn->node.data.args_vec.elements[i]);
 	while (scn->node.data.args_vec.elements[i][j])
 	{

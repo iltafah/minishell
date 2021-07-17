@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:10:18 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/16 11:35:48 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/17 08:20:16 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	execv_errors(t_rand *num, t_ast *scn, struct stat buff)
 	else if ((scn->node.data.args_vec.elements[0][0] == '/'
 		|| (!ft_strncmp(scn->node.data.args_vec.elements[0], "./", 2)
 			|| (ft_strchr(scn->node.data.args_vec.elements[0], '/'))))
-			&& num->y && !num->command_exists)
+			&& (num->y || !num->command_exists))
 	{
 		status_check_w_err(num, scn, buff);
 	}
@@ -48,11 +48,9 @@ void	ex(t_rand *num, t_varso *vars, t_ast *scn)
 	num->pid = fork();
 	if (num->pid == 0)
 	{
-		execve(num->tab[num->i], scn->node.data.args_vec.elements,
-				vars->export.env);
-		// if (execve(num->tab[num->i], scn->node.data.args_vec.elements,
-		// 		vars->export.env) == -1)
-			// exit(1);
+		if (execve(num->tab[num->i], scn->node.data.args_vec.elements,
+				vars->export.env) == -1)
+			exit(1);
 	}
 	waitpid(num->pid, &num->status, 0);
 	if (WIFEXITED(num->status))
