@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:46:15 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:46:16 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/16 11:10:14 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_value_of_env_name(t_env_table env_table, char *name)
 	i = 0;
 	while (env_table.name.elements[i] != NULL)
 	{
-		if (strcmp(env_table.name.elements[i], name) == 0)
+		if (ft_strcmp(env_table.name.elements[i], name) == 0)
 			return (env_table.value.elements[i]);
 		i++;
 	}

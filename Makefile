@@ -6,6 +6,24 @@ CC := gcc
 
 CFLAGS := #-Wall -Wextra -Werror
 
+HDRS := srcs/environment/environment.h \
+srcs/execution/file.h \
+srcs/freeing_time/freeing_time.h \
+srcs/get_next_line/get_next_line.h \
+srcs/minishell.h \
+srcs/minishell_typedefs.h \
+srcs/parser/check_tokens_syntax/check_tokens_syntax.h \
+srcs/parser/create_abstract_syntax_tree/create_abstract_syntax_tree.h \
+srcs/parser/expanding/expanding.h \
+srcs/parser/parser.h \
+srcs/parser/parser_typedefs.h \
+srcs/parser/tokenization/tokenization.h \
+srcs/parser/usefull_functions/usefull_functions.h \
+srcs/parser/usefull_functions/usefull_functions_typedefs.h \
+srcs/readline/readline.h \
+srcs/readline/readline_typedefs.h \
+srcs/vectors/vectors.h
+
 SRC := srcs/minishell.c \
 srcs/environment/convert_env_table_to_array.c \
 srcs/environment/create_env_table.c \
@@ -187,20 +205,20 @@ $(NAME): $(LIBFT) $(OBJ)
 	$(CC) $(OBJ) $(LIBFT) -o $(NAME) -ltermcap -lreadline
 
 $(LIBFT): force
-	make -C ./srcs/libft/
+	@make -sC ./srcs/libft/
 
-$(OBJ): $(OBJ_DIR)/%.o : %.c
+$(OBJ): $(OBJ_DIR)/%.o : %.c $(HDRS)
 	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
 	rm -f $(OBJ)
 	rm -rf $(OBJ_DIR)
-	make clean -C ./srcs/libft/
+	@make clean -sC ./srcs/libft/
 
 fclean : clean
 	rm -f $(NAME)
-	make fclean -C ./srcs/libft/
+	@make fclean -sC ./srcs/libft/
 
 re : fclean all
 

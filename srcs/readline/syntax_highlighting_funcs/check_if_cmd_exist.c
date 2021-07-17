@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:48:57 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/13 15:57:08 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/16 11:12:36 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 static int	check_if_cmd_is_builtin(char *cmd)
 {
-	if (strcmp(cmd, "export") == 0)
+	if (ft_strcmp(cmd, "export") == 0)
 		return (true);
-	else if (strcmp(cmd, "echo") == 0)
+	else if (ft_strcmp(cmd, "echo") == 0)
 		return (true);
-	else if (strcmp(cmd, "env") == 0)
+	else if (ft_strcmp(cmd, "env") == 0)
 		return (true);
-	else if (strcmp(cmd, "unset") == 0)
+	else if (ft_strcmp(cmd, "unset") == 0)
 		return (true);
-	else if (strcmp(cmd, "cd") == 0)
+	else if (ft_strcmp(cmd, "cd") == 0)
 		return (true);
-	else if (strcmp(cmd, "pwd") == 0)
+	else if (ft_strcmp(cmd, "pwd") == 0)
 		return (true);
-	else if (strcmp(cmd, "exit") == 0)
+	else if (ft_strcmp(cmd, "exit") == 0)
 		return (true);
 	return (false);
 }

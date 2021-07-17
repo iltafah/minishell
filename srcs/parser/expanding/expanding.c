@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:35:38 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/09 17:12:19 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/16 11:12:15 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	expand_redirection_list(t_redirection *rdir_list)
 	curr_redir_node = rdir_list;
 	while (curr_redir_node != NULL)
 	{
-		if (strcmp(curr_redir_node->type, "<<") != 0)
+		if (ft_strcmp(curr_redir_node->type, "<<") != 0)
 		{
 			if (check_ambiguous_redirect(curr_redir_node->file) == EXIST)
 			{

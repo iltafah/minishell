@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 21:48:57 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/07 21:49:16 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/16 11:12:45 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	select_printing_method(t_rdline *rdl_vars)
 		rdl_vars->syntax_highlighting = off;
 	else
 	{
-		if (strcmp(value, "ON") == 0)
+		if (ft_strcmp(value, "ON") == 0)
 			rdl_vars->syntax_highlighting = on;
 		else
 			rdl_vars->syntax_highlighting = off;
@@ -31,7 +31,7 @@ void	select_printing_method(t_rdline *rdl_vars)
 		rdl_vars->auto_suggestions = off;
 	else
 	{
-		if (strcmp(value, "ON") == 0)
+		if (ft_strcmp(value, "ON") == 0)
 			rdl_vars->auto_suggestions = on;
 		else
 			rdl_vars->auto_suggestions = off;
