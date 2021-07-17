@@ -63,10 +63,10 @@ loooong wrong commands
 /bibdlsmn/ls\\\\\\\\\\fixed
 export TEST_$USER=hallo$LOGNAME \\\\\\\\\\\ fixed
 exit a aa a ---- \\\\\\\\\\\\\fixed
+/*noice*/Echo ; echo \n ' \n this is the; "first line"' ; echo "and right here;;; 'We have the second'" ; echo and" a fe"'w 'here'; with some slash and quotes   .'   '\' ; echo '\\' ; echo "\\" ; echo    "\"" ; echo   \\ ; echo   \' ; echo   \" "\\"    "\""   \\   \'   \"
 
 
 
 export ; export a="\\" ; export b='\\' ; export c="\b" ; export
-Echo ; echo \n ' \n this is the; "first line"' ; echo "and right here;;; 'We have the second'" ; echo and" a fe"'w 'here'; with some slash and quotes   .'   '\' ; echo '\\' ; echo "\\" ; echo    "\"" ; echo   \\ ; echo   \' ; echo   \" "\\"    "\""   \\   \'   \"
 export ; export a="\\" ; export b='\\' ; export c="\b" ; export.  +++++++
 
