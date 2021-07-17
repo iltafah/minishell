@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 11:04:06 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/16 20:24:01 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/17 12:20:31 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	status_check_w_err(t_rand *num, t_ast *scn, struct stat buff)
 		if (buff.st_mode & S_IFDIR)
 			print_three("minishell: ", scn->node.data.args_vec.elements[0],
 				(": is a directory\n"));
-		else
+		else if (open(scn->node.data.args_vec.elements[0], O_RDONLY) != -1
+			&& !(buff.st_mode & S_IXUSR))
 			print_three("minishell: ", scn->node.data.args_vec.elements[0],
 				(": Permission denied\n"));
 		g_vars.last_err_num = 126;
