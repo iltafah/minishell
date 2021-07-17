@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:39:35 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/16 20:36:47 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/17 11:23:18 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	line_tokenization(char *line, t_tokens **tokens_list)
 	t_type		type;
 	t_tokens	*curr_token;
 
-			// printf("============================\n");
 	*tokens_list = create_token_node(NULL, e_start);
 	curr_token = *tokens_list;
 	while (*line)
@@ -54,14 +53,10 @@ void	line_tokenization(char *line, t_tokens **tokens_list)
 			line++;
 		else
 		{
-			// printf("c = %c\n", *line);
 			token = get_token(&line, &type);
 			curr_token->next = create_token_node(token, type);
 			curr_token = curr_token->next;
-			// printf("token = %s, type = %d\n", curr_token->data, curr_token->type);
 		}
 	}
-			// printf("============================\n");
-
 	curr_token->next = create_token_node(NULL, newline);
 }
