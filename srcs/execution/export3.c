@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 10:49:58 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/13 18:02:03 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/17 08:35:52 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_middle(char *s)
 	while (s[i] && s[i] != '=' && i < (int)ft_strlen(s)
 		&& ft_strncmp(s + i, "+=", 2))
 	{
-		if (!ft_isalnum(s[i]))
+		if (!ft_isalnum(s[i]) && s[i] != '_')
 		{
 			return (0);
 		}
