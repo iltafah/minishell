@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 10:55:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/16 20:22:41 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/17 13:53:38 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	multi_exit_arg(t_ast *scn, int i)
 		print_error("exit\nminishell: exit: ");
 		print_error(scn->node.data.args_vec.elements[i]);
 		print_error(": numeric argument required\n");
-		exit(ft_atoi(scn->node.data.args_vec.elements[i]));
+		exit(255);
 	}
 	print_error("exit\nminishell: exit: too many arguments\n");
 	g_vars.last_err_num = 1;

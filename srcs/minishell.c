@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 08:27:58 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/16 18:40:31 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/17 11:46:43 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	start_execution(t_ast *ast)
 {
 	t_ast		*curr_pipeline_seq;
 	t_ast		*curr_simple_cmd;
-	t_ast		*curr_data;
 	t_piping	num;
 
 	curr_pipeline_seq = get_curr_pipeline_seq_node(ast);

@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:14 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/11 19:09:42 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/17 12:58:50 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void	disable_raw_mode(struct termios old_termios_state)
 	tcsetattr(g_vars.rdl_vars.tty_fd, TCSANOW, &old_termios_state);
 }
 
-void	set_rdl_signals(t_rdline *rdl_vars)
+void	set_rdl_signals(void)
 {
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signals_handler);
 	signal(SIGWINCH, signals_handler);
 }
 
-void	restore_rdl_signals(t_rdline *rdl_vars)
+void	restore_rdl_signals(void)
 {
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
@@ -57,10 +57,10 @@ char	*read_line(char *prompt)
 		load_history(rdl_vars);
 		is_initialized = true;
 	}
-	set_rdl_signals(rdl_vars);
+	set_rdl_signals();
 	enable_raw_mode();
 	process_input(rdl_vars, prompt);
 	disable_raw_mode(rdl_vars->original_termios_state);
-	restore_rdl_signals(rdl_vars);
+	restore_rdl_signals();
 	return (rdl_vars->line);
 }

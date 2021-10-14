@@ -6,7 +6,7 @@
 /*   By: iariss <iariss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 10:44:47 by iariss            #+#    #+#             */
-/*   Updated: 2021/07/17 08:54:51 by iariss           ###   ########.fr       */
+/*   Updated: 2021/07/17 13:25:12 by iariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	export_add(char **args, int lp, int x)
 
 	i = 0;
 	in = 0;
-	printf("%s\n", args[1]);
 	while (i < g_vars.env_table.name.used_size)
 	{
 		tmp = ft_substr(args[lp], 0, x);

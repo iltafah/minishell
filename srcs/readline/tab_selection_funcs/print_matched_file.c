@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 13:50:21 by iltafah           #+#    #+#             */
-/*   Updated: 2021/07/09 12:20:19 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/07/17 11:48:52 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	add_slash_if_directory(t_rdline *rdl_vars, t_tab_vars *tab_vars)
 
 void	print_matched_file(t_rdline *rdl_vars, t_tab_vars *tab_vars)
 {
-	int				i;
 	t_char_vec		*hstry_line;
 	char			*curr_matched_file;
 
